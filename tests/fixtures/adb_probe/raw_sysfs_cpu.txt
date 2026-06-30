@@ -1,0 +1,39 @@
+### /sys/devices/system/cpu/possible
+0-1
+### /sys/devices/system/cpu/present
+0-1
+### /sys/devices/system/cpu/online
+0-1
+### /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq
+2200000
+### /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq
+300000
+### /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
+1200000
+### /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+schedutil
+### /sys/devices/system/cpu/cpu0/topology/physical_package_id
+0
+### /sys/devices/system/cpu/cpu0/topology/core_id
+0
+### /sys/devices/system/cpu/cpu0/topology/cluster_id
+0
+### /sys/devices/system/cpu/cpu0/topology/cpu_capacity
+512
+### /sys/devices/system/cpu/cpu1/cpufreq/cpuinfo_max_freq
+3200000
+### /sys/devices/system/cpu/cpu1/cpufreq/cpuinfo_min_freq
+300000
+### /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq
+1800000
+### /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
+schedutil
+### /sys/devices/system/cpu/cpu1/topology/physical_package_id
+0
+### /sys/devices/system/cpu/cpu1/topology/core_id
+1
+### /sys/devices/system/cpu/cpu1/topology/cluster_id
+1
+### /sys/devices/system/cpu/cpu1/topology/cpu_capacity
+1024
+

@@ -1,0 +1,13 @@
+### getprop filtered
+[ro.hardware.egl]: [adreno]
+[ro.board.platform]: [synthetic-qcom]
+### ls /vendor/lib64
+-rw-r--r-- 1 root root 1 libvulkan.so
+-rw-r--r-- 1 root root 1 libOpenCL.so
+-rw-r--r-- 1 root root 1 libGLESv2_adreno.so
+### library hints
+/vendor/lib64/libvulkan.so
+/vendor/lib64/libOpenCL.so
+/vendor/lib64/libGLESv2_adreno.so
+/sys/class/kgsl/kgsl-3d0
+

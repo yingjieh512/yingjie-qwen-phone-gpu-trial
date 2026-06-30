@@ -1,0 +1,13 @@
+### getprop filtered
+[ro.vendor.qti.soc_name]: [synthetic-qcom]
+[vendor.ai.hint]: [synthetic]
+### ls /vendor/lib64
+-rw-r--r-- 1 root root 1 libQnnHtp.so
+-rw-r--r-- 1 root root 1 libQnnSystem.so
+-rw-r--r-- 1 root root 1 libcdsprpc.so
+### library hints
+/vendor/lib64/libQnnHtp.so
+/vendor/lib64/libQnnSystem.so
+/vendor/lib64/libcdsprpc.so
+/system/lib64/libneuralnetworks.so
+

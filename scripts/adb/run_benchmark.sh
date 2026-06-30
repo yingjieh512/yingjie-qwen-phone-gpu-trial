@@ -4,7 +4,7 @@ set -euo pipefail
 usage() {
   echo "usage: $0 [package-name]"
   echo
-  echo "Phase 0 stub. Future phases will run on-device microbenchmarks through adb."
+  echo "Phase 1 placeholder. Host-side probing is implemented, but benchmarks are not run in Phase 1."
 }
 
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
@@ -18,6 +18,5 @@ if ! command -v adb >/dev/null 2>&1; then
 fi
 
 PACKAGE="${1:-com.qpnpu.trial}"
-echo "Phase 0 stub: would run benchmark package ${PACKAGE}"
-echo "No benchmark APK exists in Phase 0."
-
+echo "Phase 1 placeholder: would run benchmark package ${PACKAGE} in a later phase."
+echo "No benchmark APK or native benchmark runner exists in Phase 1."

@@ -2,9 +2,9 @@
 set -euo pipefail
 
 usage() {
-  echo "usage: $0 [package-name]"
+  echo "usage: $0 [--out DIR]"
   echo
-  echo "Phase 0 stub. Future phases will run a minimal Android probe APK or test runner."
+  echo "Phase 1 host-side probe wrapper. Delegates to collect_device_info.sh."
 }
 
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
@@ -12,12 +12,5 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   exit 0
 fi
 
-if ! command -v adb >/dev/null 2>&1; then
-  echo "error: adb was not found on PATH. Install Android platform-tools for future probe work." >&2
-  exit 127
-fi
-
-PACKAGE="${1:-com.qpnpu.trial}"
-echo "Phase 0 stub: would run probe package ${PACKAGE}"
-echo "No APK exists in Phase 0."
-
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+"${SCRIPT_DIR}/collect_device_info.sh" "$@"

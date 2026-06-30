@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently in Phase 0. Each later phase should leave behind a small, testable checkpoint.
+This repository is currently in Phase 1. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -11,24 +11,27 @@ Exit criteria:
 - CLI scripts provide useful help or dry-run output.
 - No Android device, AWS credentials, Qualcomm SDK, or model download is required.
 
-## Phase 1: ADB Hardware Probe
+## Phase 1: Host-Side ADB Hardware Probe
 
 Exit criteria:
 
-- Minimal Android probe APK or test runner exists.
-- ADB scripts can install or invoke the probe on a connected device.
-- Probe JSON captures device, CPU, memory, GPU, NNAPI, QNN, NPU-related, thermal, and warning fields.
-- Probe schema remains backward compatible with Phase 0 samples.
+- `scripts/adb/collect_device_info.sh` validates `adb` and connected-device state.
+- A connected device probe collects raw `getprop`, `uname`, CPU, memory, thermal, sysfs CPU, GPU-hint, and NPU-hint files.
+- The parser builds a valid `probe_result.json` and updates `benchmarks/results/latest_probe.json`.
+- Probe summarization prints backend hints and a conservative backend order.
+- Tests cover parser behavior with synthetic raw ADB fixtures and do not require an Android device.
+- No Android APK is required yet.
 
-Start AWS Device Farm remote access after this phase has a minimal Android probe APK/test runner. Do not wait for the full inference library.
+Start AWS Device Farm remote access after a minimal Android probe APK or test runner exists, not after the host-side-only probe and not after the full inference library.
 
-## Phase 2: CPU Reference Backend
+## Phase 2: Native CPU Reference Backend And Microbench Foundation
 
 Exit criteria:
 
 - Native CPU backend can execute tiny fixture operators.
 - CPU output is used as correctness reference.
-- Native test harness runs without Android first, then on Android.
+- Native test harness runs without Android first.
+- Microbenchmark result JSON can be produced from local native runs.
 
 ## Phase 3: Model Metadata Pipeline
 
@@ -38,7 +41,16 @@ Exit criteria:
 - Conversion planning produces deterministic QPNPU metadata.
 - No large model weights are committed.
 
-## Phase 4: Quantization Validation
+## Phase 4: Android Probe App Or Native Android Harness
+
+Exit criteria:
+
+- Minimal Android probe APK or test runner exists.
+- Device-side NNAPI and runtime library enumeration can be performed without claiming accelerator execution.
+- ADB scripts can install or invoke the probe on a connected device.
+- Probe schema remains backward compatible with Phase 1 host-side outputs.
+
+## Phase 5: Quantization Validation
 
 Exit criteria:
 
@@ -46,7 +58,7 @@ Exit criteria:
 - Quantized tensor metadata records scales, shapes, and packing order.
 - Accuracy checks compare against CPU reference fixtures.
 
-## Phase 5: Kernel Generation
+## Phase 6: Kernel Generation
 
 Exit criteria:
 
@@ -54,7 +66,7 @@ Exit criteria:
 - Generated kernels build in the native project.
 - Microbenchmarks can compare candidates on local CPU and Android.
 
-## Phase 6: Android Benchmark Harness
+## Phase 7: Android Benchmark Harness
 
 Exit criteria:
 
@@ -62,7 +74,7 @@ Exit criteria:
 - Results are pulled as benchmark JSON.
 - Thermal and device state are captured with every run.
 
-## Phase 7: Backend Capability Selection
+## Phase 8: Backend Capability Selection
 
 Exit criteria:
 
@@ -70,19 +82,12 @@ Exit criteria:
 - CPU fallback always works.
 - Vulkan, NNAPI, and QNN paths are only enabled when runtime capability is detected.
 
-## Phase 8: AWS Device Farm Runs
+## Phase 9: AWS Device Farm Runs And Full Trial Analysis
 
 Exit criteria:
 
 - Device Farm scripts can create projects, upload artifacts, and schedule runs with user-provided credentials.
 - Runs produce repeatable probe and benchmark artifacts.
-- Remote access is used to inspect device-specific failures.
-
-## Phase 9: Full Trial and Analysis
-
-Exit criteria:
-
 - Configurable Qwen-style 9B trial runs on real target hardware.
 - Results are reproducible and include thermal context.
 - Any decode tokens/sec claims are backed by recorded benchmark artifacts.
-

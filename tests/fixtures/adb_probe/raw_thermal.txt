@@ -1,0 +1,11 @@
+### /sys/class/thermal/thermal_zone0/type
+cpu-thermal
+### /sys/class/thermal/thermal_zone0/temp
+42000
+### /sys/class/thermal/cooling_device0/type
+synthetic-cooling
+### /sys/class/thermal/cooling_device0/cur_state
+0
+### /sys/class/thermal/cooling_device0/max_state
+10
+

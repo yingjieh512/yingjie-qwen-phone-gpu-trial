@@ -4,7 +4,8 @@ set -euo pipefail
 usage() {
   echo "usage: $0 [remote-dir] [local-dir]"
   echo
-  echo "Phase 0 stub. Future phases will pull JSON probe and benchmark results from Android."
+  echo "Phase 1 placeholder. Host-side probe results are already written locally."
+  echo "Future Android app phases will pull app-generated JSON results from the device."
 }
 
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
@@ -19,5 +20,4 @@ fi
 
 REMOTE="${1:-/sdcard/Android/data/com.qpnpu.trial/files/results}"
 LOCAL="${2:-benchmarks/results}"
-echo "Phase 0 stub: would pull ${REMOTE} to ${LOCAL}"
-
+echo "Phase 1 placeholder: would pull ${REMOTE} to ${LOCAL} in a later Android app phase."
