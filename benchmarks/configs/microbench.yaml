@@ -1,0 +1,10 @@
+schema_version: "0.1"
+name: "phase0_microbench_placeholder"
+operators:
+  - int4_matvec
+context_lengths:
+  - 128
+  - 512
+  - 2048
+notes: "Placeholder config for future microbenchmarks."
+

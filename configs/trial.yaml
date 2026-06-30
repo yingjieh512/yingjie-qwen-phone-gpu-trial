@@ -1,0 +1,28 @@
+model:
+  hf_id: "Qwen/Qwen-placeholder-9B"
+  local_dir: "./models/qwen"
+  architecture: "qwen"
+  dtype_source: "bf16"
+  quantization: "int4_groupwise_symmetric"
+  group_size: 128
+  kv_cache_dtype: "fp16"
+  max_context: 4096
+
+runtime:
+  target_device: "android"
+  package_name: "com.qpnpu.trial"
+  preferred_backends:
+    - qnn
+    - nnapi
+    - vulkan
+    - cpu
+  target_decode_tps: 20
+  benchmark_context_lengths:
+    - 128
+    - 512
+    - 2048
+
+kernelgen:
+  use_probe_file: "./benchmarks/results/latest_probe.json"
+  output_dir: "./native/kernels/generated"
+

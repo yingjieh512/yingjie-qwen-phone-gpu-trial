@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "timestamp_utc": "2026-01-01T00:00:00Z",
+  "device": {
+    "model": "Sample Android Device"
+  },
+  "model": {
+    "hf_id": "Qwen/Qwen-placeholder-9B"
+  },
+  "backend": "cpu",
+  "operator": "int4_matvec",
+  "shape": {
+    "m": 1,
+    "n": 64,
+    "k": 128
+  },
+  "metrics": {
+    "latency_ms_p50": 0.0,
+    "latency_ms_p90": 0.0,
+    "latency_ms_p99": 0.0,
+    "tokens_per_second": 0.0,
+    "memory_rss_mb": 0.0
+  },
+  "thermal": {
+    "summary": "sample thermal fields; not measured"
+  },
+  "kernel_config_hash": "sample",
+  "warnings": [
+    "sample benchmark result; not a performance claim"
+  ]
+}
+

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qwen-phone-npu-trial"
+version = "0.0.0"
+description = "Phase 0 skeleton for a future Snapdragon Android phone NPU trial."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pyyaml",
+  "numpy",
+  "pytest",
+]
+
+[tool.setuptools.packages.find]
+include = ["qpnpu*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

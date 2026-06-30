@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+native/build/
+cmake-build-*/
+
+# Android build outputs
+android/**/.gradle/
+android/**/build/
+android/**/*.apk
+android/**/*.aab
+
+# Model weights and large model artifacts
+models/qwen/
+models/**/*.bin
+models/**/*.safetensors
+models/**/*.onnx
+models/**/*.gguf
+models/**/*.pt
+models/**/*.pth
+!models/README.md
+
+# Benchmark artifacts
+benchmarks/results/*
+!benchmarks/results/.gitkeep
+!benchmarks/results/sample_probe.json
+!benchmarks/results/sample_benchmark.json
+
+# Generated kernels can be regenerated from configs.
+native/kernels/generated/generated_*.cpp
+
+# Local secrets or credentials
+.env
+*.pem
+*.key
+

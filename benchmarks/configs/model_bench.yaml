@@ -1,0 +1,11 @@
+schema_version: "0.1"
+name: "phase0_model_bench_placeholder"
+model:
+  hf_id: "Qwen/Qwen-placeholder-9B"
+decode_tokens: 128
+prompt_lengths:
+  - 128
+  - 512
+  - 2048
+notes: "Placeholder config for future full-model benchmarks."
+

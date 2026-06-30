@@ -1,0 +1,10 @@
+{
+  "schema_version": "0.1",
+  "operator": "int4_matvec",
+  "group_size": 128,
+  "tile_n": 64,
+  "unroll": 4,
+  "prefetch_distance": 2,
+  "accumulation_dtype": "fp32"
+}
+

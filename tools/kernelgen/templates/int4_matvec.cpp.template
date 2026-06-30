@@ -1,0 +1,3 @@
+// qpnpu int4 matvec template placeholder
+// Real generated kernels will be implemented in a later phase.
+
