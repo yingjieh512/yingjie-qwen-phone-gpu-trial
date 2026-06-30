@@ -27,17 +27,20 @@ BENCHMARKS = [
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--build-dir", default="native/build", help="CMake build directory containing qpnpu_microbench.")
+    parser.add_argument("--exe", help="Explicit qpnpu_microbench executable path.")
     parser.add_argument("--out", default="benchmarks/results/local_microbench.json", help="Combined JSON list output path.")
     parser.add_argument("--iters", type=int, default=10, help="Iterations per operator benchmark.")
     args = parser.parse_args(argv)
 
     build_dir = Path(args.build_dir)
-    executable = _find_microbench(build_dir)
+    executable = _find_microbench(build_dir, Path(args.exe) if args.exe else None)
     if executable is None:
         print(f"error: qpnpu_microbench executable was not found under {build_dir}", file=sys.stderr)
+        if args.exe:
+            print(f"explicit --exe path did not exist or was not a file: {args.exe}", file=sys.stderr)
         print("build it first with:", file=sys.stderr)
         print("  cmake -S native -B native/build", file=sys.stderr)
-        print("  cmake --build native/build", file=sys.stderr)
+        print("  cmake --build native/build --config Release", file=sys.stderr)
         return 2
 
     out_path = Path(args.out)
@@ -79,14 +82,27 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-def _find_microbench(build_dir: Path) -> Path | None:
-    names = ["qpnpu_microbench", "qpnpu_microbench.exe"]
-    configs = [Path(""), Path("Debug"), Path("Release"), Path("RelWithDebInfo"), Path("MinSizeRel")]
-    for config in configs:
-        for name in names:
-            candidate = build_dir / config / name
-            if candidate.exists() and candidate.is_file():
-                return candidate
+def _find_microbench(build_dir: Path, explicit_exe: Path | None) -> Path | None:
+    if explicit_exe is not None:
+        return explicit_exe if explicit_exe.exists() and explicit_exe.is_file() else None
+
+    candidates = [
+        build_dir / "qpnpu_microbench",
+        build_dir / "qpnpu_microbench.exe",
+        build_dir / "Debug" / "qpnpu_microbench.exe",
+        build_dir / "Release" / "qpnpu_microbench.exe",
+        build_dir / "RelWithDebInfo" / "qpnpu_microbench.exe",
+        build_dir / "MinSizeRel" / "qpnpu_microbench.exe",
+        build_dir / "tools" / "qpnpu_microbench",
+        build_dir / "tools" / "qpnpu_microbench.exe",
+        build_dir / "tools" / "Debug" / "qpnpu_microbench.exe",
+        build_dir / "tools" / "Release" / "qpnpu_microbench.exe",
+        build_dir / "tools" / "RelWithDebInfo" / "qpnpu_microbench.exe",
+        build_dir / "tools" / "MinSizeRel" / "qpnpu_microbench.exe",
+    ]
+    for candidate in candidates:
+        if candidate.exists() and candidate.is_file():
+            return candidate
     return None
 
 

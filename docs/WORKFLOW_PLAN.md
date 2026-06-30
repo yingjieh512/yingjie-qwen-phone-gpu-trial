@@ -1,6 +1,6 @@
-# Workflow Plan
+﻿# Workflow Plan
 
-This repository is currently in Phase 2. Each phase should leave behind a small, testable checkpoint.
+This repository is currently in Phase 3. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -35,13 +35,18 @@ Exit criteria:
 
 Start AWS Device Farm remote access after a minimal Android probe APK or test runner exists, not after the host-side-only probe or this local native foundation.
 
-## Phase 3: Model Metadata Pipeline
+## Phase 3: Local Toy Model Vertical Slice
 
 Exit criteria:
 
-- Tiny fixture model metadata can be read and validated.
-- Conversion planning produces deterministic QPNPU metadata.
-- No large model weights are committed.
+- A tiny deterministic QPNPU toy model can be created locally.
+- `metadata.json`, `model.bin`, `tokenizer_stub.json`, and artifact `README.md` are written.
+- QPNPU metadata validates and fp32 tensors can be loaded by name.
+- The toy model can be inspected with `scripts/model/inspect_model.py --model-dir`.
+- CPU-only toy decode can run from a prompt and write JSON with an embedded benchmark object.
+- The embedded benchmark validates with `qpnpu.benchmark.validate_benchmark_result`.
+- No Android hardware, AWS credentials, Qualcomm SDK, Hugging Face credentials, network access, large model, or NPU execution is required.
+- Warnings clearly state that toy results are not Qwen 9B, not Android, not NPU, and not performance claims.
 
 ## Phase 4: Android Probe App Or Native Android Harness
 

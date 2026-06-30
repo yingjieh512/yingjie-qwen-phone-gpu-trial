@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  python-and-native:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . pytest numpy pyyaml
+
+      - name: Python tests
+        run: python -m pytest tests
+
+      - name: Configure native
+        run: cmake -S native -B native/build
+
+      - name: Build native
+        run: cmake --build native/build --config Release
+
+      - name: Native tests
+        run: ctest --test-dir native/build --build-config Release --output-on-failure
+
+      - name: Native microbench smoke
+        run: |
+          native/build/qpnpu_microbench --operator int4_matvec --rows 16 --cols 16 --group-size 8 --iters 5 --out benchmarks/results/local_int4_smoke.json
+
+      - name: Python microbench wrapper
+        run: python scripts/native/run_local_microbench.py --build-dir native/build --out benchmarks/results/local_microbench.json
+

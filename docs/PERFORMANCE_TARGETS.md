@@ -1,4 +1,4 @@
-# Performance Targets
+﻿# Performance Targets
 
 The long-term trial target is at least 20 decode tokens/sec for the configurable Qwen-style 9B decoder model on the target Android phone class.
 
@@ -9,6 +9,22 @@ Current status:
 - No on-device benchmark has run.
 - No NPU execution exists.
 - No performance target is claimed as achieved.
+
+## Phase 3 Toy Local Throughput
+
+Phase 3 can report tokens/sec for a tiny local CPU Python toy decode. That number is only a smoke-test timing for a 32-hidden-size byte-token toy artifact.
+
+It is not comparable to the target because it is not:
+
+- Qwen 9B
+- a real transformer decode
+- Android execution
+- NPU execution
+- QNN execution
+- a full-model benchmark
+- evidence that the 20 decode tokens/sec target has been met
+
+The `>=20 decode tokens/sec` target remains unmeasured.
 
 ## Phase 2 Measurements
 

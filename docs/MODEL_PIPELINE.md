@@ -1,8 +1,97 @@
-# Model Pipeline
+﻿# Model Pipeline
 
-The target model is a configurable Qwen-style 9B decoder model referred to as Qwen 3.5 9B for the trial. Phase 0 uses the placeholder Hugging Face id `Qwen/Qwen-placeholder-9B`.
+The target model for the long-term trial is a configurable Qwen-style 9B decoder model. No Qwen 9B weights are downloaded, stored, converted, or executed in Phase 3.
 
-Planned workflow:
+## Phase 3 Local Toy Workflow
+
+Phase 3 introduces a tiny deterministic QPNPU artifact for local workflow validation:
+
+```bash
+python scripts/model/create_toy_qwen.py --out models/toy_qwen_smoke --overwrite
+python scripts/model/inspect_model.py --model-dir models/toy_qwen_smoke
+python scripts/model/run_toy_decode.py \
+  --model-dir models/toy_qwen_smoke \
+  --prompt "hello" \
+  --max-new-tokens 8 \
+  --out benchmarks/results/toy_decode_smoke.json
+```
+
+This toy model is not a real transformer, not Qwen 9B, not the Qwen tokenizer, not Android execution, not NPU/QNN execution, and not a performance claim. It exists to validate the local model-format, tensor-loading, CPU-reference math, CLI, and benchmark-output path.
+
+## QPNPU Toy Model Format
+
+A toy QPNPU model directory contains:
+
+- `metadata.json`: schema, model config, tensor manifest, and warnings.
+- `model.bin`: small fp32 tensor data.
+- `tokenizer_stub.json`: byte-level tokenizer stub metadata.
+- `README.md`: local artifact explanation and non-claim warnings.
+
+`metadata.json` uses schema version `0.1`:
+
+```json
+{
+  "schema_version": "0.1",
+  "format": "qpnpu",
+  "model": {
+    "architecture": "qwen_toy",
+    "hf_id": "local/toy-qwen-smoke",
+    "hidden_size": 32,
+    "num_layers": 1,
+    "num_attention_heads": 4,
+    "num_key_value_heads": 4,
+    "intermediate_size": 64,
+    "vocab_size": 256,
+    "max_position_embeddings": 128,
+    "rope_theta": 10000.0,
+    "dtype": "fp32",
+    "quantization": "none"
+  },
+  "tensors": [
+    {
+      "name": "token_embedding.weight",
+      "shape": [256, 32],
+      "dtype": "fp32",
+      "quantization": "none",
+      "file": "model.bin",
+      "byte_offset": 0,
+      "byte_length": 32768
+    }
+  ]
+}
+```
+
+Tensor entries may point to byte offsets inside binary files. Phase 3 supports loading fp32 tensors for the toy workflow.
+
+## Toy Decode Flow
+
+The CPU Python reference runtime performs this deterministic loop for each generated token:
+
+1. Encode the prompt with the byte tokenizer stub.
+2. Read the current token embedding.
+3. Apply RMSNorm with `norm.weight`.
+4. Compute `lm_head.weight @ hidden`.
+5. Add a deterministic token/position bias so the smoke decode does not collapse to a single constant token.
+6. Select the next token with argmax and feed it back.
+
+No sampling, attention cache, transformer block, RoPE attention, Qwen tokenizer, Android backend, or NPU backend is implemented here.
+
+## Small Fixture Conversion
+
+`scripts/model/convert_to_qpnpu.py` can convert one small local `.npy` tensor into a one-tensor QPNPU fixture:
+
+```bash
+python scripts/model/convert_to_qpnpu.py \
+  --input-npy path/to/tensor.npy \
+  --tensor-name fixture.weight \
+  --output-dir models/fixture.qpnpu
+```
+
+This is not full safetensors conversion. Full Qwen model conversion remains future work.
+
+## Future Full-Model Workflow
+
+Planned later-phase workflow:
 
 1. Inspect Hugging Face-style `config.json` metadata.
 2. Fetch model files into `models/` using explicit user action.
@@ -11,10 +100,4 @@ Planned workflow:
 5. Validate quantized fixtures against a CPU reference backend.
 6. Package model artifacts for Android deployment.
 
-Phase 0 status:
-
-- `scripts/model/fetch_model.py` prints an intended download command but does not download.
-- `scripts/model/convert_to_qpnpu.py` prints a placeholder conversion plan.
-- `scripts/model/quantize.py` can quantize a small `.npy` fixture, but it is not a full model quantizer.
-- No model weights are stored in git.
-
+No model weights are stored in git.
