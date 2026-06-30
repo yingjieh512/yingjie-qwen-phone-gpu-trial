@@ -1,6 +1,6 @@
-﻿# Workflow Plan
+# Workflow Plan
 
-This repository is currently in Phase 3. Each phase should leave behind a small, testable checkpoint.
+This repository is currently in Phase 4A. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -33,8 +33,6 @@ Exit criteria:
 - Local CPU microbench emits valid benchmark JSON.
 - No Android device, AWS credentials, Qualcomm SDK, model download, or NPU execution is required.
 
-Start AWS Device Farm remote access after a minimal Android probe APK or test runner exists, not after the host-side-only probe or this local native foundation.
-
 ## Phase 3: Local Toy Model Vertical Slice
 
 Exit criteria:
@@ -48,14 +46,32 @@ Exit criteria:
 - No Android hardware, AWS credentials, Qualcomm SDK, Hugging Face credentials, network access, large model, or NPU execution is required.
 - Warnings clearly state that toy results are not Qwen 9B, not Android, not NPU, and not performance claims.
 
-## Phase 4: Android Probe App Or Native Android Harness
+## Phase 4A: Minimal Android Probe APK
 
 Exit criteria:
 
-- Minimal Android probe APK or test runner exists.
-- Device-side NNAPI and runtime library enumeration can be performed without claiming accelerator execution.
-- ADB scripts can install or invoke the probe on a connected device.
-- Probe schema remains backward compatible with Phase 1 host-side outputs.
+- A minimal Android app project exists under `android/probe-app`.
+- A debug APK can be built with Android Studio or a local Gradle/Android SDK setup.
+- The package name is `com.qpnpu.trial`.
+- The UI has `QPNPU Probe`, a `Run Probe` button, scrollable JSON output, `Copy JSON`, and `Clear` controls.
+- Tapping `Run Probe` collects best-effort Android-side hardware info.
+- Probe JSON is shown on screen.
+- Probe JSON is logged to logcat between `QPNPU_PROBE_JSON_BEGIN` and `QPNPU_PROBE_JSON_END`.
+- The app tries to save `getExternalFilesDir(null)/probe_result.json`.
+- The app requires no special permissions.
+- The project is ready for the first AWS Device Farm Remote Access session.
+
+The first AWS Remote Access session may start after Phase 4A. It does not need full native kernels, the Phase 3 toy model, or any full-model path. The goal is hardware/app smoke validation, not performance.
+
+## Phase 4B: First AWS Remote Access Smoke Session
+
+Exit criteria:
+
+- The Phase 4A debug APK is uploaded or installed in a manual Remote Access session.
+- The app launches and runs the probe on a selected Android device.
+- UI JSON and logcat markers are observed.
+- Session metadata, logs, and copied probe JSON are saved when available.
+- No automated benchmark or performance claim is made.
 
 ## Phase 5: Quantization Validation
 

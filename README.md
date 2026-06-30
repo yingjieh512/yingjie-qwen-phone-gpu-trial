@@ -1,4 +1,4 @@
-﻿# qwen-phone-npu-trial
+# qwen-phone-npu-trial
 
 Repository for a Snapdragon-class Android phone NPU trial with a configurable Qwen-style 9B decoder model.
 
@@ -8,13 +8,14 @@ The long-term performance target is at least 20 decode tokens/sec. No performanc
 
 ## Current Status
 
-Phase 3 adds a local runnable vertical slice: a tiny deterministic CPU-only toy Qwen-like artifact can be created, inspected, decoded, and written as benchmark-schema JSON without Android hardware, AWS, Hugging Face credentials, Qualcomm QNN SDKs, or model downloads.
+Phase 4A adds a minimal Java-only Android probe APK under `android/probe-app` for the first AWS Device Farm Remote Access smoke test. The APK displays best-effort hardware probe JSON on screen, logs it to logcat between clear markers, and tries to save it to app-private external files.
 
-Phase 2.1 still hardens native verification: CI validates the Python and native Phase 2 paths on Ubuntu, and `scripts/dev/verify_phase2.py` explains whether local native checks pass or are blocked by missing CMake/compiler tools.
+Phase 3 adds a local runnable vertical slice: a tiny deterministic CPU-only toy Qwen-like artifact can be created, inspected, decoded, and written as benchmark-schema JSON without Android hardware, AWS, Hugging Face credentials, Qualcomm QNN SDKs, or model downloads.
 
 This repository currently contains:
 
 - Python helpers for config loading, schema validation, benchmark selection, kernel config hashing, model metadata validation/loading, lightweight int4 quantization, and ADB probe parsing.
+- A minimal Android probe app package named `com.qpnpu.trial` for manual Remote Access smoke validation.
 - A tiny QPNPU toy model creator and CPU Python reference runtime for local smoke tests.
 - A host-side ADB collection script from Phase 1 that writes structured probe JSON from a connected debugging-enabled Android device.
 - Native CPU reference kernels for fp32 matvec, groupwise symmetric int4 dequant matvec, RMSNorm, RoPE, and softmax.
@@ -24,13 +25,12 @@ This repository currently contains:
 
 This phase does not implement:
 
-- Android APK logic.
-- Real inference execution for a full model.
-- Real AWS Device Farm runs.
+- Qwen 9B inference.
+- A production Android inference app.
+- Real AWS Device Farm automated runs.
 - Real Qualcomm QNN integration.
 - Real Vulkan, NNAPI, QNN, or NPU execution.
 - Model downloads.
-- Qwen 9B inference.
 - Performance target claims.
 
 ## Quickstart
@@ -43,6 +43,38 @@ python tools/probe_parser/summarize_probe.py benchmarks/results/sample_probe.jso
 python tools/kernelgen/generate_kernels.py --probe benchmarks/results/sample_probe.json --config configs/kernel_config.example.json --out native/kernels/generated
 python scripts/autotune/run_autotune.py --dry-run
 ```
+
+## Phase 4A Android Probe APK Quickstart
+
+Build the debug APK with Android Studio or an installed Gradle/Android SDK:
+
+```bash
+cd android/probe-app
+./gradlew assembleDebug
+```
+
+On Windows:
+
+```powershell
+cd android\probe-app
+.\gradlew.bat assembleDebug
+```
+
+Find the built APK:
+
+```bash
+python scripts/android/find_probe_apk.py
+```
+
+For the first AWS Device Farm Remote Access smoke test, upload or install the debug APK, launch `QPNPU Probe`, tap `Run Probe`, and verify that JSON appears in the UI and logcat contains `QPNPU_PROBE_JSON_BEGIN` and `QPNPU_PROBE_JSON_END`.
+
+Save copied probe JSON as:
+
+```text
+benchmarks/results/aws_remote_probe_<date>.json
+```
+
+Do not treat this Remote Access smoke test as a benchmark or performance claim.
 
 ## Phase 3 Toy Model Quickstart
 
@@ -127,11 +159,12 @@ python scripts/dev/verify_phase2.py --skip-native
 
 GitHub Actions CI is defined in `.github/workflows/ci.yml`. After pushing a branch, check the repository Actions tab for the `CI` workflow. CI runs Python tests, native CMake configure/build, CTest, and local CPU microbench smoke on `ubuntu-latest`.
 
-AWS Remote Access timing is unchanged: start AWS Device Farm remote access only after a minimal Android probe APK or test runner exists, not after this local native foundation.
+AWS Remote Access may start after Phase 4A for manual app/hardware smoke validation. Automated Device Farm runs should wait until an instrumentation or test runner exists.
 
 ## What Works Locally
 
 - Python unit tests run without Android hardware, AWS credentials, Qualcomm SDKs, or network access.
+- A minimal Android probe app project exists under `android/probe-app`.
 - A toy QPNPU model can be created, inspected, decoded with a CPU Python reference path, and emitted as benchmark JSON.
 - Sample probe JSON can be validated and summarized.
 - ADB raw-output fixtures validate the Phase 1 parser path without requiring a real device.
@@ -142,18 +175,18 @@ AWS Remote Access timing is unchanged: start AWS Device Farm remote access only 
 
 ## What Is Stubbed
 
+- The Android probe APK does not run inference, benchmarks, QNN, or NPU code.
 - The Phase 3 toy runtime is not a transformer and is not Qwen 9B inference.
-- Android probe app is documentation only.
 - Vulkan, NNAPI, and QNN backends are safe unavailable stubs.
 - AWS Device Farm scripts only check for `aws`, print usage, and show intended commands.
 - Generated kernels remain placeholders.
-- No phone, accelerator, or NPU benchmark exists in Phase 3.
+- No phone, accelerator, or NPU benchmark exists in Phase 4A.
 
 ## Next Phases
 
-1. Phase 4: Android probe app or native Android harness when device-side enumeration is needed.
+1. Phase 4B: First manual AWS Device Farm Remote Access smoke session using the probe APK.
 2. Phase 5: Quantization validation with small model shards or fixtures.
 3. Phase 6: Kernel generation and local native microbenchmarks beyond the reference kernels.
 4. Phase 7: Android deployment and on-device microbenchmarks.
 5. Phase 8: Backend probing for NNAPI, Vulkan, and QNN availability.
-6. Phase 9: AWS Device Farm remote access and repeatable benchmark runs after a minimal Android runner exists.
+6. Phase 9: AWS Device Farm automated runs and full trial analysis after a minimal test runner exists.

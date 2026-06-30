@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if command -v gradle >/dev/null 2>&1; then
+  exec gradle "$@"
+fi
+
+cat >&2 <<'EOF'
+Gradle is not installed and this repository does not vendor a Gradle wrapper jar.
+
+Install Android Studio or Gradle with the Android Gradle Plugin available, then run:
+  gradle assembleDebug
+
+Or open android/probe-app in Android Studio and build the app module.
+Expected APK:
+  app/build/outputs/apk/debug/app-debug.apk
+EOF
+exit 127
