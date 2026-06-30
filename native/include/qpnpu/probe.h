@@ -9,5 +9,6 @@ struct ProbeBackendAvailability {
     bool qnn;
 };
 
-}  // namespace qpnpu
+ProbeBackendAvailability phase2_probe_backend_availability();
 
+}  // namespace qpnpu

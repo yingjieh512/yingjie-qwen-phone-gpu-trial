@@ -1,6 +1,21 @@
-# Native Placeholder
+# Native Runtime Foundation
 
-This directory will hold the native runtime, reference CPU backend, generated kernels, and Android-facing integration code in later phases.
+Phase 2 provides a small C++17 native foundation:
 
-Phase 0 only provides a minimal CMake project and small header placeholders.
+- tensor view helpers
+- CPU reference kernels
+- backend interface
+- CPU backend implementation
+- Vulkan, NNAPI, and QNN unavailable stubs
+- CTest correctness tests
+- local CPU microbenchmark executable
 
+Build and test:
+
+```bash
+cmake -S native -B native/build
+cmake --build native/build
+ctest --test-dir native/build --output-on-failure
+```
+
+No Android device, Qualcomm SDK, AWS credentials, or model weights are required.

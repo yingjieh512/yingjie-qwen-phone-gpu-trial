@@ -89,6 +89,27 @@ def validate_benchmark_result(data: dict[str, Any]) -> list[str]:
     return errors
 
 
+def benchmark_results_from_payload(data: Any) -> tuple[list[dict[str, Any]], list[str]]:
+    """Return benchmark result objects from either one JSON object or a list."""
+
+    if isinstance(data, dict):
+        return [data], validate_benchmark_result(data)
+
+    if isinstance(data, list):
+        results: list[dict[str, Any]] = []
+        errors: list[str] = []
+        for index, item in enumerate(data):
+            if not isinstance(item, dict):
+                errors.append(f"benchmark[{index}] must be a JSON object")
+                continue
+            item_errors = validate_benchmark_result(item)
+            errors.extend(f"benchmark[{index}]: {error}" for error in item_errors)
+            results.append(item)
+        return results, errors
+
+    return [], ["benchmark payload must be a JSON object or a list of objects"]
+
+
 def select_best_benchmarks(results: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     """Choose the best result for each operator and shape group.
 
@@ -131,4 +152,3 @@ def _metric(result: dict[str, Any], name: str, default: float) -> float:
         return float(value)
     except (TypeError, ValueError):
         return default
-

@@ -3,9 +3,10 @@
 namespace qpnpu {
 
 struct ModelMetadata {
-    const char* architecture;
-    const char* format;
+    const char* architecture{"unknown"};
+    const char* format{"qpnpu"};
 };
 
-}  // namespace qpnpu
+bool is_qpnpu_format(const ModelMetadata& metadata);
 
+}  // namespace qpnpu

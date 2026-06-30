@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently in Phase 1. Each phase should leave behind a small, testable checkpoint.
+This repository is currently in Phase 2. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -22,16 +22,18 @@ Exit criteria:
 - Tests cover parser behavior with synthetic raw ADB fixtures and do not require an Android device.
 - No Android APK is required yet.
 
-Start AWS Device Farm remote access after a minimal Android probe APK or test runner exists, not after the host-side-only probe and not after the full inference library.
-
 ## Phase 2: Native CPU Reference Backend And Microbench Foundation
 
 Exit criteria:
 
-- Native CPU backend can execute tiny fixture operators.
-- CPU output is used as correctness reference.
-- Native test harness runs without Android first.
-- Microbenchmark result JSON can be produced from local native runs.
+- Native CMake configure/build/test passes on a machine with CMake and a C++17 compiler.
+- CPU reference kernels pass correctness tests for fp32 matvec, int4 matvec, RMSNorm, RoPE, and softmax.
+- CPU backend reports available.
+- Vulkan, NNAPI, and QNN backends remain unavailable stubs with non-empty reasons.
+- Local CPU microbench emits valid benchmark JSON.
+- No Android device, AWS credentials, Qualcomm SDK, model download, or NPU execution is required.
+
+Start AWS Device Farm remote access after a minimal Android probe APK or test runner exists, not after the host-side-only probe or this local native foundation.
 
 ## Phase 3: Model Metadata Pipeline
 

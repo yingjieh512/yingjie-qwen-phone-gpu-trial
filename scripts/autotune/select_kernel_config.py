@@ -12,26 +12,26 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from qpnpu.benchmark import select_best_benchmarks, validate_benchmark_result  # noqa: E402
-from qpnpu.config import load_json  # noqa: E402
+from qpnpu.benchmark import benchmark_results_from_payload, select_best_benchmarks  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("benchmarks", nargs="+", help="One or more benchmark JSON files.")
+    parser.add_argument("benchmarks", nargs="+", help="One or more benchmark JSON files or JSON lists.")
     parser.add_argument("--out", help="Optional output JSON with selected result summaries.")
     args = parser.parse_args(argv)
 
     results = []
-    for path in args.benchmarks:
-        result = load_json(path)
-        errors = validate_benchmark_result(result)
+    for path_text in args.benchmarks:
+        path = Path(path_text)
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        file_results, errors = benchmark_results_from_payload(payload)
         if errors:
             print(f"benchmark validation failed for {path}:", file=sys.stderr)
             for error in errors:
                 print(f"  - {error}", file=sys.stderr)
             return 2
-        results.append(result)
+        results.extend(file_results)
 
     selected = select_best_benchmarks(results)
     print("selected benchmark results:")
@@ -67,4 +67,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

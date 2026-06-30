@@ -4,29 +4,29 @@ Repository for a Snapdragon-class Android phone NPU trial with a configurable Qw
 
 The trial target is a Samsung Galaxy S26 Ultra-class Android phone with a Snapdragon-class SoC. The trial brief mentions "Snapdragon X Elite NPU", but actual CPU, GPU, NNAPI, QNN, and NPU capabilities must be detected at runtime before any backend is selected.
 
-The long-term performance target is at least 20 decode tokens/sec. No performance has been measured yet.
+The long-term performance target is at least 20 decode tokens/sec. No performance target has been measured or achieved yet.
 
 ## Current Status
 
-Phase 1 adds a real host-side ADB hardware probe workflow. It collects best-effort raw Android system information with `adb shell`, writes a structured `probe_result.json`, and updates `benchmarks/results/latest_probe.json`.
+Phase 2 adds the local native foundation: a C++17 CMake library, CPU reference kernels, safe backend stubs, CTest correctness tests, and a local CPU microbenchmark scaffold.
 
 This repository currently contains:
 
 - Python helpers for config loading, schema validation, benchmark selection, kernel config hashing, model metadata validation, lightweight int4 quantization, and ADB probe parsing.
-- CLI tools for probe summarization, probe JSON generation, model planning, placeholder kernel generation, and autotune dry runs.
-- A host-side ADB collection script that requires `adb` and a connected debugging-enabled Android device only when you run it.
-- Documentation for the planned workflow, hardware probe, model pipeline, backends, benchmarking, AWS Device Farm, and performance targets.
-- Native and Android placeholder directories only.
+- A host-side ADB collection script from Phase 1 that writes structured probe JSON from a connected debugging-enabled Android device.
+- Native CPU reference kernels for fp32 matvec, groupwise symmetric int4 dequant matvec, RMSNorm, RoPE, and softmax.
+- Backend classes where CPU reports available and Vulkan, NNAPI, and QNN report unavailable with explicit Phase 2 reasons.
+- A local CPU microbenchmark executable that emits benchmark-schema JSON with warnings that results are not phone or NPU claims.
 
 This phase does not implement:
 
 - Android APK logic.
-- Real inference execution.
+- Real inference execution for a full model.
 - Real AWS Device Farm runs.
 - Real Qualcomm QNN integration.
-- Real NPU execution.
+- Real Vulkan, NNAPI, QNN, or NPU execution.
 - Model downloads.
-- Performance claims.
+- Performance target claims.
 
 ## Quickstart
 
@@ -56,30 +56,53 @@ bash scripts/adb/collect_device_info.sh --out benchmarks/results/my_probe
 
 If multiple devices are connected, set `ANDROID_SERIAL` before running the script.
 
+## Phase 2 Native Quickstart
+
+Build and test the native foundation:
+
+```bash
+cmake -S native -B native/build
+cmake --build native/build
+ctest --test-dir native/build --output-on-failure
+```
+
+Run one local CPU microbenchmark:
+
+```bash
+./native/build/qpnpu_microbench --operator int4_matvec --rows 256 --cols 256 --group-size 128 --iters 20 --out benchmarks/results/local_int4_matvec.json
+```
+
+On multi-config generators such as Visual Studio, the executable may be under `native/build/Debug/qpnpu_microbench.exe`.
+
+Run the Python wrapper for the small Phase 2 operator suite:
+
+```bash
+python scripts/native/run_local_microbench.py --build-dir native/build --out benchmarks/results/local_microbench.json
+```
+
 ## What Works Locally
 
-- Unit tests run without Android hardware, AWS credentials, Qualcomm SDKs, or network access.
+- Python unit tests run without Android hardware, AWS credentials, Qualcomm SDKs, or network access.
 - Sample probe JSON can be validated and summarized.
 - ADB raw-output fixtures validate the Phase 1 parser path without requiring a real device.
+- Native CPU reference kernels can be built and tested with CMake on a machine with CMake and a C++17 compiler.
+- Local CPU microbenchmarks can produce benchmark-schema JSON.
 - Example kernel config can be validated and used to generate a tiny placeholder C++ file.
-- Autotune can print the planned future workflow in dry-run mode.
-- Small NumPy arrays can be packed and quantized with Phase 0 int4 helpers.
 
 ## What Is Stubbed
 
 - Android probe app is documentation only.
-- Native backends are documentation placeholders.
+- Vulkan, NNAPI, and QNN backends are safe unavailable stubs.
 - AWS Device Farm scripts only check for `aws`, print usage, and show intended commands.
-- Kernel generation emits placeholder C++ and does not produce optimized kernels.
-- Benchmarks and microbenchmarks are not run in Phase 1.
+- Generated kernels remain placeholders.
+- No phone, accelerator, or NPU benchmark exists in Phase 2.
 
 ## Next Phases
 
-1. Phase 2: Native CPU reference backend and microbenchmark/probe foundation.
-2. Phase 3: Model metadata and conversion prototype using tiny fixtures.
-3. Phase 4: Android probe app or native Android harness when device-side enumeration is needed.
-4. Phase 5: Quantization validation with small model shards or fixtures.
-5. Phase 6: Kernel generation and local native microbenchmarks.
-6. Phase 7: Android deployment and on-device microbenchmarks.
-7. Phase 8: Backend probing for NNAPI, Vulkan, and QNN availability.
-8. Phase 9: AWS Device Farm remote access and repeatable benchmark runs after a minimal Android runner exists.
+1. Phase 3: Model metadata and conversion prototype using tiny fixtures.
+2. Phase 4: Android probe app or native Android harness when device-side enumeration is needed.
+3. Phase 5: Quantization validation with small model shards or fixtures.
+4. Phase 6: Kernel generation and local native microbenchmarks beyond the reference kernels.
+5. Phase 7: Android deployment and on-device microbenchmarks.
+6. Phase 8: Backend probing for NNAPI, Vulkan, and QNN availability.
+7. Phase 9: AWS Device Farm remote access and repeatable benchmark runs after a minimal Android runner exists.
