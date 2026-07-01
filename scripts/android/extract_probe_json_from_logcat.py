@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Extract QPNPU probe or native benchmark JSON from AWS Device Farm logcat text."""
+"""Extract QPNPU probe, native benchmark, or Phase 6 JSON from AWS Device Farm logcat text."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", required=True, help="Clean JSON output path.")
     parser.add_argument(
         "--kind",
-        choices=["probe", "native"],
+        choices=["probe", "native", "phase6"],
         default="probe",
         help="Which QPNPU marker pair to extract. Default: probe.",
     )

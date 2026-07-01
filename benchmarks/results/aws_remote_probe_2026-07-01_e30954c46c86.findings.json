@@ -1,0 +1,233 @@
+{
+  "device": {
+    "android_release": "16",
+    "board": "canoe",
+    "device": "m3q",
+    "hardware": "qcom",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "device_farm_session": {
+    "first_log_json_timestamp": "2026-07-01T03:23:43.271208Z",
+    "harness_events": [
+      {
+        "data": "Starting 00000 with device R3GL10AHD8A",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:23:43.271208Z"
+      },
+      {
+        "data": "Using network profile Default network profile",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:23:51.523561Z"
+      },
+      {
+        "data": "Successful test lifecycle of Setup Test",
+        "level": "Passed",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:23:52.878636Z"
+      },
+      {
+        "data": "Tests stopped: Stopped by request",
+        "level": "Stopped",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:29:04.768882Z"
+      },
+      {
+        "data": "Tests stopped: Timeout exceeded during test execution",
+        "level": "Stopped",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:29:06.345988Z"
+      },
+      {
+        "data": "Interactive test passed",
+        "level": "Passed",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:29:11.356377Z"
+      },
+      {
+        "data": "Finished Tests",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:29:12.805638Z"
+      },
+      {
+        "data": "Finished Tests Suite",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:29:12.806205Z"
+      },
+      {
+        "data": "Successful test lifecycle of Teardown Test",
+        "level": "Passed",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T03:29:23.426159Z"
+      }
+    ],
+    "interactive_test_passed": true,
+    "last_log_json_timestamp": "2026-07-01T10:29:23.532123Z",
+    "log_json_entry_count": 88013,
+    "qpnpu_payload_counts": {
+      "native": 5,
+      "probe": 3,
+      "total": 8
+    },
+    "stopped_by_request_seen": true,
+    "timeout_stop_seen": true
+  },
+  "guardrails": [
+    "tiny native CPU microbenchmarks only",
+    "not Qwen 9B inference",
+    "not QNN or NPU execution",
+    "not a performance target claim"
+  ],
+  "recommended_next_gates": [
+    "cpu_isa_feature_probe",
+    "thread_topology_probe",
+    "memory_hierarchy_probe",
+    "backend_runtime_load_probe for Vulkan/NNAPI/QNN-like libraries"
+  ],
+  "schema_version": "0.1",
+  "source": "codex-derived-devicefarm-findings",
+  "source_files": {
+    "download_log_json": "C:\\Users\\Yingjie Huang\\Downloads\\log.json",
+    "download_logcat": "C:\\Users\\Yingjie Huang\\Downloads\\logcat-e30954c46c86.logcat",
+    "hardware_model_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_e30954c46c86.hw_model.json",
+    "latest_probe_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_e30954c46c86_latest.json",
+    "native_runs_json": "benchmarks\\results\\aws_remote_native_microbench_2026-07-01_e30954c46c86_all_runs.json",
+    "session_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_e30954c46c86.session.json",
+    "summary_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_e30954c46c86.summary.json"
+  },
+  "useful_findings": [
+    {
+      "evidence": {
+        "interactive_test_passed": true,
+        "payload_counts": {
+          "native": 5,
+          "probe": 3,
+          "total": 8
+        }
+      },
+      "finding": "Device Farm installed and launched com.qpnpu.trial; the interactive session passed."
+    },
+    {
+      "evidence": {
+        "native": 5,
+        "probe": 3,
+        "total": 8
+      },
+      "finding": "The Android app emitted three full hardware probes and five standalone native benchmark payloads."
+    },
+    {
+      "evidence": {
+        "all_runs_correctness_passed": true,
+        "native_run_count": 5,
+        "operator_stats": {
+          "fp32_matvec": {
+            "latency_ms_p50_max": 0.006718,
+            "latency_ms_p50_mean": 0.0040624,
+            "latency_ms_p50_min": 0.003229,
+            "native_work_items_per_second_max": 4968470.911673,
+            "native_work_items_per_second_mean": 4102363.8227616,
+            "native_work_items_per_second_min": 2297161.808728,
+            "runs": 5
+          },
+          "int4_dequant_matvec": {
+            "latency_ms_p50_max": 0.017812,
+            "latency_ms_p50_mean": 0.010812200000000001,
+            "latency_ms_p50_min": 0.00875,
+            "native_work_items_per_second_max": 1833298.895323,
+            "native_work_items_per_second_mean": 1539607.452881,
+            "native_work_items_per_second_min": 813847.341229,
+            "runs": 5
+          },
+          "rmsnorm": {
+            "latency_ms_p50_max": 0.001354,
+            "latency_ms_p50_mean": 0.0012396,
+            "latency_ms_p50_min": 0.001094,
+            "native_work_items_per_second_max": 57360622.649559,
+            "native_work_items_per_second_mean": 49794769.1101342,
+            "native_work_items_per_second_min": 42589664.553155,
+            "runs": 5
+          },
+          "rope": {
+            "latency_ms_p50_max": 0.001719,
+            "latency_ms_p50_mean": 0.0015004,
+            "latency_ms_p50_min": 0.001355,
+            "native_work_items_per_second_max": 46482238.700821,
+            "native_work_items_per_second_mean": 41511740.7601768,
+            "native_work_items_per_second_min": 36520550.22774,
+            "runs": 5
+          },
+          "softmax": {
+            "latency_ms_p50_max": 0.002604,
+            "latency_ms_p50_mean": 0.0023126,
+            "latency_ms_p50_min": 0.002084,
+            "native_work_items_per_second_max": 30308081.649972,
+            "native_work_items_per_second_mean": 26389777.598213,
+            "native_work_items_per_second_min": 21253618.096393,
+            "runs": 5
+          }
+        },
+        "operators": [
+          "fp32_matvec",
+          "int4_dequant_matvec",
+          "rmsnorm",
+          "rope",
+          "softmax"
+        ]
+      },
+      "finding": "Phase 5 JNI/NDK native CPU harness is confirmed working repeatedly on the phone."
+    },
+    {
+      "evidence": {
+        "available_processors": 8,
+        "features_present": [
+          "asimddp",
+          "i8mm",
+          "bf16",
+          "sve",
+          "sve2",
+          "svei8mm",
+          "sme",
+          "sha3"
+        ]
+      },
+      "finding": "CPU reference path remains the only proven execution backend; ARM feature flags are promising for future CPU kernels."
+    },
+    {
+      "evidence": {
+        "gpu_hint_count": 24,
+        "gpu_status": "hints_detected",
+        "npu_hint_count": 9,
+        "npu_status": "hints_detected",
+        "qnn_libraries_detected": false,
+        "vulkan_libraries_detected": true
+      },
+      "finding": "GPU/Vulkan and DSP/HTP hints exist, but accelerator execution is still unproven."
+    },
+    {
+      "evidence": {
+        "thermal_status": "hints_detected",
+        "thermal_zone_count": 64
+      },
+      "finding": "Thermal telemetry is app-readable and should be attached to every future benchmark gate."
+    }
+  ]
+}

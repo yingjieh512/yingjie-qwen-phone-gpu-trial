@@ -43,6 +43,8 @@ benchmarks/results/*
 !benchmarks/results/sample_probe.json
 !benchmarks/results/sample_benchmark.json
 !benchmarks/results/aws_remote_probe_*.json
+!benchmarks/results/aws_remote_native_microbench_*.json
+!benchmarks/results/aws_remote_phase6_*.json
 
 # Generated kernels can be regenerated from configs.
 native/kernels/generated/generated_*.cpp

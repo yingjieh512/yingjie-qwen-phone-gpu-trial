@@ -1,0 +1,92 @@
+{
+  "derived_artifacts": {
+    "hardware_model": "benchmarks/results/aws_remote_probe_2026-07-01_phase5.hw_model.json",
+    "native_microbenchmarks": "benchmarks\\results\\aws_remote_native_microbench_2026-07-01_phase5_embedded.json",
+    "summary": "benchmarks/results/aws_remote_probe_2026-07-01_phase5.summary.json"
+  },
+  "device": {
+    "android_release": "16",
+    "device": "m3q",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "guardrails": [
+    "not Qwen 9B inference",
+    "not NPU or QNN execution",
+    "not a performance target claim"
+  ],
+  "recommended_next_gates": [
+    "extract standalone Native Bench logcat if available",
+    "android CPU ISA feature probes with guarded native instructions",
+    "thread topology and affinity probe",
+    "memory hierarchy probe",
+    "backend runtime load probes for Vulkan, NNAPI, QNN/SNPE-like libraries"
+  ],
+  "schema_version": "0.1",
+  "source": "codex-derived-findings",
+  "source_probe": "benchmarks\\results\\aws_remote_probe_2026-07-01_phase5.json",
+  "useful_findings": [
+    {
+      "evidence": {
+        "all_correctness_passed": true,
+        "available": true,
+        "backend": "cpu_android_native_reference",
+        "native_library": "qpnpu_probe_native",
+        "operators": [
+          "fp32_matvec",
+          "int4_dequant_matvec",
+          "rmsnorm",
+          "softmax",
+          "rope"
+        ]
+      },
+      "finding": "Phase 5 JNI/NDK native harness executed inside the Android app"
+    },
+    {
+      "evidence": {
+        "available_processors": 8,
+        "important_arm_features_detected": [
+          "asimddp",
+          "i8mm",
+          "bf16",
+          "sve",
+          "sve2",
+          "svei8mm",
+          "sme",
+          "sha3"
+        ]
+      },
+      "finding": "CPU fallback path is mandatory and promising for reference validation"
+    },
+    {
+      "evidence": {
+        "gpu_hint_count": 24,
+        "gpu_status": "hints_detected",
+        "vulkan_libraries_detected": true
+      },
+      "finding": "Vulkan/GPU library hints are visible, but no real GPU execution has been proven"
+    },
+    {
+      "evidence": {
+        "nnapi_string_hints_detected": false,
+        "npu_hint_count": 9,
+        "npu_status": "hints_detected",
+        "qnn_libraries_detected": false
+      },
+      "finding": "DSP/HTP/NPU-like string hints are visible, but QNN availability is not proven"
+    },
+    {
+      "evidence": {
+        "thermal_status": "hints_detected",
+        "thermal_zone_count": 64
+      },
+      "finding": "Thermal sysfs is readable enough to include thermal context in future benchmark gates"
+    }
+  ]
+}

@@ -52,12 +52,15 @@ def characterize_android_probe(probe: dict[str, Any]) -> dict[str, Any]:
     npu = _object(summary.get("npu"))
     thermal = _object(summary.get("thermal"))
     source = _object(summary.get("source_probe"))
+    microbenchmarks = _object(probe.get("microbenchmarks"))
 
     execution_units = [
         _cpu_unit(device, cpu),
         _gpu_unit(gpu),
         _npu_hint_unit(npu),
     ]
+    if _native_microbench_available(microbenchmarks):
+        execution_units.append(_native_microbench_unit(microbenchmarks))
     if thermal.get("zone_count", 0):
         execution_units.append(_thermal_unit(thermal))
 
@@ -98,8 +101,12 @@ def characterize_android_probe(probe: dict[str, Any]) -> dict[str, Any]:
             },
             {
                 "id": "android_native_jni",
-                "status": "planned",
-                "evidence": "needed for safe instruction and kernel probes",
+                "status": "working" if _native_microbench_available(microbenchmarks) else "planned",
+                "evidence": (
+                    "JNI/NDK native CPU microbenchmarks executed and emitted benchmark JSON"
+                    if _native_microbench_available(microbenchmarks)
+                    else "needed for safe instruction and kernel probes"
+                ),
             },
             {
                 "id": "qnn_runtime",
@@ -112,15 +119,9 @@ def characterize_android_probe(probe: dict[str, Any]) -> dict[str, Any]:
                 "evidence": "GPU/OpenCL/GLES hints found; Vulkan not proven in first probe",
             },
         ],
-        "probe_gaps": _probe_gaps(gpu, npu),
+        "probe_gaps": _probe_gaps(gpu, npu, microbenchmarks),
         "fuzzing_plan": _fuzzing_plan(),
-        "next_gates": [
-            "android_native_smoke_jni",
-            "cpu_isa_feature_probe",
-            "native_kernel_correctness_microfixtures",
-            "native_cpu_microbench_json",
-            "backend_runtime_load_probe",
-        ],
+        "next_gates": _next_gates(microbenchmarks),
         "warnings": [
             "hardware characterization is based on Android app-accessible evidence only",
             "string hints do not prove accelerator execution",
@@ -320,17 +321,68 @@ def _thermal_unit(thermal: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _probe_gaps(gpu: dict[str, Any], npu: dict[str, Any]) -> list[str]:
-    gaps = [
-        "No JNI/NDK instruction probes have run yet.",
-        "No native kernel correctness tests have run on Android yet.",
-    ]
+def _native_microbench_available(microbenchmarks: dict[str, Any]) -> bool:
+    return bool(microbenchmarks.get("available")) and bool(_list(microbenchmarks.get("results")))
+
+
+def _native_microbench_unit(microbenchmarks: dict[str, Any]) -> dict[str, Any]:
+    results = [_object(item) for item in _list(microbenchmarks.get("results"))]
+    operators = [str(result.get("operator", "")) for result in results if result.get("operator")]
+    all_passed = bool(microbenchmarks.get("all_correctness_passed"))
+    return {
+        "id": "cpu.arm64.native_microbench",
+        "kind": "cpu_microbenchmark",
+        "status": "passed" if all_passed else "ran",
+        "access": "android_ndk_jni",
+        "confidence": "high",
+        "execution_model": {
+            "model": "native_cpu_reference_kernels",
+            "simd_model": "compiler_selected_arm64",
+            "host_device_memory": "unified",
+        },
+        "features": {
+            "backend": microbenchmarks.get("backend", ""),
+            "native_library": microbenchmarks.get("native_library", ""),
+            "result_count": len(results),
+            "operators": operators,
+            "all_correctness_passed": all_passed,
+        },
+        "evidence": ["JNI native library loaded", "deterministic native CPU benchmark JSON", "per-operator correctness flags"],
+    }
+
+def _probe_gaps(gpu: dict[str, Any], npu: dict[str, Any], microbenchmarks: dict[str, Any]) -> list[str]:
+    gaps: list[str] = []
+    if _native_microbench_available(microbenchmarks):
+        gaps.append("No guarded ARM ISA instruction probes have run yet beyond compiler-selected native code.")
+        gaps.append("No thread topology, affinity, or memory hierarchy probes have run yet.")
+    else:
+        gaps.extend([
+            "No JNI/NDK instruction probes have run yet.",
+            "No native kernel correctness tests have run on Android yet.",
+        ])
     if not gpu.get("vulkan_libraries_detected"):
         gaps.append("Vulkan availability requires real API enumeration; library hints were insufficient.")
     if not npu.get("qnn_libraries_detected"):
-        gaps.append("QNN availability requires direct library load/API probing; first probe did not prove libQnn availability.")
-    gaps.append("No accelerator execution or performance benchmark has run.")
+        gaps.append("QNN availability requires direct library load/API probing; probe evidence did not prove libQnn availability.")
+    gaps.append("No accelerator execution or full-model performance benchmark has run.")
     return gaps
+
+
+def _next_gates(microbenchmarks: dict[str, Any]) -> list[str]:
+    if _native_microbench_available(microbenchmarks):
+        return [
+            "cpu_isa_feature_probe",
+            "thread_topology_probe",
+            "memory_hierarchy_probe",
+            "backend_runtime_load_probe",
+        ]
+    return [
+        "android_native_smoke_jni",
+        "cpu_isa_feature_probe",
+        "native_kernel_correctness_microfixtures",
+        "native_cpu_microbench_json",
+        "backend_runtime_load_probe",
+    ]
 
 
 def _fuzzing_plan() -> list[dict[str, Any]]:

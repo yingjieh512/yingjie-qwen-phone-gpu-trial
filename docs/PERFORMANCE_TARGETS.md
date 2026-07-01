@@ -10,6 +10,18 @@ Current status:
 - No NPU execution exists.
 - No performance target is claimed as achieved.
 
+## Phase 6 Characterization
+
+Phase 6 can report thread-scaling and memory-copy timings plus backend library load statuses. These are hardware characterization signals only.
+
+They are not:
+
+- Qwen 9B inference
+- accelerator execution
+- QNN, NNAPI, or Vulkan kernel execution
+- full-model decode results
+- comparable to the `>=20 decode tokens/sec` target
+- evidence that the target has been met
 ## Phase 5 Android Native CPU Microbenchmarks
 
 Phase 5 can run tiny native CPU fixtures inside the Android APK. These measurements are useful for validating ABI packaging, JNI calls, native timing, correctness checks, and JSON extraction on a real phone.

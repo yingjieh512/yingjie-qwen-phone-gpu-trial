@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently completing Phase 5. Each phase should leave behind a small, testable checkpoint.
+This repository is currently completing Phase 6. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -101,13 +101,25 @@ Phase 5 result:
 - `scripts/android/extract_probe_json_from_logcat.py --kind native` extracts native benchmark JSON from Device Farm logcat.
 - `docs/PHASE_5_NATIVE_MICROBENCH.md` records the runbook and interpretation guardrails.
 
-## Phase 6: Quantization Validation
+## Phase 6: On-Device CPU ISA, Topology, Quantization, And Backend Load Probes
 
 Exit criteria:
 
-- Int4 groupwise quantization is validated on small fixtures.
-- Quantized tensor metadata records scales, shapes, and packing order.
-- Accuracy checks compare against CPU reference fixtures.
+- The Android APK exposes a `Phase 6` action.
+- Phase 6 JSON is logged between `QPNPU_PHASE6_JSON_BEGIN` and `QPNPU_PHASE6_JSON_END`.
+- CPU ISA evidence compares `/proc/cpuinfo` with auxv feature bits where available.
+- Thread scaling, app-visible affinity, and bounded memory-copy probes run from JNI.
+- Tiny int4 quantization fixture validates packing/dequant metadata and correctness.
+- Backend load probes use controlled `dlopen` only and do not execute accelerator kernels.
+- Host extraction supports `--kind phase6` and validates the JSON.
+- No Qwen 9B, QNN/NPU execution, or performance claim is made.
+
+Phase 6 result:
+
+- `android/probe-app/app/src/main/cpp/qpnpu_phase6_native.cpp` implements native characterization probes.
+- `qpnpu/android_phase6.py` validates Phase 6 payloads.
+- `scripts/android/extract_probe_json_from_logcat.py --kind phase6` extracts Phase 6 logcat payloads.
+- `docs/PHASE_6_ANDROID_CHARACTERIZATION.md` records the runbook and interpretation guardrails.
 
 ## Phase 7: Kernel Generation
 

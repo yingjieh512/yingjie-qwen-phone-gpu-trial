@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from qpnpu.android_phase6 import validate_phase6_characterization
 from qpnpu.benchmark import benchmark_results_from_payload
 from qpnpu.probe_schema import validate_probe_result
 
@@ -16,6 +17,8 @@ BEGIN_MARKER = "QPNPU_PROBE_JSON_BEGIN"
 END_MARKER = "QPNPU_PROBE_JSON_END"
 NATIVE_BENCH_BEGIN_MARKER = "QPNPU_NATIVE_BENCH_JSON_BEGIN"
 NATIVE_BENCH_END_MARKER = "QPNPU_NATIVE_BENCH_JSON_END"
+PHASE6_BEGIN_MARKER = "QPNPU_PHASE6_JSON_BEGIN"
+PHASE6_END_MARKER = "QPNPU_PHASE6_JSON_END"
 
 
 def extract_probe_json_from_logcat_text(text: str) -> dict[str, Any]:
@@ -63,6 +66,30 @@ def write_extracted_native_benchmark_json(logcat_path: str | Path, out_path: str
     data = extract_native_benchmark_json_from_logcat_file(logcat_path)
     return _write_json(data, out_path)
 
+
+
+
+def extract_phase6_characterization_json_from_logcat_text(text: str) -> dict[str, Any]:
+    """Extract and validate Phase 6 characterization JSON from QPNPU logcat markers."""
+
+    data = _extract_json_with_markers(text, PHASE6_BEGIN_MARKER, PHASE6_END_MARKER)
+    validation_errors = validate_phase6_characterization(data)
+    if validation_errors:
+        raise ValueError("invalid extracted Phase 6 characterization JSON: " + "; ".join(validation_errors))
+    return data
+
+
+def extract_phase6_characterization_json_from_logcat_file(path: str | Path) -> dict[str, Any]:
+    """Read a logcat text file and extract the Phase 6 characterization JSON object."""
+
+    return extract_phase6_characterization_json_from_logcat_text(Path(path).read_text(encoding="utf-8"))
+
+
+def write_extracted_phase6_characterization_json(logcat_path: str | Path, out_path: str | Path) -> Path:
+    """Extract Phase 6 characterization JSON from logcat and write pretty JSON."""
+
+    data = extract_phase6_characterization_json_from_logcat_file(logcat_path)
+    return _write_json(data, out_path)
 
 def _extract_json_with_markers(text: str, begin_marker: str, end_marker: str) -> dict[str, Any]:
     chunks: list[str] = []

@@ -1,0 +1,1203 @@
+{
+  "first_log_json_timestamp": "2026-07-01T03:23:43.271208Z",
+  "harness_events": [
+    {
+      "data": "Starting 00000 with device R3GL10AHD8A",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:23:43.271208Z"
+    },
+    {
+      "data": "Using network profile Default network profile",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:23:51.523561Z"
+    },
+    {
+      "data": "Successful test lifecycle of Setup Test",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:23:52.878636Z"
+    },
+    {
+      "data": "Tests stopped: Stopped by request",
+      "level": "Stopped",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:29:04.768882Z"
+    },
+    {
+      "data": "Tests stopped: Timeout exceeded during test execution",
+      "level": "Stopped",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:29:06.345988Z"
+    },
+    {
+      "data": "Interactive test passed",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:29:11.356377Z"
+    },
+    {
+      "data": "Finished Tests",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:29:12.805638Z"
+    },
+    {
+      "data": "Finished Tests Suite",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:29:12.806205Z"
+    },
+    {
+      "data": "Successful test lifecycle of Teardown Test",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T03:29:23.426159Z"
+    }
+  ],
+  "install_or_app_events_sample": [
+    {
+      "data": "pkg{com.qpnpu.trial}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "PackageManager",
+      "timestamp": "2026-07-01T10:23:52.570123Z"
+    },
+    {
+      "data": "PkgInstallStarted for com.qpnpu.trial UserID : 0",
+      "level": "Info",
+      "source": "Device",
+      "tag": "GOS:GameServiceReceiver",
+      "timestamp": "2026-07-01T10:23:52.571123Z"
+    },
+    {
+      "data": "setAllowlistedRestrictedPermissionsUnchecked called for package - com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "PermissionService",
+      "timestamp": "2026-07-01T10:23:52.591123Z"
+    },
+    {
+      "data": "updateAdminPermissionsInternalcom.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "PermissionService",
+      "timestamp": "2026-07-01T10:23:52.591123Z"
+    },
+    {
+      "data": "installation completed for package:com.qpnpu.trial. Final code path: /data/app/~~UzW8OatEMz6O_SGrOp0r8Q==/com.qpnpu.trial-hwSI2UbkYI20tV8F9shI2g==",
+      "level": "Info",
+      "source": "Device",
+      "tag": "PackageManager",
+      "timestamp": "2026-07-01T10:23:52.616123Z"
+    },
+    {
+      "data": "interaction: PackageSetting{9317bce com.android.microdroid.empty_payload/10308} -> PackageSetting{76904de com.qpnpu.trial/10339} BLOCKED",
+      "level": "Info",
+      "source": "Device",
+      "tag": "AppsFilter",
+      "timestamp": "2026-07-01T10:23:52.617123Z"
+    },
+    {
+      "data": "onPackageChanged(). extras: Bundle[{changeType=2, userId=0, type=15, packageName=com.qpnpu.trial}]",
+      "level": "Info",
+      "source": "Device",
+      "tag": "GOS:GameIntentService",
+      "timestamp": "2026-07-01T10:23:52.617123Z"
+    },
+    {
+      "data": "onPackageChanged(). changeType(INSTALL_STARTED), pkgName(com.qpnpu.trial), UserHandle(0), userId(0), Installed(true)",
+      "level": "Info",
+      "source": "Device",
+      "tag": "GOS:GameIntentService",
+      "timestamp": "2026-07-01T10:23:52.617123Z"
+    },
+    {
+      "data": "Received broadcast: android.intent.action.PACKAGE_ADDED, Updates all providers with com.qpnpu.trial, userId: 0",
+      "level": "Info",
+      "source": "Device",
+      "tag": "AppWidgetServiceImpl",
+      "timestamp": "2026-07-01T10:23:52.621123Z"
+    },
+    {
+      "data": "onPackageAdded: com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "CarrierSvcBindHelper",
+      "timestamp": "2026-07-01T10:23:52.622123Z"
+    },
+    {
+      "data": "onPackageAdded : com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "SatelliteAppTracker",
+      "timestamp": "2026-07-01T10:23:52.622123Z"
+    },
+    {
+      "data": "identifyGamePackage. com.qpnpu.trial, mCurrentUserId: 0, callingMethodInfo: com.samsung.android.game.SemGameManager.isGamePackage(SemGameManager.java:106)",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:GameManager",
+      "timestamp": "2026-07-01T10:23:52.622123Z"
+    },
+    {
+      "data": "adding package: com.qpnpu.trial userId=0",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "ShortcutService",
+      "timestamp": "2026-07-01T10:23:52.622123Z"
+    },
+    {
+      "data": "isGamePackage(), pkgName=com.qpnpu.trial, ret=false",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:SemGameManager",
+      "timestamp": "2026-07-01T10:23:52.623123Z"
+    },
+    {
+      "data": "No SDKs used. Skipping SDK data reconcilation for CallingInfo{mUid=10339, mPackageName='com.qpnpu.trial, mAppProcessToken='null'}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "SdkSandboxManager",
+      "timestamp": "2026-07-01T10:23:52.623123Z"
+    },
+    {
+      "data": "received android.intent.action.PACKAGE_ADDED replacing: false archival: false for package com.qpnpu.trial with uid 10339",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "AS.AudioService",
+      "timestamp": "2026-07-01T10:23:52.624123Z"
+    },
+    {
+      "data": "updatePackagesForUid, UidPackageState{uid: 10339, packageStates: [PackageState{packageName: com.qpnpu.trial, targetSdk: 35, isPlaybackCaptureAllowed: true}]}",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "NativePermissionController",
+      "timestamp": "2026-07-01T10:23:52.624123Z"
+    },
+    {
+      "data": "Received : android.intent.action.PACKAGE_ADDED, Package : com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "DWBPkgEventReceiver",
+      "timestamp": "2026-07-01T10:23:52.624123Z"
+    },
+    {
+      "data": "packageAdded() - packageName: com.qpnpu.trial, uid: 0",
+      "level": "Info",
+      "source": "Device",
+      "tag": "DomainFilter",
+      "timestamp": "2026-07-01T10:23:52.624123Z"
+    },
+    {
+      "data": "reConnectAgentsByPkgName:: package: com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "DualDARComnService",
+      "timestamp": "2026-07-01T10:23:52.624123Z"
+    },
+    {
+      "data": "identifyGamePackage. com.qpnpu.trial, mCurrentUserId: 0, callingMethodInfo: com.samsung.android.game.SemGameManager.isGamePackage(SemGameManager.java:106)",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:GameManager",
+      "timestamp": "2026-07-01T10:23:52.625123Z"
+    },
+    {
+      "data": "isGamePackage(), pkgName=com.qpnpu.trial, ret=false",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:SemGameManager",
+      "timestamp": "2026-07-01T10:23:52.625123Z"
+    },
+    {
+      "data": "[com.qpnpu.trial]: Checking signature: 3082037b30820263a00302010202046fa81c07300d06092a864886f70d01010b0500306d310b3009060355040613025553310f300d060355040813064f7265676f6e3111300f06035504071308506f72746c616e6431123010060355040a130941707054687761636b31123010060355040b130941707054687761636b311230100603550403130941707054687761636b3020170d3132313131323037343033335a180f32303531303331333037343033335a306d310b3009060355040613025553310f300d060355040813064f7265676f6e3111300f06035504071308506f72746c616e6431123010060355040a130941707054687761636b31123010060355040b130941707054687761636b311230100603550403130941707054687761636b30820122300d06092a864886f70d01010105000382010f003082010a0282010100c8a2ced2ac4e08ad877450353d44c8cfe263eedf111694e15d3813f7a89ee7101b6547515811a68dc91d02a50d2ccf964ac675d4e9d9f2bb08114ebba27e601476591da39fefc269cbe9c82e718243fd90b6ce55a91aef95a5e87d1ba9c49c26deeeb3f0eed1613b3265d09c679ee9e081bab7ef5d110fc960017797fdeebbe44bc3e9788eb277a1aa6cbfa1fa81cbb2e29cbaa66c17f12c5f063c5795c9ed7d9ffc2c79240a47cf03d483ebb603c96950f5de46ddeb2b38fb11d3cdb8af1d3234478cca4a1092841fc483fcbac0ac3001a9cf4806aba036bb03530f8da3dd222c35e0074c9b533fae5598ad7007be3c99ae5c88a40971d002582811fd9061510203010001a321301f301d0603551d0e04160414ee59bdaa05b04c31e520eb310ee42d90deb67470300d06092a864886f70d01010b050003820101009ad52f7de1c94afc2ac18af8f3cf2431bd121547afa1b00c904cd86438a9c6f15dcb3da8613325fb65bfc1210111a6868a6078c27f3f2f000c29e37e8546685b823508e7159421d3b0098ac0775433994d0d374632b8aa0bd3cd0ceb9969c062c3b830bde751b043e9d66db94d2e88ebcbceb0d7a9c5e516740f2bead81ee403cb0268b9b6ce3635e90342dd8a1c524a94415aad9bb2abd0264b817b590cc8e1a541f69cb5281d7435c5ebaa5ffe6d0962340583ec7349352e262c2beed133bc2862403f58ec18910b99c9fee1ef9acde5c26b1ffe024f53b4a2ad9655a67011471539d74eb533241519c90fdb2eab75a3ab2808b64b6fa2d7f835f7966c54d7",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "AatpInstallReceiver",
+      "timestamp": "2026-07-01T10:23:52.625123Z"
+    },
+    {
+      "data": "reconcileSettingsForPackage pkgName=com.qpnpu.trial userId=0",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "OverlayManager",
+      "timestamp": "2026-07-01T10:23:52.626123Z"
+    },
+    {
+      "data": "AppPackageChangedHandler: package name = com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "BluetoothEventManager",
+      "timestamp": "2026-07-01T10:23:52.627123Z"
+    },
+    {
+      "data": "SamsungOpenCommunicationPlatformPolicyPackageBroadcastReceiver : action : android.intent.action.PACKAGE_ADDED / packageName : com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "Telecom",
+      "timestamp": "2026-07-01T10:23:52.627123Z"
+    },
+    {
+      "data": "SamsungOpenCommunicationPlatformPolicyPackageHandler : handleMessage : { when=0 what=0 obj=com.qpnpu.trial target=com.samsung.server.telecom.advancedcall.ocp.policy.broadcast.SamsungOpenCommunicationPlatformPolicyPackageHandler async=false heapIndex=-1 }.what",
+      "level": "Info",
+      "source": "Device",
+      "tag": "Telecom",
+      "timestamp": "2026-07-01T10:23:52.627123Z"
+    },
+    {
+      "data": "updateOverlaysForTarget() called with: targetPackage = [com.qpnpu.trial], userId = [0], flags = [0]",
+      "level": "Info",
+      "source": "Device",
+      "tag": "OverlayManager",
+      "timestamp": "2026-07-01T10:23:52.627123Z"
+    },
+    {
+      "data": "startId : 1, Received : com.samsung.android.forest.PACKAGE_ADDED, Package : com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "DWBPkgEventService",
+      "timestamp": "2026-07-01T10:23:52.628123Z"
+    },
+    {
+      "data": "AppPackageChangedHandler: package name = com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "BluetoothEventManager",
+      "timestamp": "2026-07-01T10:23:52.630123Z"
+    },
+    {
+      "data": "identifyGamePackage. com.qpnpu.trial, mCurrentUserId: 0, callingMethodInfo: com.samsung.android.game.SemGameManager.isGamePackage(SemGameManager.java:106)",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:GameManager",
+      "timestamp": "2026-07-01T10:23:52.631123Z"
+    },
+    {
+      "data": "isGamePackage(), pkgName=com.qpnpu.trial, ret=false",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:SemGameManager",
+      "timestamp": "2026-07-01T10:23:52.631123Z"
+    },
+    {
+      "data": "appinfo : com.qpnpu.trial 0 0 0 0",
+      "level": "Info",
+      "source": "Device",
+      "tag": "Pageboost",
+      "timestamp": "2026-07-01T10:23:52.631123Z"
+    },
+    {
+      "data": "maybeAddedImsService, packageName: com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "ImsResolver",
+      "timestamp": "2026-07-01T10:23:52.631123Z"
+    },
+    {
+      "data": "searchForImsServices: package=com.qpnpu.trial, users=[UserHandle{0}]",
+      "level": "Verbose",
+      "source": "Device",
+      "tag": "ImsResolver",
+      "timestamp": "2026-07-01T10:23:52.632123Z"
+    },
+    {
+      "data": "searchForImsServices: package=com.qpnpu.trial, users=[UserHandle{0}]",
+      "level": "Verbose",
+      "source": "Device",
+      "tag": "ImsResolver",
+      "timestamp": "2026-07-01T10:23:52.632123Z"
+    },
+    {
+      "data": "packageName: com.qpnpu.trial, systemDialer: com.samsung.android.dialer",
+      "level": "Info",
+      "source": "Device",
+      "tag": "VvmPkgInstalledRcvr",
+      "timestamp": "2026-07-01T10:23:52.634123Z"
+    },
+    {
+      "data": "identifyGamePackage. com.qpnpu.trial, mCurrentUserId: 0, callingMethodInfo: com.samsung.android.game.SemGameManager.isGamePackage(SemGameManager.java:106)",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:GameManager",
+      "timestamp": "2026-07-01T10:23:52.634123Z"
+    },
+    {
+      "data": "isGamePackage(), pkgName=com.qpnpu.trial, ret=false",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:SemGameManager",
+      "timestamp": "2026-07-01T10:23:52.634123Z"
+    },
+    {
+      "data": "Reset this app info : com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "Pageboost",
+      "timestamp": "2026-07-01T10:23:52.635123Z"
+    },
+    {
+      "data": "onPackageAdded: com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "GoodLockLifecycle",
+      "timestamp": "2026-07-01T10:23:52.636123Z"
+    },
+    {
+      "data": "onPackageAdded: com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "LockStarSupportLifecycle",
+      "timestamp": "2026-07-01T10:23:52.636123Z"
+    },
+    {
+      "data": "add app to global @ runtime: com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "Pageboost",
+      "timestamp": "2026-07-01T10:23:52.636123Z"
+    },
+    {
+      "data": "identifyGamePackage. com.qpnpu.trial, mCurrentUserId: 0, callingMethodInfo: com.samsung.android.game.SemGameManager.isGamePackage(SemGameManager.java:106)",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:GameManager",
+      "timestamp": "2026-07-01T10:23:52.639123Z"
+    },
+    {
+      "data": "isGamePackage(), pkgName=com.qpnpu.trial, ret=false",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:SemGameManager",
+      "timestamp": "2026-07-01T10:23:52.639123Z"
+    },
+    {
+      "data": "PkgUpdateReceiver, onPackageAdded : com.qpnpu.trial userId : 0",
+      "level": "Info",
+      "source": "Device",
+      "tag": "SGM:PackageUpdateReceiver",
+      "timestamp": "2026-07-01T10:23:52.639123Z"
+    },
+    {
+      "data": "sendPackageMessage(), changeType=0, pkgName=com.qpnpu.trial, userHandleId=0",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:GosNotifyThread",
+      "timestamp": "2026-07-01T10:23:52.639123Z"
+    },
+    {
+      "data": "notifyPackageChangedToGos(), before send intent to GOS. type:15, changeType: 0, pkgName:com.qpnpu.trial, userHandleId:0",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:GosNotifyThread",
+      "timestamp": "2026-07-01T10:23:52.639123Z"
+    },
+    {
+      "data": "-> Updating overlay: target=com.qpnpu.trial overlays=[OverlayPaths { resourceDirs = [], overlayPaths = [] }] userId=0",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "OverlayManager",
+      "timestamp": "2026-07-01T10:23:52.640123Z"
+    },
+    {
+      "data": "getManifestCategory(), manifestCategory=-1, packageName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:PmAppCategoryManager",
+      "timestamp": "2026-07-01T10:23:52.641123Z"
+    },
+    {
+      "data": "getCategoryOverride(), categoryOverride=-1, packageName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "SGM:PmAppCategoryManager",
+      "timestamp": "2026-07-01T10:23:52.641123Z"
+    },
+    {
+      "data": "notifyPackageChangedToGos(), category from pm: com.qpnpu.trial, [-1/-1]",
+      "level": "Info",
+      "source": "Device",
+      "tag": "SGM:GosNotifyThread",
+      "timestamp": "2026-07-01T10:23:52.641123Z"
+    },
+    {
+      "data": "carrierVvmPkgAdded: carrier vvm packages doesn't contain com.qpnpu.trial",
+      "level": "Warning",
+      "source": "Device",
+      "tag": "VvmPkgInstalledRcvr",
+      "timestamp": "2026-07-01T10:23:52.642123Z"
+    },
+    {
+      "data": "new Package : com.qpnpu.trial, SCPMTarget : false",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "MARsPolicyManager",
+      "timestamp": "2026-07-01T10:23:52.649123Z"
+    },
+    {
+      "data": "onReceive: done pkgName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "MetaDataCollector",
+      "timestamp": "2026-07-01T10:23:52.649123Z"
+    },
+    {
+      "data": "received broadcast packageName: com.qpnpu.trial, current user: UserHandle{0}, packageChangeEvent: NEW_INSTALL, intent user: UserHandle{0}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "SafetyLabelChangedBroadcastReceiver",
+      "timestamp": "2026-07-01T10:23:52.654123Z"
+    },
+    {
+      "data": "onPackageAdded: user=UserHandle{0}, packageName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherAppsService",
+      "timestamp": "2026-07-01T10:23:52.658123Z"
+    },
+    {
+      "data": "Calling onPackageAdded: com.qpnpu.trial, uid: 10339",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherAppsService",
+      "timestamp": "2026-07-01T10:23:52.658123Z"
+    },
+    {
+      "data": "onPackageAdded: triggering onPackageAdded for user=UserHandle{0}, packageName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherAppsService",
+      "timestamp": "2026-07-01T10:23:52.658123Z"
+    },
+    {
+      "data": "Error inserting package_name=com.qpnpu.trial timezone_id=UTC package_version=0.1 event_time=1782876231974 event_time_string=2026/07/01 03:23:51 install_type=1",
+      "level": "Error",
+      "source": "Device",
+      "tag": "SQLiteDatabase",
+      "timestamp": "2026-07-01T10:23:52.659123Z"
+    },
+    {
+      "data": "onHandleIntent. GameIntentService. type: 15, pkgName: com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "GOS:GameIntentService",
+      "timestamp": "2026-07-01T10:23:52.660123Z"
+    },
+    {
+      "data": "onPackageAdded 0,com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherApps",
+      "timestamp": "2026-07-01T10:23:52.661123Z"
+    },
+    {
+      "data": "onPackageAdded: triggering onPackageAdded for user=UserHandle{0}, packageName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherAppsService",
+      "timestamp": "2026-07-01T10:23:52.663123Z"
+    },
+    {
+      "data": "onPackageAdded: triggering onPackageAdded for user=UserHandle{0}, packageName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherAppsService",
+      "timestamp": "2026-07-01T10:23:52.664123Z"
+    },
+    {
+      "data": "onPackageAdded: triggering onPackageAdded for user=UserHandle{0}, packageName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherAppsService",
+      "timestamp": "2026-07-01T10:23:52.664123Z"
+    },
+    {
+      "data": "onPackageAdded 0,com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherApps",
+      "timestamp": "2026-07-01T10:23:52.664123Z"
+    },
+    {
+      "data": "onPackageAdded: triggering onPackageAdded for user=UserHandle{0}, packageName=com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherAppsService",
+      "timestamp": "2026-07-01T10:23:52.664123Z"
+    },
+    {
+      "data": "onPackageAdded - com.qpnpu.trial UserHandle{0}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "HoneySpace.PackageOperationTracker",
+      "timestamp": "2026-07-01T10:23:52.664123Z"
+    },
+    {
+      "data": "onPackageAdded 0,com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherApps",
+      "timestamp": "2026-07-01T10:23:52.664123Z"
+    },
+    {
+      "data": "onPackageAdded: com.qpnpu.trial / UserHandle{0}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "HoneySpace.PackageChangedCallbackImpl",
+      "timestamp": "2026-07-01T10:23:52.664123Z"
+    },
+    {
+      "data": "onPackageAdded 0,com.qpnpu.trial",
+      "level": "Debug",
+      "source": "Device",
+      "tag": "LauncherApps",
+      "timestamp": "2026-07-01T10:23:52.666123Z"
+    },
+    {
+      "data": "addActivityToList [ADD] : com.qpnpu.trial/.MainActivity#UserHandle{0}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "HoneySpace.PackageSourceImpl",
+      "timestamp": "2026-07-01T10:23:52.670123Z"
+    },
+    {
+      "data": "pkgName : com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "FILP/PackageIntentReceiver",
+      "timestamp": "2026-07-01T10:23:52.673123Z"
+    },
+    {
+      "data": "[RecentAppsMediator] Package added: (user=UserHandle{0}) com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "ProximityAuth",
+      "timestamp": "2026-07-01T10:23:52.675123Z"
+    },
+    {
+      "data": "getInstalledProvidersForProfiles lock in com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "AppWidgetServiceImpl",
+      "timestamp": "2026-07-01T10:23:52.676123Z"
+    },
+    {
+      "data": "sendSaBroadcast update:com.qpnpu.trial;35;Unspecified;True;False;False",
+      "level": "Info",
+      "source": "Device",
+      "tag": "AdaptiveAppByDefaultLogger",
+      "timestamp": "2026-07-01T10:23:52.676123Z"
+    },
+    {
+      "data": "Package added : com.qpnpu.trial",
+      "level": "Info",
+      "source": "Device",
+      "tag": "HoneySpace.HoneySpacePackageSourceImpl",
+      "timestamp": "2026-07-01T10:23:52.676123Z"
+    },
+    {
+      "data": "Package added : com.qpnpu.trial/.MainActivity#UserHandle{0}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "HoneySpace.WorkspaceViewModel",
+      "timestamp": "2026-07-01T10:23:52.676123Z"
+    },
+    {
+      "data": "Package added : com.qpnpu.trial/.MainActivity#UserHandle{0}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "HoneySpace.PackageEventHandler",
+      "timestamp": "2026-07-01T10:23:52.677123Z"
+    },
+    {
+      "data": "onPackageChanged(). extras: Bundle[{changeType=0, manifestCategory=-1, userId=0, pkgName=com.qpnpu.trial, type=15, packageName=com.qpnpu.trial, categoryOverride=-1}]",
+      "level": "Info",
+      "source": "Device",
+      "tag": "GOS:GameIntentService",
+      "timestamp": "2026-07-01T10:23:52.686123Z"
+    }
+  ],
+  "last_log_json_timestamp": "2026-07-01T10:29:23.532123Z",
+  "log_json_entry_count": 88013,
+  "qpnpu_app_events_sample": [
+    {
+      "data": "QPNPU_PROBE_JSON_BEGIN",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "{",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"schema_version\": \"0.1\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"timestamp_utc\": \"2026-07-01T03:26:13Z\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"source\": \"android-probe-app\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"device\": {",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"manufacturer\": \"samsung\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"model\": \"SM-S948U1\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"device\": \"m3q\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"board\": \"canoe\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"hardware\": \"qcom\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"soc_manufacturer\": \"QTI\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"soc_model\": \"SM8850\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"android_release\": \"16\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"sdk_version\": 36,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"supported_abis\": [",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"arm64-v8a\"",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "]",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"cpu\": {",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"available_processors\": 8,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"proc_cpuinfo_readable\": true,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"proc_cpuinfo_excerpt\": \"processor\\t: 0\\nBogoMIPS\\t: 38.40\\nFeatures\\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\\nCPU implementer\\t: 0x51\\nCPU architecture: 8\\nCPU variant\\t: 0x2\\nCPU part\\t: 0x002\\nCPU revision\\t: 1\\n\\nprocessor\\t: 1\\nBogoMIPS\\t: 38.40\\nFeatures\\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\\nCPU implementer\\t: 0x51\\nCPU architecture: 8\\nCPU variant\\t: 0x2\\nCPU part\\t: 0x002\\nCPU revision\\t: 1\\n\\nprocessor\\t: 2\\nBogoMIPS\\t: 38.40\\nFeatures\\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\\nCPU implementer\\t: 0x51\\nCPU architecture: 8\\nCPU variant\\t: 0x2\\nCPU part\\t: 0x002\\nCPU revision\\t: 1\\n\\nprocessor\\t: 3\\nBogoMIPS\\t: 38.40\\nFeatures\\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\\nCPU implementer\\t: 0x51\\nCPU architecture: 8\\nCPU variant\\t: 0x2\\nCPU part\\t: 0x002\\nCPU revision\\t: 1\\n\\nprocessor\\t: 4\\nBogoMIPS\\t: 38.40\\nFeatures\\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\\nCPU implementer\\t: 0x51\\nCPU architecture: 8\\nCPU variant\\t: 0x2\\nCPU part\\t: 0x002\\nCPU revision\\t: 1\\n\\nprocessor\\t: 5\\nBogoMIPS\\t:",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "38.40\\nFeatures\\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\\nCPU implementer\\t: 0x51\\nCPU architecture: 8\\nCPU variant\\t: 0x2\\nCPU part\\t: 0x002\\nCPU revision\\t: 1\\n\\nprocessor\\t: 6\\nBogoMIPS\\t: 38.40\\nFeatures\\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\\nCPU implementer\\t: 0x51\\nCPU architecture: 8\\nCPU variant\\t: 0x3\\nCPU part\\t: 0x002\\nCPU revision\\t: 1\\n\\nprocessor\\t: 7\\nBogoMIPS\\t: 38.40\\nFeatures\\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\\nCPU implementer\\t: 0x51\\nCPU architecture: 8\\nCPU variant\\t: 0x3\\nCPU part\\t: 0x002\\nCPU revision\\t: 1\\n\\n\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"string_hints\": [],",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"selected_getprop\": {",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.product.manufacturer\": \"samsung\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.product.model\": \"SM-S948U1\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.product.device\": \"m3q\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.board.platform\": \"canoe\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.hardware\": \"qcom\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.soc.manufacturer\": \"QTI\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.soc.model\": \"SM8850\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.build.version.release\": \"16\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.build.version.sdk\": \"36\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.opengles.version\": \"196610\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"ro.hardware.egl\": \"adreno\"",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "}",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"memory\": {",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"runtime_max_memory_bytes\": 268435456,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"runtime_total_memory_bytes\": 27191792,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"runtime_free_memory_bytes\": 24320816,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"proc_meminfo_readable\": true,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"proc_meminfo_excerpt\": \"MemTotal:       11389632 kB\\nMemFree:         1306484 kB\\nMemAvailable:    6262968 kB\\nBuffers:           29660 kB\\nCached:          4816752 kB\\nSwapCached:           96 kB\\nActive:          4420920 kB\\nInactive:        3105368 kB\\nActive(anon):    1935288 kB\\nInactive(anon):   805096 kB\\nActive(file):    2485632 kB\\nInactive(file):  2300272 kB\\nUnevictable:       15196 kB\\nMlocked:           12784 kB\\nSwapTotal:      12582908 kB\\nSwapFree:       11981320 kB\\nDirty:               348 kB\\nWriteback:             0 kB\\nAnonPages:       2667120 kB\\nMapped:          2007856 kB\\nShmem:             53352 kB\\nKReclaimable:     420016 kB\\nSlab:             718280 kB\\nSReclaimable:     256312 kB\\nSUnreclaim:       461968 kB\\nKernelStack:       87284 kB\\nShadowCallStack:       0 kB\\nPageTables:       169384 kB\\nSecPageTables:     18340 kB\\nNFS_Unstable:          0 kB\\nBounce:",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "0 kB\\nWritebackTmp:          0 kB\\nCommitLimit:    18038108 kB\\nCommitted_AS:   296246432 kB\\nVmallocTotal:   261087232 kB\\nVmallocUsed:      390924 kB\\nVmallocChunk:          0 kB\\nPercpu:            12896 kB\\nAnonHugePages:    405504 kB\\nShmemHugePages:        0 kB\\nShmemPmdMapped:        0 kB\\nFileHugePages:         0 kB\\nFilePmdMapped:         0 kB\\nCmaTotal:         720896 kB\\nCmaFree:               0 kB\\nsystem:           217568 kB\\nRbinTotal:        409600 kB\\nRbinAlloced:        2488 kB\\nGcmaTotal:        479232 kB\\nGcmaAlloced:       71096 kB\\nGcmaFree:         395636 kB\\nGcmaCached:        12500 kB\\nDmaHeapPool:       63188 kB\\nHugepagePool:     778240 kB\\nzram0:            129708 kB\\nGpuTotal:         219156 kB\\nKgslShmemUsage:        0 kB\\nGpuSwap:           17640 kB\\n\"",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"gpu\": {",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"searched_library_dirs\": [",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "{",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"path\": \"\\/vendor\\/lib64\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"entry_count\": 600,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"readable\": true",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "{",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"path\": \"\\/vendor\\/lib\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"entry_count\": 2,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"readable\": true",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "{",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"path\": \"\\/system\\/lib64\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"entry_count\": 600,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"readable\": true",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "{",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"path\": \"\\/system\\/lib\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"entry_count\": 1,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"readable\": true",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "{",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"path\": \"\\/system_ext\\/lib64\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"entry_count\": 244,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"readable\": true",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "{",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"path\": \"\\/system_ext\\/lib\",",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"entry_count\": 0,",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "\"readable\": false",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "},",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    },
+    {
+      "data": "{",
+      "level": "Info",
+      "source": "Device",
+      "tag": "QPNPUProbe",
+      "timestamp": "2026-07-01T10:26:18.912123Z"
+    }
+  ],
+  "qpnpu_payload_counts": {
+    "native": 5,
+    "probe": 3,
+    "total": 8
+  },
+  "schema_version": "0.1",
+  "source": "aws-device-farm-log-json",
+  "source_log_json": "C:\\Users\\Yingjie Huang\\Downloads\\log.json",
+  "source_logcat": "C:\\Users\\Yingjie Huang\\Downloads\\logcat-e30954c46c86.logcat"
+}

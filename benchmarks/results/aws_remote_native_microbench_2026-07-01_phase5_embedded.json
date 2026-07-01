@@ -1,0 +1,177 @@
+{
+  "all_correctness_passed": true,
+  "available": true,
+  "backend": "cpu_android_native_reference",
+  "native_library": "qpnpu_probe_native",
+  "results": [
+    {
+      "backend": "cpu_android_native_reference",
+      "device": {
+        "type": "android_device"
+      },
+      "kernel_config_hash": "phase5_native_reference_v1",
+      "metrics": {
+        "correctness_passed": true,
+        "latency_ms_p50": 0.004948,
+        "latency_ms_p90": 0.004948,
+        "latency_ms_p99": 0.005,
+        "max_abs_error": 0,
+        "memory_rss_mb": 0,
+        "native_work_items_per_second": 3092303.321456,
+        "tokens_per_second": 0
+      },
+      "model": {
+        "architecture": "native_microfixture",
+        "hf_id": "local/native-microbench"
+      },
+      "operator": "fp32_matvec",
+      "schema_version": "0.1",
+      "shape": {
+        "cols": 32,
+        "rows": 16
+      },
+      "thermal": {},
+      "timestamp_utc": "native_clock_unavailable",
+      "warnings": [
+        "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+      ]
+    },
+    {
+      "backend": "cpu_android_native_reference",
+      "device": {
+        "type": "android_device"
+      },
+      "kernel_config_hash": "phase5_native_reference_v1",
+      "metrics": {
+        "correctness_passed": true,
+        "latency_ms_p50": 0.013125,
+        "latency_ms_p90": 0.013177,
+        "latency_ms_p99": 0.025417,
+        "max_abs_error": 0,
+        "memory_rss_mb": 0,
+        "native_work_items_per_second": 1210986.065587,
+        "tokens_per_second": 0
+      },
+      "model": {
+        "architecture": "native_microfixture",
+        "hf_id": "local/native-microbench"
+      },
+      "operator": "int4_dequant_matvec",
+      "schema_version": "0.1",
+      "shape": {
+        "cols": 32,
+        "group_size": 32,
+        "rows": 16
+      },
+      "thermal": {},
+      "timestamp_utc": "native_clock_unavailable",
+      "warnings": [
+        "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+      ]
+    },
+    {
+      "backend": "cpu_android_native_reference",
+      "device": {
+        "type": "android_device"
+      },
+      "kernel_config_hash": "phase5_native_reference_v1",
+      "metrics": {
+        "correctness_passed": true,
+        "latency_ms_p50": 0.001355,
+        "latency_ms_p90": 0.001407,
+        "latency_ms_p99": 0.001407,
+        "max_abs_error": 0,
+        "memory_rss_mb": 0,
+        "native_work_items_per_second": 46429633.713717,
+        "tokens_per_second": 0
+      },
+      "model": {
+        "architecture": "native_microfixture",
+        "hf_id": "local/native-microbench"
+      },
+      "operator": "rmsnorm",
+      "schema_version": "0.1",
+      "shape": {
+        "n": 64
+      },
+      "thermal": {},
+      "timestamp_utc": "native_clock_unavailable",
+      "warnings": [
+        "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+      ]
+    },
+    {
+      "backend": "cpu_android_native_reference",
+      "device": {
+        "type": "android_device"
+      },
+      "kernel_config_hash": "phase5_native_reference_v1",
+      "metrics": {
+        "correctness_passed": true,
+        "latency_ms_p50": 0.002604,
+        "latency_ms_p90": 0.002656,
+        "latency_ms_p99": 0.002864,
+        "max_abs_error": 0,
+        "memory_rss_mb": 0,
+        "native_work_items_per_second": 24396380.18709,
+        "tokens_per_second": 0
+      },
+      "model": {
+        "architecture": "native_microfixture",
+        "hf_id": "local/native-microbench"
+      },
+      "operator": "softmax",
+      "schema_version": "0.1",
+      "shape": {
+        "n": 64
+      },
+      "thermal": {},
+      "timestamp_utc": "native_clock_unavailable",
+      "warnings": [
+        "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+      ]
+    },
+    {
+      "backend": "cpu_android_native_reference",
+      "device": {
+        "type": "android_device"
+      },
+      "kernel_config_hash": "phase5_native_reference_v1",
+      "metrics": {
+        "correctness_passed": true,
+        "latency_ms_p50": 0.001718,
+        "latency_ms_p90": 0.001719,
+        "latency_ms_p99": 0.001771,
+        "max_abs_error": 0,
+        "memory_rss_mb": 0,
+        "native_work_items_per_second": 37522088.198013,
+        "tokens_per_second": 0
+      },
+      "model": {
+        "architecture": "native_microfixture",
+        "hf_id": "local/native-microbench"
+      },
+      "operator": "rope",
+      "schema_version": "0.1",
+      "shape": {
+        "n": 64,
+        "position": 7,
+        "rope_theta": 10000
+      },
+      "thermal": {},
+      "timestamp_utc": "native_clock_unavailable",
+      "warnings": [
+        "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+      ]
+    }
+  ],
+  "schema_version": "0.1",
+  "source": "android-native-microbench",
+  "timestamp_utc": "2026-07-01T03:28:30Z",
+  "warnings": [
+    "tiny deterministic native CPU microbenchmarks only",
+    "not Qwen 9B inference",
+    "not NPU or QNN execution",
+    "not a performance target claim"
+  ]
+}

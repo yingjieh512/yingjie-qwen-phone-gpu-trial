@@ -26,6 +26,18 @@ Benchmark artifacts are JSON records with enough context to avoid accidental per
 }
 ```
 
+## Phase 6 Characterization Payloads
+
+Phase 6 payloads are characterization artifacts, not benchmark results. They are extracted with:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind phase6 \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_phase6_<date>.json
+```
+
+They include CPU ISA evidence, thread scaling, memory-copy cases, backend `dlopen` probes, and tiny quantization fixtures. Treat timings as harness signals only. Backend load success does not prove usable accelerator execution.
 ## Phase 5 Android Native CPU Microbenchmarks
 
 The probe APK can run tiny CPU-only native fixtures through JNI/NDK and emit a top-level native payload with a `results` list of benchmark-schema objects:

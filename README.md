@@ -8,6 +8,8 @@ The long-term performance target is at least 20 decode tokens/sec. No performanc
 
 ## Current Status
 
+Phase 6 adds on-device Android characterization for CPU ISA evidence, thread scaling, memory bandwidth, quantization packing, and backend library load probes. It still does not run Qwen 9B, QNN, Vulkan kernels, or NPU execution.
+
 Phase 5 adds a minimal Android NDK/JNI native CPU microbenchmark harness inside the probe APK. The app can run tiny deterministic native fixtures for fp32 matvec, int4 dequant matvec, RMSNorm, softmax, and RoPE, then display and log benchmark-schema JSON. These are CPU-only harness checks, not Qwen 9B inference, not NPU/QNN execution, and not performance target claims.
 
 Phase 4A/4B added the Android probe APK and first AWS Device Farm Remote Access smoke path. The APK displays best-effort hardware probe JSON on screen, logs it to logcat between clear markers, and tries to save it to app-private external files.
@@ -46,6 +48,32 @@ python tools/kernelgen/generate_kernels.py --probe benchmarks/results/sample_pro
 python scripts/autotune/run_autotune.py --dry-run
 ```
 
+## Phase 6 Android Characterization Quickstart
+
+Build the APK:
+
+```powershell
+cd android\probe-app
+.\gradlew.bat assembleDebug
+```
+
+In AWS Device Farm Remote Access, upload/install the APK, launch `QPNPU Probe`, and tap `Phase 6`. The app logs characterization JSON between:
+
+```text
+QPNPU_PHASE6_JSON_BEGIN
+QPNPU_PHASE6_JSON_END
+```
+
+Extract it from downloaded logcat:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind phase6 \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_phase6_<date>.json
+```
+
+Phase 6 records CPU ISA evidence, thread scaling, memory copy fixtures, int4 packing validation, and backend `dlopen` results. These are characterization signals only, not accelerator execution or performance claims.
 ## Phase 5 Android Native Microbenchmark Quickstart
 
 Build the debug APK with the NDK/JNI harness:
@@ -218,8 +246,8 @@ AWS Remote Access may start after Phase 4A for manual app/hardware smoke validat
 
 ## Next Phases
 
-1. Phase 6: Quantization validation with small model shards or fixtures.
-2. Phase 7: Generated native kernels and candidate selection beyond reference fixtures.
+1. Phase 6: On-device CPU ISA, topology, memory, quantization, and backend-load characterization.
+2. Phase 7: Guarded instruction probes and generated native kernels beyond reference fixtures.
 3. Phase 8: Backend probing for NNAPI, Vulkan, and QNN availability with conservative CPU fallback.
 4. Phase 9: Automated Android/Device Farm benchmark runs once a test runner exists.
 5. Phase 10: Full model integration analysis with recorded artifacts before any tokens/sec claim.

@@ -1,0 +1,156 @@
+{
+  "runs": [
+    {
+      "all_correctness_passed": true,
+      "available": true,
+      "end_line": 45803,
+      "logcat_timestamp": "07-01 03:27:01.655",
+      "native_work_items_per_second_by_operator": {
+        "fp32_matvec": 4968470.911673,
+        "int4_dequant_matvec": 1799399.900133,
+        "rmsnorm": 51660897.866406,
+        "rope": 42091029.743889,
+        "softmax": 27575271.874946
+      },
+      "operators": [
+        "fp32_matvec",
+        "int4_dequant_matvec",
+        "rmsnorm",
+        "softmax",
+        "rope"
+      ],
+      "p50_latency_ms_by_operator": {
+        "fp32_matvec": 0.003229,
+        "int4_dequant_matvec": 0.00875,
+        "rmsnorm": 0.00125,
+        "rope": 0.001511,
+        "softmax": 0.002292
+      },
+      "run_index": 1,
+      "start_line": 45345,
+      "validation_errors": []
+    },
+    {
+      "all_correctness_passed": true,
+      "available": true,
+      "end_line": 70136,
+      "logcat_timestamp": "07-01 03:28:21.726",
+      "native_work_items_per_second_by_operator": {
+        "fp32_matvec": 4726879.894906,
+        "int4_dequant_matvec": 1720943.306391,
+        "rmsnorm": 50877315.712823,
+        "rope": 44509044.376908,
+        "softmax": 27612724.633829
+      },
+      "operators": [
+        "fp32_matvec",
+        "int4_dequant_matvec",
+        "rmsnorm",
+        "softmax",
+        "rope"
+      ],
+      "p50_latency_ms_by_operator": {
+        "fp32_matvec": 0.003334,
+        "int4_dequant_matvec": 0.008958,
+        "rmsnorm": 0.00125,
+        "rope": 0.001406,
+        "softmax": 0.002291
+      },
+      "run_index": 2,
+      "start_line": 69678,
+      "validation_errors": []
+    },
+    {
+      "all_correctness_passed": true,
+      "available": true,
+      "end_line": 73905,
+      "logcat_timestamp": "07-01 03:28:36.227",
+      "native_work_items_per_second_by_operator": {
+        "fp32_matvec": 4382316.985769,
+        "int4_dequant_matvec": 1833298.895323,
+        "rmsnorm": 57360622.649559,
+        "rope": 46482238.700821,
+        "softmax": 30308081.649972
+      },
+      "operators": [
+        "fp32_matvec",
+        "int4_dequant_matvec",
+        "rmsnorm",
+        "softmax",
+        "rope"
+      ],
+      "p50_latency_ms_by_operator": {
+        "fp32_matvec": 0.003333,
+        "int4_dequant_matvec": 0.00875,
+        "rmsnorm": 0.001094,
+        "rope": 0.001355,
+        "softmax": 0.002084
+      },
+      "run_index": 3,
+      "start_line": 73447,
+      "validation_errors": []
+    },
+    {
+      "all_correctness_passed": true,
+      "available": true,
+      "end_line": 74433,
+      "logcat_timestamp": "07-01 03:28:36.580",
+      "native_work_items_per_second_by_operator": {
+        "fp32_matvec": 4136989.512732,
+        "int4_dequant_matvec": 1530547.821329,
+        "rmsnorm": 46485344.768728,
+        "rope": 36520550.22774,
+        "softmax": 21253618.096393
+      },
+      "operators": [
+        "fp32_matvec",
+        "int4_dequant_matvec",
+        "rmsnorm",
+        "softmax",
+        "rope"
+      ],
+      "p50_latency_ms_by_operator": {
+        "fp32_matvec": 0.003698,
+        "int4_dequant_matvec": 0.009791,
+        "rmsnorm": 0.001354,
+        "rope": 0.001719,
+        "softmax": 0.002604
+      },
+      "run_index": 4,
+      "start_line": 73975,
+      "validation_errors": []
+    },
+    {
+      "all_correctness_passed": true,
+      "available": true,
+      "end_line": 74970,
+      "logcat_timestamp": "07-01 03:28:37.043",
+      "native_work_items_per_second_by_operator": {
+        "fp32_matvec": 2297161.808728,
+        "int4_dequant_matvec": 813847.341229,
+        "rmsnorm": 42589664.553155,
+        "rope": 37955840.751526,
+        "softmax": 25199191.735925
+      },
+      "operators": [
+        "fp32_matvec",
+        "int4_dequant_matvec",
+        "rmsnorm",
+        "softmax",
+        "rope"
+      ],
+      "p50_latency_ms_by_operator": {
+        "fp32_matvec": 0.006718,
+        "int4_dequant_matvec": 0.017812,
+        "rmsnorm": 0.00125,
+        "rope": 0.001511,
+        "softmax": 0.002292
+      },
+      "run_index": 5,
+      "start_line": 74512,
+      "validation_errors": []
+    }
+  ],
+  "schema_version": "0.1",
+  "source": "qpnpu-native-benchmark-logcat-aggregate"
+}

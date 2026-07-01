@@ -1,0 +1,282 @@
+{
+  "execution_model_neutral": true,
+  "execution_units": [
+    {
+      "access": "android_app_process",
+      "confidence": "high",
+      "evidence": [
+        "/proc/cpuinfo readable",
+        "Runtime.availableProcessors"
+      ],
+      "execution_model": {
+        "host_device_memory": "unified",
+        "model": "shared_memory_os_threads",
+        "simd_model": "arm64_feature_flags_from_proc_cpuinfo"
+      },
+      "features": {
+        "available_processors": 8,
+        "missing_cpu_flags": [],
+        "present_cpu_flags": [
+          "asimddp",
+          "i8mm",
+          "bf16",
+          "sve",
+          "sve2",
+          "svei8mm",
+          "sme",
+          "sha3"
+        ],
+        "soc_model": "SM8850"
+      },
+      "id": "cpu.arm64.app_process",
+      "kind": "cpu",
+      "status": "reachable"
+    },
+    {
+      "access": "library_listing_only",
+      "confidence": "medium",
+      "evidence": [
+        "Android library listings",
+        "getprop ro.hardware.egl when available"
+      ],
+      "execution_model": {
+        "host_device_memory": "shared_or_driver_managed_unknown",
+        "model": "unknown_gpu_runtime",
+        "simd_model": "unknown"
+      },
+      "features": {
+        "hint_count": 24,
+        "notable_hints": [
+          "/vendor/lib64/libEGL_adreno.so",
+          "/vendor/lib64/libGLESv2_adreno.so",
+          "/vendor/lib64/libOpenCL.so",
+          "/vendor/lib64/libOpenCL_adreno.so",
+          "/vendor/lib64/libadreno_app_profiles.so",
+          "/vendor/lib64/libadreno_compiler_cl.so",
+          "/vendor/lib64/libadreno_utils.so",
+          "/system/lib64/libAdrenoQProfiler.so",
+          "/system/lib64/libGLESv1_CM.so",
+          "/system/lib64/libGLESv1_CM_angle.so",
+          "/system/lib64/libGLESv2.so",
+          "/system/lib64/libGLESv2_angle.so",
+          "/system/lib64/libGLESv3.so",
+          "/system/lib64/libaivp_opencl.so",
+          "/system_ext/lib64/libOpenCL_system.so",
+          "/system/lib64/libvulkan.so"
+        ],
+        "vulkan_libraries_detected": true
+      },
+      "id": "gpu.adreno.hints",
+      "kind": "gpu",
+      "status": "hints_detected"
+    },
+    {
+      "access": "library_listing_only",
+      "confidence": "medium",
+      "evidence": [
+        "Android library listings",
+        "thermal/cooling CDSP hints if present"
+      ],
+      "execution_model": {
+        "host_device_memory": "driver_managed_unknown",
+        "model": "unknown_dsp_or_npu_runtime",
+        "simd_model": "unknown"
+      },
+      "features": {
+        "hint_count": 9,
+        "nnapi_string_hints_detected": false,
+        "notable_hints": [
+          "/vendor/lib64/cdsp_face.so",
+          "/vendor/lib64/libSnpeHtpV81Stub.so",
+          "/vendor/lib64/libadsp_default_listener.so",
+          "/vendor/lib64/libadsprpc.so",
+          "/vendor/lib64/libcdsp_default_listener.so",
+          "/vendor/lib64/libcdsprpc.so"
+        ],
+        "qnn_libraries_detected": false
+      },
+      "id": "accelerator.cdsp_htp_qnn.hints",
+      "kind": "npu_or_dsp_hint",
+      "status": "hints_detected"
+    },
+    {
+      "access": "sysfs_read_only",
+      "confidence": "high",
+      "evidence": [
+        "/sys/class/thermal readable"
+      ],
+      "execution_model": {
+        "host_device_memory": "not_applicable",
+        "model": "telemetry_and_throttling_context",
+        "simd_model": "not_applicable"
+      },
+      "features": {
+        "notable_zones": [
+          "cpufreq-cpu0",
+          "cpufreq-cpu6",
+          "pause-cpu3",
+          "pause-cpu4",
+          "pause-cpu5",
+          "pause-cpu6",
+          "ufs",
+          "pause-cpu7",
+          "cpu-hotplug0",
+          "cpu-hotplug1",
+          "cpu-hotplug2",
+          "cpu-hotplug3",
+          "cpu-hotplug4",
+          "ddr-cdev",
+          "cpu-hotplug5",
+          "cpu-hotplug6",
+          "cpu-hotplug7",
+          "cdsp_hw",
+          "cdsp_ss",
+          "cdsp",
+          "cdsp_sw_hvx",
+          "cdsp_sw_hmx",
+          "cpu-cluster0",
+          "kgsl"
+        ],
+        "zone_count": 64
+      },
+      "id": "thermal.cooling_control",
+      "kind": "thermal",
+      "status": "hints_detected"
+    }
+  ],
+  "fuzzing_plan": [
+    {
+      "id": "cpu_arm64_isa_feature_probe",
+      "outputs": [
+        "feature_name",
+        "compiled",
+        "executed",
+        "sigill_or_ok",
+        "latency_ns_optional"
+      ],
+      "purpose": "Validate reported CPU feature flags with tiny guarded native instructions.",
+      "requires": "Android NDK/JNI",
+      "safety": "Run one candidate per guarded probe using SIGILL handling or process isolation."
+    },
+    {
+      "id": "thread_topology_probe",
+      "outputs": [
+        "threads",
+        "latency",
+        "throughput",
+        "thermal_snapshot"
+      ],
+      "purpose": "Map CPU thread scaling and infer big/mid/little behavior from latency and affinity when allowed.",
+      "requires": "Android NDK/JNI",
+      "safety": "Use short bounded loops and record thermal state."
+    },
+    {
+      "id": "memory_hierarchy_probe",
+      "outputs": [
+        "buffer_bytes",
+        "stride",
+        "bandwidth_gbps",
+        "latency_ns"
+      ],
+      "purpose": "Measure app-visible memory bandwidth and latency regimes for kernel tiling decisions.",
+      "requires": "Android NDK/JNI",
+      "safety": "Use small buffers first; cap allocation sizes well below available memory."
+    },
+    {
+      "id": "backend_runtime_load_probe",
+      "outputs": [
+        "backend",
+        "library",
+        "load_status",
+        "api_version_or_error"
+      ],
+      "purpose": "Check whether Vulkan, NNAPI, QNN, or SNPE-like libraries can be loaded and minimally enumerated.",
+      "requires": "Android Java APIs plus optional NDK dlopen",
+      "safety": "Load and unload libraries only; do not execute untrusted accelerator kernels."
+    },
+    {
+      "id": "native_kernel_correctness_probe",
+      "outputs": [
+        "operator",
+        "shape",
+        "max_abs_error",
+        "passed"
+      ],
+      "purpose": "Run tiny deterministic matvec, int4 dequant, RMSNorm, RoPE, and softmax kernels against references.",
+      "requires": "Android NDK/JNI",
+      "safety": "Tiny tensors only; no model weights."
+    }
+  ],
+  "memory": {
+    "evidence": [
+      "app Runtime memory",
+      "/proc/meminfo"
+    ],
+    "host_device_memory_model": "unified_android_process_memory_observed",
+    "mem_available_kb": 6461452,
+    "mem_total_kb": 11389632,
+    "runtime_max_memory_bytes": 268435456
+  },
+  "next_gates": [
+    "android_native_smoke_jni",
+    "cpu_isa_feature_probe",
+    "native_kernel_correctness_microfixtures",
+    "native_cpu_microbench_json",
+    "backend_runtime_load_probe"
+  ],
+  "probe_gaps": [
+    "No JNI/NDK instruction probes have run yet.",
+    "No native kernel correctness tests have run on Android yet.",
+    "QNN availability requires direct library load/API probing; first probe did not prove libQnn availability.",
+    "No accelerator execution or performance benchmark has run."
+  ],
+  "runtime_access": [
+    {
+      "evidence": "probe APK installed, launched, read files, ran shell getprop, and emitted logcat JSON",
+      "id": "android_app_java",
+      "status": "working"
+    },
+    {
+      "evidence": "needed for safe instruction and kernel probes",
+      "id": "android_native_jni",
+      "status": "planned"
+    },
+    {
+      "evidence": "no direct libQnn*.so evidence in first probe",
+      "id": "qnn_runtime",
+      "status": "unknown"
+    },
+    {
+      "evidence": "GPU/OpenCL/GLES hints found; Vulkan not proven in first probe",
+      "id": "vulkan_runtime",
+      "status": "unknown"
+    }
+  ],
+  "schema_version": "0.1",
+  "source": {
+    "artifact_kind": "android_probe_json",
+    "probe_source": "android-probe-app",
+    "probe_timestamp_utc": "2026-07-01T03:28:24Z"
+  },
+  "target": {
+    "android_release": "16",
+    "board": "canoe",
+    "device": "m3q",
+    "hardware": "qcom",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "phone": "Samsung Galaxy S26 Ultra",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "warnings": [
+    "hardware characterization is based on Android app-accessible evidence only",
+    "string hints do not prove accelerator execution",
+    "no Qwen 9B inference was run",
+    "no performance target was measured"
+  ]
+}

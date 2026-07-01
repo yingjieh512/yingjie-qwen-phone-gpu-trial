@@ -40,6 +40,8 @@ public class MainActivity extends Activity {
     private static final String JSON_END = "QPNPU_PROBE_JSON_END";
     private static final String NATIVE_JSON_BEGIN = "QPNPU_NATIVE_BENCH_JSON_BEGIN";
     private static final String NATIVE_JSON_END = "QPNPU_NATIVE_BENCH_JSON_END";
+    private static final String PHASE6_JSON_BEGIN = "QPNPU_PHASE6_JSON_BEGIN";
+    private static final String PHASE6_JSON_END = "QPNPU_PHASE6_JSON_END";
     private static final int LOG_CHUNK_SIZE = 3000;
     private static boolean nativeLibraryLoaded = false;
     private static String nativeLibraryLoadError = "";
@@ -57,6 +59,7 @@ public class MainActivity extends Activity {
     private String lastJson = "";
 
     private native String nativeRunMicrobenchmarks();
+    private native String nativeRunPhase6Characterization();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,8 @@ public class MainActivity extends Activity {
         runButton.setText("Run Probe");
         Button nativeButton = new Button(this);
         nativeButton.setText("Native Bench");
+        Button phase6Button = new Button(this);
+        phase6Button.setText("Phase 6");
         Button copyButton = new Button(this);
         copyButton.setText("Copy JSON");
         Button clearButton = new Button(this);
@@ -94,16 +99,23 @@ public class MainActivity extends Activity {
                 1.0f);
         buttons.addView(runButton, buttonParams);
         buttons.addView(nativeButton, buttonParams);
-        buttons.addView(copyButton, buttonParams);
-        buttons.addView(clearButton, buttonParams);
+        buttons.addView(phase6Button, buttonParams);
         root.addView(buttons, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        LinearLayout utilityButtons = new LinearLayout(this);
+        utilityButtons.setOrientation(LinearLayout.HORIZONTAL);
+        utilityButtons.addView(copyButton, buttonParams);
+        utilityButtons.addView(clearButton, buttonParams);
+        root.addView(utilityButtons, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
         outputText = new TextView(this);
         outputText.setTypeface(Typeface.MONOSPACE);
         outputText.setTextIsSelectable(true);
-        outputText.setText("Tap Run Probe to collect hardware JSON, or Native Bench to run tiny CPU-only JNI checks.");
+        outputText.setText("Tap Run Probe, Native Bench, or Phase 6 for deeper CPU/backend characterization.");
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(outputText, new ScrollView.LayoutParams(
@@ -126,6 +138,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 runNativeBench();
+            }
+        });
+        phase6Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runPhase6Characterization();
             }
         });
         copyButton.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +206,31 @@ public class MainActivity extends Activity {
         }).start();
     }
 
+
+    private void runPhase6Characterization() {
+        outputText.setText("Running Phase 6 characterization...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONArray warnings = new JSONArray();
+                try {
+                    JSONObject phase6Json = collectPhase6Characterization(warnings);
+                    phase6Json.put("timestamp_utc", utcNow());
+                    phase6Json.put("device", collectDeviceInfo(warnings));
+                    phase6Json.put("thermal", collectThermalHints(warnings));
+                    phase6Json.put("warnings_from_java", warnings);
+                    saveJsonToExternalFile(phase6Json, "phase6_characterization.json", warnings);
+                    lastJson = phase6Json.toString(2);
+                    logPhase6Json(lastJson);
+                    showText(lastJson);
+                } catch (final Exception exc) {
+                    final String message = "Phase 6 characterization failed without crashing the app:\n" + exc;
+                    Log.e(TAG, message, exc);
+                    showText(message);
+                }
+            }
+        }).start();
+    }
     private void copyLastJson() {
         if (lastJson.isEmpty()) {
             Toast.makeText(this, "No JSON to copy yet", Toast.LENGTH_SHORT).show();
@@ -227,6 +270,41 @@ public class MainActivity extends Activity {
         return root;
     }
 
+
+    private JSONObject collectPhase6Characterization(JSONArray warnings) throws JSONException {
+        if (!nativeLibraryLoaded) {
+            JSONObject unavailable = new JSONObject();
+            unavailable.put("schema_version", "0.1");
+            unavailable.put("source", "android-phase6-characterization");
+            unavailable.put("timestamp_utc", utcNow());
+            unavailable.put("backend", "cpu_android_native_reference");
+            unavailable.put("available", false);
+            unavailable.put("native_library", "qpnpu_probe_native");
+            unavailable.put("error", nativeLibraryLoadError);
+            unavailable.put("warnings", new JSONArray().put("native library was not loaded; Phase 6 characterization did not run"));
+            warnings.put("Phase 6 native library was not loaded: " + nativeLibraryLoadError);
+            return unavailable;
+        }
+
+        try {
+            JSONObject payload = new JSONObject(nativeRunPhase6Characterization());
+            payload.put("timestamp_utc", utcNow());
+            payload.put("available", true);
+            return payload;
+        } catch (Throwable exc) {
+            JSONObject failed = new JSONObject();
+            failed.put("schema_version", "0.1");
+            failed.put("source", "android-phase6-characterization");
+            failed.put("timestamp_utc", utcNow());
+            failed.put("backend", "cpu_android_native_reference");
+            failed.put("available", false);
+            failed.put("native_library", "qpnpu_probe_native");
+            failed.put("error", exc.toString());
+            failed.put("warnings", new JSONArray().put("Phase 6 characterization failed; no accelerator performance claim"));
+            warnings.put("Phase 6 characterization failed: " + exc);
+            return failed;
+        }
+    }
     private JSONObject collectNativeMicrobenchmarks(JSONArray warnings) throws JSONException {
         if (!nativeLibraryLoaded) {
             JSONObject unavailable = new JSONObject();
@@ -629,6 +707,10 @@ public class MainActivity extends Activity {
 
     private void logNativeBenchmarkJson(String json) {
         logJsonWithMarkers(NATIVE_JSON_BEGIN, NATIVE_JSON_END, json);
+    }
+
+    private void logPhase6Json(String json) {
+        logJsonWithMarkers(PHASE6_JSON_BEGIN, PHASE6_JSON_END, json);
     }
 
     private void logJsonWithMarkers(String begin, String endMarker, String json) {

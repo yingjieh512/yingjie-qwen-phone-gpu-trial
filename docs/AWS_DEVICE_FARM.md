@@ -82,6 +82,30 @@ Record whether each native fixture reported `correctness_passed: true`:
 - `rope`
 
 These results only validate APK packaging, JNI, native CPU execution, timing, and JSON extraction. They are not Qwen 9B inference, not QNN/NPU execution, and not a tokens/sec performance claim.
+## Phase 6 Characterization Smoke Test
+
+After installing the Phase 6 APK in Remote Access:
+
+1. Launch `QPNPU Probe`.
+2. Tap `Phase 6`.
+3. Verify the UI shows characterization JSON and the app does not crash.
+4. Confirm logcat contains:
+
+   ```text
+   QPNPU_PHASE6_JSON_BEGIN
+   QPNPU_PHASE6_JSON_END
+   ```
+
+5. Extract the payload:
+
+   ```bash
+   python scripts/android/extract_probe_json_from_logcat.py \
+     --kind phase6 \
+     --logcat path/to/devicefarm-logcat.txt \
+     --out benchmarks/results/aws_remote_phase6_<date>.json
+   ```
+
+Record CPU ISA feature agreement, thread scaling, memory probe output, backend library load statuses, and quantization fixture correctness. Do not interpret `dlopen` success as accelerator execution.
 ## What To Record
 
 - AWS device name and model.
