@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently in Phase 4A. Each phase should leave behind a small, testable checkpoint.
+This repository is currently completing Phase 4B. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -71,9 +71,28 @@ Exit criteria:
 - The app launches and runs the probe on a selected Android device.
 - UI JSON and logcat markers are observed.
 - Session metadata, logs, and copied probe JSON are saved when available.
+- The Android probe JSON can be summarized into a target hardware profile.
 - No automated benchmark or performance claim is made.
 
-## Phase 5: Quantization Validation
+Phase 4B result:
+
+- `benchmarks/results/aws_remote_probe_2026-07-01.json` records the first S26 Ultra probe.
+- `benchmarks/results/aws_remote_probe_2026-07-01.summary.json` records the compact summary.
+- `docs/TARGET_HARDWARE_PROFILE.md` records the human-readable hardware profile.
+- `docs/PHASE_4B_RESULTS.md` records the checkpoint interpretation.
+
+## Phase 5: Android Native CPU Microbenchmark Harness
+
+Exit criteria:
+
+- The Android probe app can load a small Java/JNI/NDK native library.
+- Native CPU kernels for fp32 matvec, int4 dequant matvec, RMSNorm, RoPE, and softmax run on Android.
+- Results are checked against small deterministic expected outputs.
+- Benchmark JSON is shown on screen and emitted to logcat.
+- Thermal state from the probe path is included with benchmark JSON.
+- No Qwen 9B model, QNN SDK, NPU execution, or performance target claim is required.
+
+## Phase 6: Quantization Validation
 
 Exit criteria:
 
@@ -81,7 +100,7 @@ Exit criteria:
 - Quantized tensor metadata records scales, shapes, and packing order.
 - Accuracy checks compare against CPU reference fixtures.
 
-## Phase 6: Kernel Generation
+## Phase 7: Kernel Generation
 
 Exit criteria:
 
@@ -89,7 +108,7 @@ Exit criteria:
 - Generated kernels build in the native project.
 - Microbenchmarks can compare candidates on local CPU and Android.
 
-## Phase 7: Android Benchmark Harness
+## Phase 8: Android Benchmark Harness
 
 Exit criteria:
 
@@ -97,7 +116,7 @@ Exit criteria:
 - Results are pulled as benchmark JSON.
 - Thermal and device state are captured with every run.
 
-## Phase 8: Backend Capability Selection
+## Phase 9: Backend Capability Selection
 
 Exit criteria:
 
@@ -105,7 +124,7 @@ Exit criteria:
 - CPU fallback always works.
 - Vulkan, NNAPI, and QNN paths are only enabled when runtime capability is detected.
 
-## Phase 9: AWS Device Farm Runs And Full Trial Analysis
+## Phase 10: AWS Device Farm Runs And Full Trial Analysis
 
 Exit criteria:
 

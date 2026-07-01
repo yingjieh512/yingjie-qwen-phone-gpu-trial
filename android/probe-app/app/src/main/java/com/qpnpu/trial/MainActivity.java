@@ -172,6 +172,7 @@ public class MainActivity extends Activity {
         root.put("gpu", collectGpuHints(warnings));
         root.put("npu", collectNpuHints(warnings));
         root.put("thermal", collectThermalHints(warnings));
+        root.put("summary", buildCapabilitySummary(root));
         root.put("microbenchmarks", new JSONObject());
         root.put("warnings", warnings);
         return root;
@@ -258,9 +259,13 @@ public class MainActivity extends Activity {
     private JSONObject collectGpuHints(JSONArray warnings) throws JSONException {
         JSONObject gpu = collectLibraryHints(new String[]{
                 "vulkan", "libvulkan", "gles", "egl", "opencl", "adreno", "kgsl"
+        }, new String[]{
+                "libvulkan.so", "libOpenCL.so", "libOpenCL_adreno.so",
+                "libGLESv2_adreno.so", "libEGL_adreno.so", "libGLESv3.so"
         }, warnings);
         boolean vulkanDetected = containsHint(gpu.optJSONArray("library_hints"), "vulkan")
-                || containsHint(gpu.optJSONArray("shell_hints"), "vulkan");
+                || containsHint(gpu.optJSONArray("shell_hints"), "vulkan")
+                || containsHint(gpu.optJSONArray("direct_library_hints"), "vulkan");
         gpu.put("vulkan_libraries_detected", vulkanDetected);
         gpu.put("status", statusFromHints(gpu));
         gpu.put("availability_claim", "none");
@@ -282,13 +287,20 @@ public class MainActivity extends Activity {
                 "nnapi",
                 "neuralnetworks",
                 "libneuralnetworks"
+        }, new String[]{
+                "libQnnHtp.so", "libQnnSystem.so", "libQnnCpu.so", "libQnnGpu.so",
+                "libQnnDsp.so", "libSnpeHtpV81Stub.so", "libcdsprpc.so",
+                "libadsprpc.so", "libneuralnetworks.so"
         }, warnings);
         boolean qnnDetected = containsHint(npu.optJSONArray("library_hints"), "qnn")
-                || containsHint(npu.optJSONArray("shell_hints"), "qnn");
+                || containsHint(npu.optJSONArray("shell_hints"), "qnn")
+                || containsHint(npu.optJSONArray("direct_library_hints"), "qnn");
         boolean nnapiDetected = containsHint(npu.optJSONArray("library_hints"), "neuralnetworks")
                 || containsHint(npu.optJSONArray("shell_hints"), "neuralnetworks")
                 || containsHint(npu.optJSONArray("library_hints"), "nnapi")
-                || containsHint(npu.optJSONArray("shell_hints"), "nnapi");
+                || containsHint(npu.optJSONArray("shell_hints"), "nnapi")
+                || containsHint(npu.optJSONArray("direct_library_hints"), "neuralnetworks")
+                || containsHint(npu.optJSONArray("direct_library_hints"), "nnapi");
         npu.put("qnn_libraries_detected", qnnDetected);
         npu.put("nnapi_string_hints_detected", nnapiDetected);
         npu.put("status", statusFromHints(npu));
@@ -331,7 +343,7 @@ public class MainActivity extends Activity {
         return thermal;
     }
 
-    private JSONObject collectLibraryHints(String[] needles, JSONArray warnings) throws JSONException {
+    private JSONObject collectLibraryHints(String[] needles, String[] directLibraryNames, JSONArray warnings) throws JSONException {
         JSONObject result = new JSONObject();
         JSONArray dirs = new JSONArray();
         JSONArray libraryHints = new JSONArray();
@@ -370,15 +382,71 @@ public class MainActivity extends Activity {
                 "ls /vendor/lib64 /vendor/lib /system/lib64 /system/lib /system_ext/lib64 /odm/lib64 2>/dev/null",
                 30000);
         JSONArray shellHints = findHints(shellListing, needles);
+        JSONArray directHints = directLibraryHints(paths, directLibraryNames);
 
         result.put("searched_library_dirs", dirs);
         result.put("library_hints", libraryHints);
+        result.put("direct_library_hints", directHints);
         result.put("shell_hints", shellHints);
         result.put("library_dirs_readable", anyReadable);
         if (!anyReadable) {
             warnings.put("Android library directories were not readable from the app sandbox");
         }
         return result;
+    }
+
+    private JSONObject buildCapabilitySummary(JSONObject root) throws JSONException {
+        JSONObject device = root.optJSONObject("device");
+        JSONObject cpu = root.optJSONObject("cpu");
+        JSONObject gpu = root.optJSONObject("gpu");
+        JSONObject npu = root.optJSONObject("npu");
+        JSONObject thermal = root.optJSONObject("thermal");
+
+        JSONObject summary = new JSONObject();
+        if (device != null) {
+            summary.put("device_model", device.optString("model", ""));
+            summary.put("soc_model", device.optString("soc_model", ""));
+            summary.put("android_release", device.optString("android_release", ""));
+        }
+        if (cpu != null) {
+            summary.put("available_processors", cpu.optInt("available_processors", -1));
+        }
+        if (gpu != null) {
+            summary.put("gpu_status", gpu.optString("status", "unknown"));
+            summary.put("vulkan_libraries_detected", gpu.optBoolean("vulkan_libraries_detected", false));
+            summary.put("gpu_hint_count",
+                    lengthOf(gpu.optJSONArray("library_hints"))
+                            + lengthOf(gpu.optJSONArray("direct_library_hints"))
+                            + lengthOf(gpu.optJSONArray("shell_hints")));
+        }
+        if (npu != null) {
+            summary.put("npu_status", npu.optString("status", "unknown"));
+            summary.put("qnn_libraries_detected", npu.optBoolean("qnn_libraries_detected", false));
+            summary.put("nnapi_string_hints_detected", npu.optBoolean("nnapi_string_hints_detected", false));
+            summary.put("npu_hint_count",
+                    lengthOf(npu.optJSONArray("library_hints"))
+                            + lengthOf(npu.optJSONArray("direct_library_hints"))
+                            + lengthOf(npu.optJSONArray("shell_hints")));
+        }
+        if (thermal != null) {
+            summary.put("thermal_status", thermal.optString("status", "unknown"));
+            summary.put("thermal_zone_count", lengthOf(thermal.optJSONArray("zones")));
+        }
+        summary.put("availability_claim", "none; this is probe evidence only, not accelerator execution");
+        return summary;
+    }
+
+    private JSONArray directLibraryHints(String[] paths, String[] libraryNames) {
+        JSONArray hints = new JSONArray();
+        for (String path : paths) {
+            for (String libraryName : libraryNames) {
+                File candidate = new File(path, libraryName);
+                if (candidate.exists() && candidate.isFile()) {
+                    hints.put(candidate.getAbsolutePath());
+                }
+            }
+        }
+        return hints;
     }
 
     private String readTextFileBestEffort(String path, int maxChars) {
@@ -540,8 +608,11 @@ public class MainActivity extends Activity {
 
     private String statusFromHints(JSONObject object) {
         JSONArray libraries = object.optJSONArray("library_hints");
+        JSONArray direct = object.optJSONArray("direct_library_hints");
         JSONArray shell = object.optJSONArray("shell_hints");
-        if ((libraries != null && libraries.length() > 0) || (shell != null && shell.length() > 0)) {
+        if ((libraries != null && libraries.length() > 0)
+                || (direct != null && direct.length() > 0)
+                || (shell != null && shell.length() > 0)) {
             return "hints_detected";
         }
         if (object.optBoolean("library_dirs_readable", false)) {
@@ -558,6 +629,10 @@ public class MainActivity extends Activity {
         } catch (Exception exc) {
             return "";
         }
+    }
+
+    private int lengthOf(JSONArray array) {
+        return array == null ? 0 : array.length();
     }
 
     private String utcNow() {

@@ -1,0 +1,66 @@
+{
+  "schema_version": "0.1",
+  "timestamp_utc": "2026-07-01T00:33:01Z",
+  "source": "android-probe-app",
+  "device": {
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "device": "m3q",
+    "board": "canoe",
+    "hardware": "qcom",
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "android_release": "16",
+    "sdk_version": 36,
+    "supported_abis": ["arm64-v8a"]
+  },
+  "cpu": {
+    "available_processors": 8,
+    "proc_cpuinfo_readable": true,
+    "proc_cpuinfo_excerpt": "processor\\t: 0\\nFeatures\\t: fp asimd asimddp sve sve2 svei8mm bf16 i8mm sme sha3\\nCPU implementer\\t: 0x51\\n"
+  },
+  "memory": {
+    "runtime_max_memory_bytes": 268435456,
+    "runtime_total_memory_bytes": 67108864,
+    "runtime_free_memory_bytes": 62157712,
+    "proc_meminfo_readable": true,
+    "proc_meminfo_excerpt": "MemTotal:       11389632 kB\\nMemAvailable:    5698916 kB\\nGpuTotal:         258576 kB\\n"
+  },
+  "gpu": {
+    "searched_library_dirs": [],
+    "library_hints": [
+      "/vendor/lib64/libEGL_adreno.so",
+      "/vendor/lib64/libOpenCL_adreno.so"
+    ],
+    "direct_library_hints": [],
+    "shell_hints": [],
+    "library_dirs_readable": true,
+    "vulkan_libraries_detected": false,
+    "status": "hints_detected",
+    "availability_claim": "none"
+  },
+  "npu": {
+    "searched_library_dirs": [],
+    "library_hints": [
+      "/vendor/lib64/libSnpeHtpV81Stub.so",
+      "/vendor/lib64/libcdsprpc.so"
+    ],
+    "direct_library_hints": [],
+    "shell_hints": [],
+    "library_dirs_readable": true,
+    "qnn_libraries_detected": false,
+    "nnapi_string_hints_detected": false,
+    "status": "hints_detected",
+    "availability_claim": "none; string hints are not proof of NPU availability"
+  },
+  "thermal": {
+    "status": "hints_detected",
+    "zones": [
+      {"name": "cooling_device35", "type": "cdsp_ss"},
+      {"name": "cooling_device37", "type": "kgsl"},
+      {"name": "cooling_device39", "type": "gpu"}
+    ]
+  },
+  "microbenchmarks": {},
+  "warnings": []
+}

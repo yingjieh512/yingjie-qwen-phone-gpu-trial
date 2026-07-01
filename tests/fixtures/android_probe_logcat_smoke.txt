@@ -1,0 +1,15 @@
+07-01 00:33:06.188  7338  7445 I QPNPUProbe: QPNPU_PROBE_JSON_BEGIN
+07-01 00:33:06.188  7338  7445 I QPNPUProbe: {
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "schema_version": "0.1",
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "timestamp_utc": "2026-07-01T00:33:01Z",
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "source": "android-probe-app",
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "device": {"manufacturer": "samsung", "model": "SM-S948U1"},
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "cpu": {},
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "memory": {},
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "gpu": {},
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "npu": {},
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "thermal": {},
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "microbenchmarks": {},
+07-01 00:33:06.188  7338  7445 I QPNPUProbe:   "warnings": []
+07-01 00:33:06.188  7338  7445 I QPNPUProbe: }
+07-01 00:33:06.188  7338  7445 I QPNPUProbe: QPNPU_PROBE_JSON_END
