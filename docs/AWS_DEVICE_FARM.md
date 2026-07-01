@@ -140,3 +140,36 @@ Expected later usage:
 - Pull result artifacts for schema validation and benchmark analysis.
 
 No AWS credentials are included in this repository, and no Device Farm run is scheduled by Phase 4A tooling.
+
+## Phase 7A Guarded ISA Probe Smoke Test
+
+After installing the Phase 7A APK in Remote Access:
+
+1. Launch `QPNPU Hardware Probe`.
+2. Tap `ISA Probe`.
+3. Verify the UI shows guarded ISA probe JSON and the app does not crash.
+4. Confirm logcat contains:
+
+```text
+QPNPU_PHASE7A_JSON_BEGIN
+QPNPU_PHASE7A_JSON_END
+```
+
+5. Download logcat and extract:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind phase7a \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_phase7a_<date>.json
+```
+
+Record:
+
+- Which features were reported.
+- Which probes returned `executed_ok`.
+- Whether any probe returned `sigill`.
+- Whether any feature was skipped or deferred.
+- App stability and Device Farm session status.
+
+These ISA probes validate tiny CPU instruction fixtures only. They are not Qwen inference, not accelerator execution, and not a performance claim.

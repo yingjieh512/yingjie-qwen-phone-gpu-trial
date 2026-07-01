@@ -8,6 +8,8 @@ The long-term performance target is at least 20 decode tokens/sec. No performanc
 
 ## Current Status
 
+Phase 7A adds guarded ARM ISA instruction probes from the Android app process. It validates selected reported CPU features with tiny SIGILL-guarded fixtures and still does not run Qwen 9B, QNN, Vulkan kernels, NPU execution, or performance-target benchmarks.
+
 Phase 6 adds on-device Android characterization for CPU ISA evidence, thread scaling, memory bandwidth, quantization packing, and backend library load probes. It still does not run Qwen 9B, QNN, Vulkan kernels, or NPU execution.
 
 Phase 5 adds a minimal Android NDK/JNI native CPU microbenchmark harness inside the probe APK. The app can run tiny deterministic native fixtures for fp32 matvec, int4 dequant matvec, RMSNorm, softmax, and RoPE, then display and log benchmark-schema JSON. These are CPU-only harness checks, not Qwen 9B inference, not NPU/QNN execution, and not performance target claims.
@@ -47,6 +49,34 @@ python tools/probe_parser/summarize_probe.py benchmarks/results/sample_probe.jso
 python tools/kernelgen/generate_kernels.py --probe benchmarks/results/sample_probe.json --config configs/kernel_config.example.json --out native/kernels/generated
 python scripts/autotune/run_autotune.py --dry-run
 ```
+
+
+## Phase 7A Guarded ISA Probe Quickstart
+
+Build the APK:
+
+```powershell
+cd android\probe-app
+.\gradlew.bat assembleDebug
+```
+
+In AWS Device Farm Remote Access, upload/install the APK, launch `QPNPU Hardware Probe`, and tap `ISA Probe`. The app logs guarded ISA probe JSON between:
+
+```text
+QPNPU_PHASE7A_JSON_BEGIN
+QPNPU_PHASE7A_JSON_END
+```
+
+Extract it from downloaded logcat:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind phase7a \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_phase7a_<date>.json
+```
+
+Phase 7A records executable CPU ISA smoke evidence only. A successful probe means one tiny guarded instruction fixture ran; it is not full kernel correctness, accelerator execution, Qwen 9B inference, or a performance claim.
 
 ## Phase 6 Android Characterization Quickstart
 

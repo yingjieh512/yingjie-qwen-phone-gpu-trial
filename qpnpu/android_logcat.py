@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from qpnpu.android_phase6 import validate_phase6_characterization
+from qpnpu.android_phase7a import validate_phase7a_isa_probes
 from qpnpu.benchmark import benchmark_results_from_payload
 from qpnpu.probe_schema import validate_probe_result
 
@@ -19,12 +20,15 @@ NATIVE_BENCH_BEGIN_MARKER = "QPNPU_NATIVE_BENCH_JSON_BEGIN"
 NATIVE_BENCH_END_MARKER = "QPNPU_NATIVE_BENCH_JSON_END"
 PHASE6_BEGIN_MARKER = "QPNPU_PHASE6_JSON_BEGIN"
 PHASE6_END_MARKER = "QPNPU_PHASE6_JSON_END"
+PHASE7A_BEGIN_MARKER = "QPNPU_PHASE7A_JSON_BEGIN"
+PHASE7A_END_MARKER = "QPNPU_PHASE7A_JSON_END"
 
 
 _MARKER_SPECS = [
     ("probe", BEGIN_MARKER, END_MARKER),
     ("native", NATIVE_BENCH_BEGIN_MARKER, NATIVE_BENCH_END_MARKER),
     ("phase6", PHASE6_BEGIN_MARKER, PHASE6_END_MARKER),
+    ("phase7a", PHASE7A_BEGIN_MARKER, PHASE7A_END_MARKER),
 ]
 
 
@@ -97,8 +101,31 @@ def write_extracted_phase6_characterization_json(logcat_path: str | Path, out_pa
     return _write_json(data, out_path)
 
 
+
+def extract_phase7a_isa_probes_json_from_logcat_text(text: str) -> dict[str, Any]:
+    """Extract and validate the first Phase 7A guarded ISA probe JSON from QPNPU logcat markers."""
+
+    data = _extract_json_with_markers(text, PHASE7A_BEGIN_MARKER, PHASE7A_END_MARKER)
+    validation_errors = validate_phase7a_isa_probes(data)
+    if validation_errors:
+        raise ValueError("invalid extracted Phase 7A ISA probe JSON: " + "; ".join(validation_errors))
+    return data
+
+
+def extract_phase7a_isa_probes_json_from_logcat_file(path: str | Path) -> dict[str, Any]:
+    """Read a logcat text file and extract the first Phase 7A guarded ISA probe JSON object."""
+
+    return extract_phase7a_isa_probes_json_from_logcat_text(Path(path).read_text(encoding="utf-8"))
+
+
+def write_extracted_phase7a_isa_probes_json(logcat_path: str | Path, out_path: str | Path) -> Path:
+    """Extract Phase 7A guarded ISA probe JSON from logcat and write pretty JSON."""
+
+    data = extract_phase7a_isa_probes_json_from_logcat_file(logcat_path)
+    return _write_json(data, out_path)
+
 def extract_all_qpnpu_json_from_logcat_text(text: str) -> dict[str, Any]:
-    """Extract every valid QPNPU probe/native/Phase 6 payload from logcat text."""
+    """Extract every valid QPNPU probe/native/Phase 6/Phase 7A payload from logcat text."""
 
     payloads: list[dict[str, Any]] = []
     active_kind = ""
@@ -139,7 +166,7 @@ def extract_all_qpnpu_json_from_logcat_text(text: str) -> dict[str, Any]:
     if not payloads:
         raise ValueError("missing QPNPU JSON markers")
 
-    counts = {"probe": 0, "native": 0, "phase6": 0}
+    counts = {"probe": 0, "native": 0, "phase6": 0, "phase7a": 0}
     for item in payloads:
         counts[item["kind"]] += 1
 
@@ -229,6 +256,8 @@ def _validate_payload_by_kind(kind: str, data: dict[str, Any]) -> list[str]:
         return _validate_native_benchmark_payload(data)
     if kind == "phase6":
         return validate_phase6_characterization(data)
+    if kind == "phase7a":
+        return validate_phase7a_isa_probes(data)
     return [f"unknown QPNPU payload kind: {kind}"]
 
 

@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently completing Phase 6. Each phase should leave behind a small, testable checkpoint.
+This repository is currently completing Phase 7A. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -121,6 +121,25 @@ Phase 6 result:
 - `scripts/android/extract_probe_json_from_logcat.py --kind phase6` extracts Phase 6 logcat payloads.
 - `docs/PHASE_6_ANDROID_CHARACTERIZATION.md` records the runbook and interpretation guardrails.
 
+
+## Phase 7A: Guarded ARM ISA Probes
+
+Exit criteria:
+
+- The Android APK exposes an `ISA Probe` action.
+- Phase 7A JSON is logged between `QPNPU_PHASE7A_JSON_BEGIN` and `QPNPU_PHASE7A_JSON_END`.
+- The native library compares reported CPU features from `/proc/cpuinfo` and auxv with tiny executable instruction fixtures.
+- Feature-specific probes are guarded with SIGILL handling and run only when the feature is reported.
+- Skipped, deferred, successful, and SIGILL outcomes are represented in JSON.
+- Host extraction supports `--kind phase7a` and validates the JSON.
+- No Qwen 9B, QNN/NPU execution, or performance claim is made.
+
+Phase 7A result:
+
+- `android/probe-app/app/src/main/cpp/qpnpu_phase7a_native.cpp` implements guarded ARM ISA probes.
+- `qpnpu/android_phase7a.py` validates Phase 7A payloads.
+- `scripts/android/extract_probe_json_from_logcat.py --kind phase7a` extracts Phase 7A logcat payloads.
+- `docs/PHASE_7A_GUARDED_ISA_PROBES.md` records the runbook and guardrails.
 ## Phase 7: Kernel Generation
 
 Exit criteria:

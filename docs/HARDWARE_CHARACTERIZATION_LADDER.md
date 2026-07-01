@@ -46,6 +46,8 @@ Gate:
 
 ## Rung 3: Structured CPU ISA Probes
 
+Implemented in Phase 7A.
+
 Use tiny guarded native probes to validate feature flags instead of trusting `/proc/cpuinfo`.
 
 Candidate probes:

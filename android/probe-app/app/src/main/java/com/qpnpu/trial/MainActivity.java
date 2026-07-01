@@ -42,6 +42,8 @@ public class MainActivity extends Activity {
     private static final String NATIVE_JSON_END = "QPNPU_NATIVE_BENCH_JSON_END";
     private static final String PHASE6_JSON_BEGIN = "QPNPU_PHASE6_JSON_BEGIN";
     private static final String PHASE6_JSON_END = "QPNPU_PHASE6_JSON_END";
+    private static final String PHASE7A_JSON_BEGIN = "QPNPU_PHASE7A_JSON_BEGIN";
+    private static final String PHASE7A_JSON_END = "QPNPU_PHASE7A_JSON_END";
     private static final int LOG_CHUNK_SIZE = 3000;
     private static boolean nativeLibraryLoaded = false;
     private static String nativeLibraryLoadError = "";
@@ -60,6 +62,7 @@ public class MainActivity extends Activity {
 
     private native String nativeRunMicrobenchmarks();
     private native String nativeRunPhase6Characterization();
+    private native String nativeRunPhase7AIsaProbes();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +82,10 @@ public class MainActivity extends Activity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        LinearLayout buttons = new LinearLayout(this);
-        buttons.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout primaryButtons = new LinearLayout(this);
+        primaryButtons.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout characterizationButtons = new LinearLayout(this);
+        characterizationButtons.setOrientation(LinearLayout.HORIZONTAL);
 
         Button runButton = new Button(this);
         runButton.setText("Run Probe");
@@ -88,6 +93,8 @@ public class MainActivity extends Activity {
         nativeButton.setText("Native Bench");
         Button phase6Button = new Button(this);
         phase6Button.setText("Characterize HW");
+        Button isaButton = new Button(this);
+        isaButton.setText("ISA Probe");
         Button copyButton = new Button(this);
         copyButton.setText("Copy JSON");
         Button clearButton = new Button(this);
@@ -97,10 +104,15 @@ public class MainActivity extends Activity {
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1.0f);
-        buttons.addView(runButton, buttonParams);
-        buttons.addView(nativeButton, buttonParams);
-        buttons.addView(phase6Button, buttonParams);
-        root.addView(buttons, new LinearLayout.LayoutParams(
+        primaryButtons.addView(runButton, buttonParams);
+        primaryButtons.addView(nativeButton, buttonParams);
+        root.addView(primaryButtons, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        characterizationButtons.addView(phase6Button, buttonParams);
+        characterizationButtons.addView(isaButton, buttonParams);
+        root.addView(characterizationButtons, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
@@ -115,7 +127,7 @@ public class MainActivity extends Activity {
         outputText = new TextView(this);
         outputText.setTypeface(Typeface.MONOSPACE);
         outputText.setTextIsSelectable(true);
-        outputText.setText("Tap Run Probe, Native Bench, or Characterize HW for CPU/backend characterization.");
+        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, or ISA Probe for hardware evidence.");
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(outputText, new ScrollView.LayoutParams(
@@ -144,6 +156,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 runPhase6Characterization();
+            }
+        });
+        isaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runPhase7AIsaProbe();
             }
         });
         copyButton.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +249,31 @@ public class MainActivity extends Activity {
             }
         }).start();
     }
+
+    private void runPhase7AIsaProbe() {
+        outputText.setText("Running guarded ISA probes...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONArray warnings = new JSONArray();
+                try {
+                    JSONObject isaJson = collectPhase7AIsaProbes(warnings);
+                    isaJson.put("timestamp_utc", utcNow());
+                    isaJson.put("device", collectDeviceInfo(warnings));
+                    isaJson.put("thermal", collectThermalHints(warnings));
+                    isaJson.put("warnings_from_java", warnings);
+                    saveJsonToExternalFile(isaJson, "phase7a_isa_probes.json", warnings);
+                    lastJson = isaJson.toString(2);
+                    logPhase7AJson(lastJson);
+                    showText(lastJson);
+                } catch (final Exception exc) {
+                    final String message = "Guarded ISA probe failed without crashing the app:\n" + exc;
+                    Log.e(TAG, message, exc);
+                    showText(message);
+                }
+            }
+        }).start();
+    }
     private void copyLastJson() {
         if (lastJson.isEmpty()) {
             Toast.makeText(this, "No JSON to copy yet", Toast.LENGTH_SHORT).show();
@@ -302,6 +345,43 @@ public class MainActivity extends Activity {
             failed.put("error", exc.toString());
             failed.put("warnings", new JSONArray().put("Phase 6 characterization failed; no accelerator performance claim"));
             warnings.put("Phase 6 characterization failed: " + exc);
+            return failed;
+        }
+    }
+
+    private JSONObject collectPhase7AIsaProbes(JSONArray warnings) throws JSONException {
+        if (!nativeLibraryLoaded) {
+            JSONObject unavailable = new JSONObject();
+            unavailable.put("schema_version", "0.1");
+            unavailable.put("source", "android-phase7a-isa-probes");
+            unavailable.put("timestamp_utc", utcNow());
+            unavailable.put("backend", "cpu_android_native_reference");
+            unavailable.put("available", false);
+            unavailable.put("native_library", "qpnpu_probe_native");
+            unavailable.put("error", nativeLibraryLoadError);
+            unavailable.put("isa_probes", new JSONArray());
+            unavailable.put("warnings", new JSONArray().put("native library was not loaded; Phase 7A ISA probes did not run"));
+            warnings.put("Phase 7A native library was not loaded: " + nativeLibraryLoadError);
+            return unavailable;
+        }
+
+        try {
+            JSONObject payload = new JSONObject(nativeRunPhase7AIsaProbes());
+            payload.put("timestamp_utc", utcNow());
+            payload.put("available", true);
+            return payload;
+        } catch (Throwable exc) {
+            JSONObject failed = new JSONObject();
+            failed.put("schema_version", "0.1");
+            failed.put("source", "android-phase7a-isa-probes");
+            failed.put("timestamp_utc", utcNow());
+            failed.put("backend", "cpu_android_native_reference");
+            failed.put("available", false);
+            failed.put("native_library", "qpnpu_probe_native");
+            failed.put("error", exc.toString());
+            failed.put("isa_probes", new JSONArray());
+            failed.put("warnings", new JSONArray().put("Phase 7A guarded ISA probes failed; no performance claim"));
+            warnings.put("Phase 7A guarded ISA probes failed: " + exc);
             return failed;
         }
     }
@@ -713,6 +793,10 @@ public class MainActivity extends Activity {
         logJsonWithMarkers(PHASE6_JSON_BEGIN, PHASE6_JSON_END, json);
     }
 
+
+    private void logPhase7AJson(String json) {
+        logJsonWithMarkers(PHASE7A_JSON_BEGIN, PHASE7A_JSON_END, json);
+    }
     private void logJsonWithMarkers(String begin, String endMarker, String json) {
         Log.i(TAG, begin);
         for (int start = 0; start < json.length(); start += LOG_CHUNK_SIZE) {
