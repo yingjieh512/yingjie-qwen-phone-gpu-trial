@@ -31,7 +31,7 @@ Use Remote Access for manual app and hardware smoke validation only. Automated D
 5. Select an Android Samsung device if available, ideally matching the intended Snapdragon-class target as closely as the device pool allows.
 6. Start the Remote Access session.
 7. Install or upload the debug APK.
-8. Launch `QPNPU Probe`.
+8. Launch `QPNPU Hardware Probe`.
 9. Tap `Run Probe`.
 10. Verify:
 
@@ -52,7 +52,7 @@ Use Remote Access for manual app and hardware smoke validation only. Automated D
 
 After the Phase 5 APK is built and uploaded, use the same Remote Access flow but run both app actions:
 
-1. Launch `QPNPU Probe`.
+1. Launch `QPNPU Hardware Probe`.
 2. Tap `Run Probe` to collect hardware characterization JSON.
 3. Tap `Native Bench` to run the tiny CPU-only JNI/NDK benchmark fixtures.
 4. Confirm the UI updates with standalone native benchmark JSON.
@@ -86,8 +86,8 @@ These results only validate APK packaging, JNI, native CPU execution, timing, an
 
 After installing the Phase 6 APK in Remote Access:
 
-1. Launch `QPNPU Probe`.
-2. Tap `Phase 6`.
+1. Launch `QPNPU Hardware Probe`.
+2. Tap `Characterize HW`.
 3. Verify the UI shows characterization JSON and the app does not crash.
 4. Confirm logcat contains:
 

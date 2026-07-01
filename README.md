@@ -57,7 +57,7 @@ cd android\probe-app
 .\gradlew.bat assembleDebug
 ```
 
-In AWS Device Farm Remote Access, upload/install the APK, launch `QPNPU Probe`, and tap `Phase 6`. The app logs characterization JSON between:
+In AWS Device Farm Remote Access, upload/install the APK, launch `QPNPU Hardware Probe`, and tap `Characterize HW`. The app logs characterization JSON between:
 
 ```text
 QPNPU_PHASE6_JSON_BEGIN
@@ -73,6 +73,15 @@ python scripts/android/extract_probe_json_from_logcat.py \
   --out benchmarks/results/aws_remote_phase6_<date>.json
 ```
 
+
+To preserve every QPNPU payload from repeated button taps in one Device Farm session, extract a bundled artifact too:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind all \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_probe_<date>.all_qpnpu_payloads.json
+```
 Phase 6 records CPU ISA evidence, thread scaling, memory copy fixtures, int4 packing validation, and backend `dlopen` results. These are characterization signals only, not accelerator execution or performance claims.
 ## Phase 5 Android Native Microbenchmark Quickstart
 
@@ -89,7 +98,7 @@ Find the built APK:
 python scripts/android/find_probe_apk.py
 ```
 
-In AWS Device Farm Remote Access, upload/install the APK, launch `QPNPU Probe`, and tap `Native Bench` to run the standalone native CPU microbenchmarks. The app logs native benchmark JSON between:
+In AWS Device Farm Remote Access, upload/install the APK, launch `QPNPU Hardware Probe`, and tap `Native Bench` to run the standalone native CPU microbenchmarks. The app logs native benchmark JSON between:
 
 ```text
 QPNPU_NATIVE_BENCH_JSON_BEGIN
@@ -128,7 +137,7 @@ Find the built APK:
 python scripts/android/find_probe_apk.py
 ```
 
-For the first AWS Device Farm Remote Access smoke test, upload or install the debug APK, launch `QPNPU Probe`, tap `Run Probe`, and verify that JSON appears in the UI and logcat contains `QPNPU_PROBE_JSON_BEGIN` and `QPNPU_PROBE_JSON_END`.
+For the first AWS Device Farm Remote Access smoke test, upload or install the debug APK, launch `QPNPU Hardware Probe`, tap `Run Probe`, and verify that JSON appears in the UI and logcat contains `QPNPU_PROBE_JSON_BEGIN` and `QPNPU_PROBE_JSON_END`.
 
 Save copied probe JSON as:
 

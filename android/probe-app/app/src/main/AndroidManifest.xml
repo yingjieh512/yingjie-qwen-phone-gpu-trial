@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:allowBackup="false"
-        android:label="QPNPU Probe"
+        android:label="QPNPU Hardware Probe"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
         <activity
@@ -14,3 +14,4 @@
         </activity>
     </application>
 </manifest>
+

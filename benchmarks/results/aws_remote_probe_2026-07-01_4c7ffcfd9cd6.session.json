@@ -1,0 +1,106 @@
+{
+    "first_log_json_timestamp":  "2026-07-01T04:13:36.562091Z",
+    "last_log_json_timestamp":  "2026-07-01T11:19:00.836360Z",
+    "log_json_entry_count":  54748,
+    "harness_events":  [
+                           {
+                               "timestamp":  "2026-07-01T04:13:36.562091Z",
+                               "source":  "Harness",
+                               "level":  "Info",
+                               "tag":  null,
+                               "data":  "Starting 00000 with device RFGL126LSST"
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:13:43.153968Z",
+                               "source":  "Harness",
+                               "level":  "Info",
+                               "tag":  null,
+                               "data":  "Using network profile Default network profile"
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:13:43.154252Z",
+                               "source":  "Harness",
+                               "level":  "Info",
+                               "tag":  null,
+                               "data":  "Bandwidth (bps): up 104857600, down 104857600."
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:13:43.154397Z",
+                               "source":  "Harness",
+                               "level":  "Info",
+                               "tag":  null,
+                               "data":  "Delay (ms): up 0, down 0."
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:13:43.154550Z",
+                               "source":  "Harness",
+                               "level":  "Info",
+                               "tag":  null,
+                               "data":  "Jitter (ms): up 0, down 0."
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:13:43.154655Z",
+                               "source":  "Harness",
+                               "level":  "Info",
+                               "tag":  null,
+                               "data":  "Loss (%): up 0, down 0."
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:13:44.545994Z",
+                               "source":  "Harness",
+                               "level":  "Passed",
+                               "tag":  null,
+                               "data":  "Successful test lifecycle of Setup Test"
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:18:36.212351Z",
+                               "source":  "Harness",
+                               "level":  "Stopped",
+                               "tag":  null,
+                               "data":  "Tests stopped: Stopped by request"
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:18:42.019467Z",
+                               "source":  "Harness",
+                               "level":  "Stopped",
+                               "tag":  null,
+                               "data":  "Tests stopped: Timeout exceeded during test execution"
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:18:47.029638Z",
+                               "source":  "Harness",
+                               "level":  "Passed",
+                               "tag":  null,
+                               "data":  "Interactive test passed"
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:18:48.433418Z",
+                               "source":  "Harness",
+                               "level":  "Info",
+                               "tag":  null,
+                               "data":  "Finished Tests"
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:18:48.433948Z",
+                               "source":  "Harness",
+                               "level":  "Info",
+                               "tag":  null,
+                               "data":  "Finished Tests Suite"
+                           },
+                           {
+                               "timestamp":  "2026-07-01T04:19:01.286544Z",
+                               "source":  "Harness",
+                               "level":  "Passed",
+                               "tag":  null,
+                               "data":  "Successful test lifecycle of Teardown Test"
+                           }
+                       ],
+    "interactive_test_passed":  true,
+    "stopped_by_request_seen":  true,
+    "timeout_stop_seen":  true,
+    "qpnpu_payload_counts":  {
+                                 "native":  3,
+                                 "phase6":  3,
+                                 "probe":  2
+                             }
+}

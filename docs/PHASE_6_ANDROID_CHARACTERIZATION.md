@@ -13,11 +13,11 @@ cd android\probe-app
 .\gradlew.bat assembleDebug
 ```
 
-Upload/install the debug APK in AWS Device Farm Remote Access, launch `QPNPU Probe`, then tap:
+Upload/install the debug APK in AWS Device Farm Remote Access, launch `QPNPU Hardware Probe`, then tap:
 
 - `Run Probe` for full Android hardware probe JSON.
 - `Native Bench` for Phase 5 tiny native CPU benchmark JSON.
-- `Phase 6` for deeper characterization JSON.
+- `Characterize HW` for deeper characterization JSON.
 
 The Phase 6 payload is logged between:
 
@@ -41,6 +41,15 @@ python scripts/android/extract_probe_json_from_logcat.py \
   --out benchmarks/results/aws_remote_phase6_<date>.json
 ```
 
+
+To preserve every QPNPU payload from repeated button taps in one Device Farm session, extract a bundled artifact too:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind all \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_probe_<date>.all_qpnpu_payloads.json
+```
 ## Payload Sections
 
 - `cpu_isa`: `/proc/cpuinfo` plus `getauxval(AT_HWCAP/AT_HWCAP2)` evidence for ARM feature flags such as `i8mm`, `bf16`, `sve`, `sve2`, `svei8mm`, and `sme` when exposed by the NDK headers.
@@ -59,3 +68,4 @@ Use Phase 6 to decide the next safe gate:
 - Quantization fixture success validates packing/dequant plumbing only; it is not model accuracy.
 
 The next recommended gates are guarded ARM instruction probes with SIGILL/process isolation, thread affinity/topology mapping, memory hierarchy probes, and backend API enumeration.
+

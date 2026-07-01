@@ -21,8 +21,15 @@ PHASE6_BEGIN_MARKER = "QPNPU_PHASE6_JSON_BEGIN"
 PHASE6_END_MARKER = "QPNPU_PHASE6_JSON_END"
 
 
+_MARKER_SPECS = [
+    ("probe", BEGIN_MARKER, END_MARKER),
+    ("native", NATIVE_BENCH_BEGIN_MARKER, NATIVE_BENCH_END_MARKER),
+    ("phase6", PHASE6_BEGIN_MARKER, PHASE6_END_MARKER),
+]
+
+
 def extract_probe_json_from_logcat_text(text: str) -> dict[str, Any]:
-    """Extract and validate probe JSON emitted between QPNPU logcat markers."""
+    """Extract and validate the first probe JSON emitted between QPNPU logcat markers."""
 
     data = _extract_json_with_markers(text, BEGIN_MARKER, END_MARKER)
     validation_errors = validate_probe_result(data)
@@ -32,7 +39,7 @@ def extract_probe_json_from_logcat_text(text: str) -> dict[str, Any]:
 
 
 def extract_probe_json_from_logcat_file(path: str | Path) -> dict[str, Any]:
-    """Read a logcat text file and extract the probe JSON object."""
+    """Read a logcat text file and extract the first probe JSON object."""
 
     return extract_probe_json_from_logcat_text(Path(path).read_text(encoding="utf-8"))
 
@@ -45,7 +52,7 @@ def write_extracted_probe_json(logcat_path: str | Path, out_path: str | Path) ->
 
 
 def extract_native_benchmark_json_from_logcat_text(text: str) -> dict[str, Any]:
-    """Extract and validate native microbenchmark JSON from QPNPU logcat markers."""
+    """Extract and validate the first native microbenchmark JSON from QPNPU logcat markers."""
 
     data = _extract_json_with_markers(text, NATIVE_BENCH_BEGIN_MARKER, NATIVE_BENCH_END_MARKER)
     validation_errors = _validate_native_benchmark_payload(data)
@@ -55,7 +62,7 @@ def extract_native_benchmark_json_from_logcat_text(text: str) -> dict[str, Any]:
 
 
 def extract_native_benchmark_json_from_logcat_file(path: str | Path) -> dict[str, Any]:
-    """Read a logcat text file and extract the native microbenchmark JSON object."""
+    """Read a logcat text file and extract the first native microbenchmark JSON object."""
 
     return extract_native_benchmark_json_from_logcat_text(Path(path).read_text(encoding="utf-8"))
 
@@ -67,10 +74,8 @@ def write_extracted_native_benchmark_json(logcat_path: str | Path, out_path: str
     return _write_json(data, out_path)
 
 
-
-
 def extract_phase6_characterization_json_from_logcat_text(text: str) -> dict[str, Any]:
-    """Extract and validate Phase 6 characterization JSON from QPNPU logcat markers."""
+    """Extract and validate the first Phase 6 characterization JSON from QPNPU logcat markers."""
 
     data = _extract_json_with_markers(text, PHASE6_BEGIN_MARKER, PHASE6_END_MARKER)
     validation_errors = validate_phase6_characterization(data)
@@ -80,7 +85,7 @@ def extract_phase6_characterization_json_from_logcat_text(text: str) -> dict[str
 
 
 def extract_phase6_characterization_json_from_logcat_file(path: str | Path) -> dict[str, Any]:
-    """Read a logcat text file and extract the Phase 6 characterization JSON object."""
+    """Read a logcat text file and extract the first Phase 6 characterization JSON object."""
 
     return extract_phase6_characterization_json_from_logcat_text(Path(path).read_text(encoding="utf-8"))
 
@@ -91,11 +96,85 @@ def write_extracted_phase6_characterization_json(logcat_path: str | Path, out_pa
     data = extract_phase6_characterization_json_from_logcat_file(logcat_path)
     return _write_json(data, out_path)
 
+
+def extract_all_qpnpu_json_from_logcat_text(text: str) -> dict[str, Any]:
+    """Extract every valid QPNPU probe/native/Phase 6 payload from logcat text."""
+
+    payloads: list[dict[str, Any]] = []
+    active_kind = ""
+    active_end_marker = ""
+    chunks: list[str] = []
+
+    for line in text.splitlines():
+        match = LOGCAT_MESSAGE_RE.match(line)
+        if not match:
+            continue
+        message = match.group(1)
+
+        if active_kind:
+            if active_end_marker in message:
+                data = _parse_qpnpu_json_chunks(chunks)
+                validation_errors = _validate_payload_by_kind(active_kind, data)
+                if validation_errors:
+                    raise ValueError(
+                        f"invalid extracted {active_kind} JSON: " + "; ".join(validation_errors)
+                    )
+                payloads.append({"kind": active_kind, "payload": data})
+                active_kind = ""
+                active_end_marker = ""
+                chunks = []
+            else:
+                chunks.append(message)
+            continue
+
+        for kind, begin_marker, end_marker in _MARKER_SPECS:
+            if begin_marker in message:
+                active_kind = kind
+                active_end_marker = end_marker
+                chunks = []
+                break
+
+    if active_kind:
+        raise ValueError(f"missing {active_end_marker}")
+    if not payloads:
+        raise ValueError("missing QPNPU JSON markers")
+
+    counts = {"probe": 0, "native": 0, "phase6": 0}
+    for item in payloads:
+        counts[item["kind"]] += 1
+
+    return {
+        "schema_version": "0.1",
+        "source": "android-logcat-extraction",
+        "payload_count": len(payloads),
+        "counts": counts,
+        "payloads": payloads,
+    }
+
+
+def extract_all_qpnpu_json_from_logcat_file(path: str | Path) -> dict[str, Any]:
+    """Read a logcat text file and extract every valid QPNPU payload."""
+
+    return extract_all_qpnpu_json_from_logcat_text(Path(path).read_text(encoding="utf-8"))
+
+
+def write_all_qpnpu_json_from_logcat(logcat_path: str | Path, out_path: str | Path) -> Path:
+    """Extract every QPNPU payload from logcat and write a bundled JSON artifact."""
+
+    data = extract_all_qpnpu_json_from_logcat_file(logcat_path)
+    return _write_json(data, out_path)
+
+
 def _extract_json_with_markers(text: str, begin_marker: str, end_marker: str) -> dict[str, Any]:
+    blocks = _extract_json_blocks_with_markers(text, begin_marker, end_marker)
+    return blocks[0]
+
+
+def _extract_json_blocks_with_markers(text: str, begin_marker: str, end_marker: str) -> list[dict[str, Any]]:
+    blocks: list[dict[str, Any]] = []
     chunks: list[str] = []
     inside = False
     saw_begin = False
-    saw_end = False
 
     for line in text.splitlines():
         match = LOGCAT_MESSAGE_RE.match(line)
@@ -105,17 +184,26 @@ def _extract_json_with_markers(text: str, begin_marker: str, end_marker: str) ->
         if begin_marker in message:
             inside = True
             saw_begin = True
+            chunks = []
             continue
-        if end_marker in message:
-            saw_end = True
-            break
+        if end_marker in message and inside:
+            blocks.append(_parse_qpnpu_json_chunks(chunks))
+            inside = False
+            chunks = []
+            continue
         if inside:
             chunks.append(message)
 
+    if inside:
+        raise ValueError(f"missing {end_marker}")
     if not saw_begin:
         raise ValueError(f"missing {begin_marker}")
-    if not saw_end:
-        raise ValueError(f"missing {end_marker}")
+    if not blocks:
+        raise ValueError("no QPNPU JSON chunks found")
+    return blocks
+
+
+def _parse_qpnpu_json_chunks(chunks: list[str]) -> dict[str, Any]:
     if not chunks:
         raise ValueError("no QPNPU JSON chunks found")
 
@@ -132,6 +220,16 @@ def _extract_json_with_markers(text: str, begin_marker: str, end_marker: str) ->
         return data
 
     raise ValueError("failed to parse QPNPU JSON from logcat chunks: " + " | ".join(errors))
+
+
+def _validate_payload_by_kind(kind: str, data: dict[str, Any]) -> list[str]:
+    if kind == "probe":
+        return validate_probe_result(data)
+    if kind == "native":
+        return _validate_native_benchmark_payload(data)
+    if kind == "phase6":
+        return validate_phase6_characterization(data)
+    return [f"unknown QPNPU payload kind: {kind}"]
 
 
 def _validate_native_benchmark_payload(data: dict[str, Any]) -> list[str]:

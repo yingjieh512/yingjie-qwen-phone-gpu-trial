@@ -1,0 +1,299 @@
+{
+    "schema_version":  "0.1",
+    "source":  "codex-derived-devicefarm-findings",
+    "source_files":  {
+                         "download_log_json":  "C:\\Users\\Yingjie Huang\\Downloads\\log (1).json",
+                         "download_logcat":  "C:\\Users\\Yingjie Huang\\Downloads\\logcat-4c7ffcfd9cd6.logcat",
+                         "all_qpnpu_payloads_json":  "benchmarks\\results\\aws_remote_probe_2026-07-01_4c7ffcfd9cd6.all_qpnpu_payloads.json",
+                         "latest_probe_json":  "benchmarks\\results\\aws_remote_probe_2026-07-01_4c7ffcfd9cd6_latest.json",
+                         "latest_native_json":  "benchmarks\\results\\aws_remote_native_microbench_2026-07-01_4c7ffcfd9cd6_latest.json",
+                         "latest_phase6_json":  "benchmarks\\results\\aws_remote_phase6_2026-07-01_4c7ffcfd9cd6_latest.json"
+                     },
+    "device_farm_session":  {
+                                "first_log_json_timestamp":  "2026-07-01T04:13:36.562091Z",
+                                "last_log_json_timestamp":  "2026-07-01T11:19:00.836360Z",
+                                "log_json_entry_count":  54748,
+                                "harness_events":  [
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:13:36.562091Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Starting 00000 with device RFGL126LSST"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:13:43.153968Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Using network profile Default network profile"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:13:43.154252Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Bandwidth (bps): up 104857600, down 104857600."
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:13:43.154397Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Delay (ms): up 0, down 0."
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:13:43.154550Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Jitter (ms): up 0, down 0."
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:13:43.154655Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Loss (%): up 0, down 0."
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:13:44.545994Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Passed",
+                                                           "tag":  null,
+                                                           "data":  "Successful test lifecycle of Setup Test"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:18:36.212351Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Stopped",
+                                                           "tag":  null,
+                                                           "data":  "Tests stopped: Stopped by request"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:18:42.019467Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Stopped",
+                                                           "tag":  null,
+                                                           "data":  "Tests stopped: Timeout exceeded during test execution"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:18:47.029638Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Passed",
+                                                           "tag":  null,
+                                                           "data":  "Interactive test passed"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:18:48.433418Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Finished Tests"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:18:48.433948Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Finished Tests Suite"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T04:19:01.286544Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Passed",
+                                                           "tag":  null,
+                                                           "data":  "Successful test lifecycle of Teardown Test"
+                                                       }
+                                                   ],
+                                "interactive_test_passed":  true,
+                                "stopped_by_request_seen":  true,
+                                "timeout_stop_seen":  true,
+                                "qpnpu_payload_counts":  {
+                                                             "native":  3,
+                                                             "phase6":  3,
+                                                             "probe":  2
+                                                         }
+                            },
+    "device":  {
+                   "android_release":  "16",
+                   "board":  "canoe",
+                   "device":  "m3q",
+                   "hardware":  "qcom",
+                   "manufacturer":  "samsung",
+                   "model":  "SM-S948U1",
+                   "sdk_version":  36,
+                   "soc_manufacturer":  "QTI",
+                   "soc_model":  "SM8850",
+                   "supported_abis":  [
+                                          "arm64-v8a"
+                                      ]
+               },
+    "useful_findings":  [
+                            {
+                                "finding":  "Device Farm installed and launched com.qpnpu.trial; the interactive session passed.",
+                                "evidence":  {
+                                                 "interactive_test_passed":  true,
+                                                 "qpnpu_payload_counts":  {
+                                                                              "native":  3,
+                                                                              "phase6":  3,
+                                                                              "probe":  2
+                                                                          }
+                                             }
+                            },
+                            {
+                                "finding":  "The Android app emitted repeated full probe, native benchmark, and Phase 6 characterization payloads.",
+                                "evidence":  {
+                                                 "probe_payloads":  2,
+                                                 "native_payloads":  3,
+                                                 "phase6_payloads":  3
+                                             }
+                            },
+                            {
+                                "finding":  "Native CPU reference kernels executed with correctness passing for the latest run.",
+                                "evidence":  {
+                                                 "all_correctness_passed":  true,
+                                                 "operators":  [
+                                                                   "fp32_matvec",
+                                                                   "int4_dequant_matvec",
+                                                                   "rmsnorm",
+                                                                   "softmax",
+                                                                   "rope"
+                                                               ],
+                                                 "operator_stats":  {
+                                                                        "softmax":  {
+                                                                                        "latency_ms_p50":  0.002291,
+                                                                                        "correctness_passed":  true,
+                                                                                        "native_work_items_per_second":  19728450.213098
+                                                                                    },
+                                                                        "int4_dequant_matvec":  {
+                                                                                                    "latency_ms_p50":  0.009636,
+                                                                                                    "correctness_passed":  true,
+                                                                                                    "native_work_items_per_second":  1482438.203174
+                                                                                                },
+                                                                        "fp32_matvec":  {
+                                                                                            "latency_ms_p50":  0.004948,
+                                                                                            "correctness_passed":  true,
+                                                                                            "native_work_items_per_second":  2644473.656084
+                                                                                        },
+                                                                        "rope":  {
+                                                                                     "latency_ms_p50":  0.001667,
+                                                                                     "correctness_passed":  true,
+                                                                                     "native_work_items_per_second":  36141285.319636
+                                                                                 },
+                                                                        "rmsnorm":  {
+                                                                                        "latency_ms_p50":  0.001302,
+                                                                                        "correctness_passed":  true,
+                                                                                        "native_work_items_per_second":  48564169.962453
+                                                                                    }
+                                                                    }
+                                             }
+                            },
+                            {
+                                "finding":  "Phase 6 confirms a native characterization path can collect CPU ISA, topology, memory, backend-load, and int4 quantization evidence on-device.",
+                                "evidence":  {
+                                                 "cpu_features_reported":  [
+                                                                               "asimd",
+                                                                               "asimddp",
+                                                                               "sve",
+                                                                               "i8mm",
+                                                                               "bf16",
+                                                                               "sve2",
+                                                                               "svei8mm",
+                                                                               "sme",
+                                                                               "sha3"
+                                                                           ],
+                                                 "hardware_concurrency":  8,
+                                                 "affinity_cpu_count":  8,
+                                                 "memory_copy_cases":  4,
+                                                 "quantization_fixtures":  [
+                                                                               {
+                                                                                   "name":  "qwen_like_linear_int4_fixture",
+                                                                                   "correctness_passed":  true,
+                                                                                   "packed_byte_length":  64,
+                                                                                   "packed_reference_max_abs_error":  8.5E-07,
+                                                                                   "quantization_vs_fp32_max_abs_error":  0.15001919
+                                                                               }
+                                                                           ]
+                                             }
+                            },
+                            {
+                                "finding":  "Backend library loading is evidence only: Vulkan and NNAPI runtime libraries loaded, while QNN/HTP libraries did not load from app-accessible linker paths.",
+                                "evidence":  {
+                                                 "loaded_backends":  [
+                                                                         {
+                                                                             "backend":  "vulkan",
+                                                                             "library":  "libvulkan.so",
+                                                                             "status":  "loaded"
+                                                                         },
+                                                                         {
+                                                                             "backend":  "nnapi",
+                                                                             "library":  "libneuralnetworks.so",
+                                                                             "status":  "loaded"
+                                                                         }
+                                                                     ],
+                                                 "not_loaded_interesting":  [
+                                                                                {
+                                                                                    "backend":  "qnn",
+                                                                                    "library":  "libQnnSystem.so",
+                                                                                    "status":  "not_loaded",
+                                                                                    "error":  "dlopen failed: library \"libQnnSystem.so\" not found"
+                                                                                },
+                                                                                {
+                                                                                    "backend":  "qnn",
+                                                                                    "library":  "libQnnHtp.so",
+                                                                                    "status":  "not_loaded",
+                                                                                    "error":  "dlopen failed: library \"libQnnHtp.so\" not found"
+                                                                                },
+                                                                                {
+                                                                                    "backend":  "qnn",
+                                                                                    "library":  "libQnnCpu.so",
+                                                                                    "status":  "not_loaded",
+                                                                                    "error":  "dlopen failed: library \"libQnnCpu.so\" not found"
+                                                                                },
+                                                                                {
+                                                                                    "backend":  "qnn",
+                                                                                    "library":  "libQnnGpu.so",
+                                                                                    "status":  "not_loaded",
+                                                                                    "error":  "dlopen failed: library \"libQnnGpu.so\" not found"
+                                                                                },
+                                                                                {
+                                                                                    "backend":  "qnn",
+                                                                                    "library":  "libQnnDsp.so",
+                                                                                    "status":  "not_loaded",
+                                                                                    "error":  "dlopen failed: library \"libQnnDsp.so\" not found"
+                                                                                }
+                                                                            ]
+                                             }
+                            },
+                            {
+                                "finding":  "This still does not prove NPU execution or a Qwen 9B path; it proves the app and native harness can gather target-side signals.",
+                                "evidence":  {
+                                                 "phase6_warnings":  [
+                                                                         "Phase 6 characterization only; not Qwen 9B inference",
+                                                                         "backend load probes do not execute NPU, QNN, NNAPI, or Vulkan kernels",
+                                                                         "native CPU timings are harness signals, not performance target claims"
+                                                                     ],
+                                                 "native_warnings":  [
+                                                                         "tiny deterministic native CPU microbenchmarks only",
+                                                                         "not Qwen 9B inference",
+                                                                         "not NPU or QNN execution",
+                                                                         "not a performance target claim"
+                                                                     ]
+                                             }
+                            }
+                        ],
+    "recommended_next_gates":  [
+                                   "Phase 7A: guarded CPU ISA instruction probes with SIGILL isolation and per-feature kernels",
+                                   "Phase 7B: Android asset-packaged toy model decode through JNI using existing toy model format",
+                                   "Phase 7C: backend adapter probes for NNAPI/Vulkan/QNN-loader discovery without claiming execution",
+                                   "Phase 8: generated CPU kernels and correctness ladder for Qwen-like operators",
+                                   "Phase 9: real model acquisition/conversion plan outside Device Farm, then quantized small-model smoke before 9B"
+                               ],
+    "guardrails":  [
+                       "not Qwen 9B inference",
+                       "not QNN/NPU execution",
+                       "not a performance target claim",
+                       "AWS Remote Access is useful for small APKs/log extraction, not for downloading large models on the rented phone"
+                   ]
+}

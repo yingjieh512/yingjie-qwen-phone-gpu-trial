@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Extract QPNPU probe, native benchmark, or Phase 6 JSON from AWS Device Farm logcat text."""
+"""Extract QPNPU probe, native benchmark, Phase 6, or bundled JSON from AWS Device Farm logcat text."""
 
 from __future__ import annotations
 
@@ -12,6 +12,8 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from qpnpu.android_logcat import (  # noqa: E402
+    write_all_qpnpu_json_from_logcat,
+    write_extracted_phase6_characterization_json,
     write_extracted_native_benchmark_json,
     write_extracted_probe_json,
 )
@@ -23,15 +25,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", required=True, help="Clean JSON output path.")
     parser.add_argument(
         "--kind",
-        choices=["probe", "native", "phase6"],
+        choices=["probe", "native", "phase6", "all"],
         default="probe",
-        help="Which QPNPU marker pair to extract. Default: probe.",
+        help="Which QPNPU marker pair to extract, or all for a bundled artifact. Default: probe.",
     )
     args = parser.parse_args(argv)
 
     try:
         if args.kind == "native":
             out = write_extracted_native_benchmark_json(args.logcat, args.out)
+        elif args.kind == "phase6":
+            out = write_extracted_phase6_characterization_json(args.logcat, args.out)
+        elif args.kind == "all":
+            out = write_all_qpnpu_json_from_logcat(args.logcat, args.out)
         else:
             out = write_extracted_probe_json(args.logcat, args.out)
     except (OSError, ValueError) as exc:

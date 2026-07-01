@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("QPNPU Probe");
+        setTitle("QPNPU Hardware Probe");
 
         int pad = dp(12);
         LinearLayout root = new LinearLayout(this);
@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
         root.setPadding(pad, pad, pad, pad);
 
         TextView title = new TextView(this);
-        title.setText("QPNPU Probe");
+        title.setText("QPNPU Hardware Probe");
         title.setTextSize(22);
         title.setTypeface(Typeface.DEFAULT_BOLD);
         root.addView(title, new LinearLayout.LayoutParams(
@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
         Button nativeButton = new Button(this);
         nativeButton.setText("Native Bench");
         Button phase6Button = new Button(this);
-        phase6Button.setText("Phase 6");
+        phase6Button.setText("Characterize HW");
         Button copyButton = new Button(this);
         copyButton.setText("Copy JSON");
         Button clearButton = new Button(this);
@@ -115,7 +115,7 @@ public class MainActivity extends Activity {
         outputText = new TextView(this);
         outputText.setTypeface(Typeface.MONOSPACE);
         outputText.setTextIsSelectable(true);
-        outputText.setText("Tap Run Probe, Native Bench, or Phase 6 for deeper CPU/backend characterization.");
+        outputText.setText("Tap Run Probe, Native Bench, or Characterize HW for CPU/backend characterization.");
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(outputText, new ScrollView.LayoutParams(
@@ -208,7 +208,7 @@ public class MainActivity extends Activity {
 
 
     private void runPhase6Characterization() {
-        outputText.setText("Running Phase 6 characterization...");
+        outputText.setText("Running hardware characterization...");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -224,7 +224,7 @@ public class MainActivity extends Activity {
                     logPhase6Json(lastJson);
                     showText(lastJson);
                 } catch (final Exception exc) {
-                    final String message = "Phase 6 characterization failed without crashing the app:\n" + exc;
+                    final String message = "Hardware characterization failed without crashing the app:\n" + exc;
                     Log.e(TAG, message, exc);
                     showText(message);
                 }
@@ -846,3 +846,4 @@ public class MainActivity extends Activity {
         return (int) (value * getResources().getDisplayMetrics().density + 0.5f);
     }
 }
+

@@ -1,0 +1,586 @@
+{
+  "available": true,
+  "backend": "cpu_android_native_reference",
+  "backend_load": {
+    "probes": [
+      {
+        "backend": "vulkan",
+        "library": "libvulkan.so",
+        "loaded": true,
+        "status": "loaded"
+      },
+      {
+        "backend": "nnapi",
+        "library": "libneuralnetworks.so",
+        "loaded": true,
+        "status": "loaded"
+      },
+      {
+        "backend": "qnn",
+        "error": "dlopen failed: library \"libQnnSystem.so\" not found",
+        "library": "libQnnSystem.so",
+        "loaded": false,
+        "status": "not_loaded"
+      },
+      {
+        "backend": "qnn",
+        "error": "dlopen failed: library \"libQnnHtp.so\" not found",
+        "library": "libQnnHtp.so",
+        "loaded": false,
+        "status": "not_loaded"
+      },
+      {
+        "backend": "qnn",
+        "error": "dlopen failed: library \"libQnnCpu.so\" not found",
+        "library": "libQnnCpu.so",
+        "loaded": false,
+        "status": "not_loaded"
+      },
+      {
+        "backend": "qnn",
+        "error": "dlopen failed: library \"libQnnGpu.so\" not found",
+        "library": "libQnnGpu.so",
+        "loaded": false,
+        "status": "not_loaded"
+      },
+      {
+        "backend": "qnn",
+        "error": "dlopen failed: library \"libQnnDsp.so\" not found",
+        "library": "libQnnDsp.so",
+        "loaded": false,
+        "status": "not_loaded"
+      },
+      {
+        "backend": "dsp_rpc",
+        "error": "dlopen failed: library \"libcdsprpc.so\" not found",
+        "library": "libcdsprpc.so",
+        "loaded": false,
+        "status": "not_loaded"
+      },
+      {
+        "backend": "dsp_rpc",
+        "error": "dlopen failed: library \"libadsprpc.so\" not found",
+        "library": "libadsprpc.so",
+        "loaded": false,
+        "status": "not_loaded"
+      },
+      {
+        "backend": "snpe",
+        "error": "dlopen failed: library \"libSNPE.so\" not found",
+        "library": "libSNPE.so",
+        "loaded": false,
+        "status": "not_loaded"
+      }
+    ],
+    "warnings": [
+      "dlopen probes only test library loadability; they do not execute accelerator kernels"
+    ]
+  },
+  "cpu_isa": {
+    "auxv": {
+      "AT_HWCAP": 4294967295,
+      "AT_HWCAP2": 70369763095535
+    },
+    "execution_probes": [
+      {
+        "checksum": 4212073398535475200,
+        "compiled": true,
+        "executed": true,
+        "id": "scalar_integer_loop",
+        "status": "ok"
+      },
+      {
+        "compiled": false,
+        "executed": false,
+        "id": "feature_specific_instruction_fuzzing",
+        "reason": "Phase 6 records cpuinfo and auxv agreement first; destructive ISA trials need signal/process isolation.",
+        "status": "deferred_until_sigill_isolation"
+      }
+    ],
+    "features": [
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "asimd",
+        "name": "asimd",
+        "status": "reported_by_cpuinfo_and_auxv"
+      },
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "asimddp",
+        "name": "asimddp",
+        "status": "reported_by_cpuinfo_and_auxv"
+      },
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "sve",
+        "name": "sve",
+        "status": "reported_by_cpuinfo_and_auxv"
+      },
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP2",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "i8mm",
+        "name": "i8mm",
+        "status": "reported_by_cpuinfo_and_auxv"
+      },
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP2",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "bf16",
+        "name": "bf16",
+        "status": "reported_by_cpuinfo_and_auxv"
+      },
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP2",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "sve2",
+        "name": "sve2",
+        "status": "reported_by_cpuinfo_and_auxv"
+      },
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP2",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "svei8mm",
+        "name": "svei8mm",
+        "status": "reported_by_cpuinfo_and_auxv"
+      },
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP2",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "sme",
+        "name": "sme",
+        "status": "reported_by_cpuinfo_and_auxv"
+      },
+      {
+        "auxv_macro_available": true,
+        "auxv_register": "AT_HWCAP",
+        "auxv_reported": true,
+        "cpuinfo_reported": true,
+        "cpuinfo_token": "sha3",
+        "name": "sha3",
+        "status": "reported_by_cpuinfo_and_auxv"
+      }
+    ],
+    "page_size_bytes": 4096,
+    "proc_cpuinfo_readable": true,
+    "warnings": [
+      "reported ISA flags are evidence, not a guarantee of generated-kernel correctness"
+    ]
+  },
+  "device": {
+    "android_release": "16",
+    "board": "canoe",
+    "device": "m3q",
+    "hardware": "qcom",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "memory": {
+    "copy_bandwidth_cases": [
+      {
+        "bandwidth_mib_per_second": 8509.189925,
+        "bytes": 4096,
+        "checksum": 254760,
+        "iterations": 2000,
+        "latency_ms": 0.918125
+      },
+      {
+        "bandwidth_mib_per_second": 30871.153068,
+        "bytes": 65536,
+        "checksum": 101648,
+        "iterations": 800,
+        "latency_ms": 1.619635
+      },
+      {
+        "bandwidth_mib_per_second": 43242.432935,
+        "bytes": 1048576,
+        "checksum": 14972,
+        "iterations": 120,
+        "latency_ms": 2.775052
+      },
+      {
+        "bandwidth_mib_per_second": 97896.749522,
+        "bytes": 4194304,
+        "checksum": 2508,
+        "iterations": 24,
+        "latency_ms": 0.980625
+      }
+    ],
+    "warnings": [
+      "memory probe uses bounded app-private buffers only"
+    ]
+  },
+  "native_library": "qpnpu_probe_native",
+  "output_file": "/storage/emulated/0/Android/data/com.qpnpu.trial/files/phase6_characterization.json",
+  "quantization": {
+    "fixtures": [
+      {
+        "correctness_passed": true,
+        "format": {
+          "bits": 4,
+          "packing": "low_nibble_first",
+          "scale": "per_row_symmetric",
+          "signed": true
+        },
+        "name": "qwen_like_linear_int4_fixture",
+        "packed_byte_length": 64,
+        "packed_reference_max_abs_error": 8.5e-07,
+        "quantization_vs_fp32_max_abs_error": 0.15001919,
+        "shape": {
+          "cols": 16,
+          "group_size": 16,
+          "rows": 8
+        },
+        "warning": "fixture validates packing/dequant plumbing only; it is not a model accuracy claim"
+      }
+    ],
+    "warnings": [
+      "quantization fixtures use tiny deterministic tensors only"
+    ]
+  },
+  "schema_version": "0.1",
+  "source": "android-phase6-characterization",
+  "thermal": {
+    "status": "hints_detected",
+    "zones": [
+      {
+        "name": "cooling_device0",
+        "type": "cpufreq-cpu0"
+      },
+      {
+        "name": "cooling_device1",
+        "type": "cpufreq-cpu6"
+      },
+      {
+        "name": "cooling_device10",
+        "type": "cpu-hotplug3"
+      },
+      {
+        "name": "cooling_device11",
+        "type": "cpu-hotplug4"
+      },
+      {
+        "name": "cooling_device12",
+        "type": "cpu-hotplug5"
+      },
+      {
+        "name": "cooling_device13",
+        "type": "cpu-hotplug6"
+      },
+      {
+        "name": "cooling_device14",
+        "type": "cpu-hotplug7"
+      },
+      {
+        "name": "cooling_device15",
+        "type": "pause-cpu0"
+      },
+      {
+        "name": "cooling_device16",
+        "type": "pause-cpu2"
+      },
+      {
+        "name": "cooling_device17",
+        "type": "pause-cpu1"
+      },
+      {
+        "name": "cooling_device18",
+        "type": "thermal-pause-1"
+      },
+      {
+        "name": "cooling_device19",
+        "type": "thermal-pause-2"
+      },
+      {
+        "name": "cooling_device2",
+        "type": "ufs"
+      },
+      {
+        "name": "cooling_device20",
+        "type": "thermal-pause-3C"
+      },
+      {
+        "name": "cooling_device21",
+        "type": "thermal-pause-4"
+      },
+      {
+        "name": "cooling_device22",
+        "type": "pause-cpu4"
+      },
+      {
+        "name": "cooling_device23",
+        "type": "thermal-pause-10"
+      },
+      {
+        "name": "cooling_device24",
+        "type": "pause-cpu5"
+      },
+      {
+        "name": "cooling_device25",
+        "type": "pause-cpu6"
+      },
+      {
+        "name": "cooling_device26",
+        "type": "pause-cpu7"
+      },
+      {
+        "name": "cooling_device27",
+        "type": "thermal-pause-20"
+      },
+      {
+        "name": "cooling_device28",
+        "type": "thermal-pause-C0"
+      },
+      {
+        "name": "cooling_device29",
+        "type": "thermal-pause-40"
+      },
+      {
+        "name": "cooling_device3",
+        "type": "cpu-cluster0"
+      },
+      {
+        "name": "cooling_device30",
+        "type": "thermal-pause-80"
+      },
+      {
+        "name": "cooling_device31",
+        "type": "pause-cpu3"
+      },
+      {
+        "name": "cooling_device32",
+        "type": "thermal-pause-8"
+      },
+      {
+        "name": "cooling_device33",
+        "type": "thermal-pause-3C"
+      },
+      {
+        "name": "cooling_device34",
+        "type": "cdsp_ss"
+      },
+      {
+        "name": "cooling_device35",
+        "type": "cdsp_hw"
+      },
+      {
+        "name": "cooling_device36",
+        "type": "cdsp"
+      },
+      {
+        "name": "cooling_device37",
+        "type": "kgsl"
+      },
+      {
+        "name": "cooling_device38",
+        "type": "cdsp_sw_hvx"
+      },
+      {
+        "name": "cooling_device39",
+        "type": "gpu"
+      },
+      {
+        "name": "cooling_device4",
+        "type": "display-fps"
+      },
+      {
+        "name": "cooling_device40",
+        "type": "cdsp_sw_hmx"
+      },
+      {
+        "name": "cooling_device41",
+        "type": "panel0-backlight"
+      },
+      {
+        "name": "cooling_device42",
+        "type": "modem_lte_dsc"
+      },
+      {
+        "name": "cooling_device43",
+        "type": "modem_lte_sub1_dsc"
+      },
+      {
+        "name": "cooling_device44",
+        "type": "modem_nr_dsc"
+      },
+      {
+        "name": "cooling_device45",
+        "type": "modem_nr_sub1_dsc"
+      },
+      {
+        "name": "cooling_device46",
+        "type": "modem_nr_scg_dsc"
+      },
+      {
+        "name": "cooling_device47",
+        "type": "modem_nr_scg_sub1_dsc"
+      },
+      {
+        "name": "cooling_device48",
+        "type": "pa_lte_sdr0_dsc"
+      },
+      {
+        "name": "cooling_device49",
+        "type": "pa_lte_sdr0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device5",
+        "type": "cpu-cluster1"
+      },
+      {
+        "name": "cooling_device50",
+        "type": "pa_nr_sdr0_dsc"
+      },
+      {
+        "name": "cooling_device51",
+        "type": "pa_nr_sdr0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device52",
+        "type": "pa_nr_sdr0_scg_dsc"
+      },
+      {
+        "name": "cooling_device53",
+        "type": "pa_nr_sdr0_scg_sub1_dsc"
+      },
+      {
+        "name": "cooling_device54",
+        "type": "mmw0_dsc"
+      },
+      {
+        "name": "cooling_device55",
+        "type": "mmw0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device56",
+        "type": "mmw1_dsc"
+      },
+      {
+        "name": "cooling_device57",
+        "type": "mmw1_sub1_dsc"
+      },
+      {
+        "name": "cooling_device58",
+        "type": "mmw2_dsc"
+      },
+      {
+        "name": "cooling_device59",
+        "type": "mmw2_sub1_dsc"
+      },
+      {
+        "name": "cooling_device6",
+        "type": "ddr-cdev"
+      },
+      {
+        "name": "cooling_device60",
+        "type": "mmw3_dsc"
+      },
+      {
+        "name": "cooling_device61",
+        "type": "mmw3_sub1_dsc"
+      },
+      {
+        "name": "cooling_device62",
+        "type": "modem_bcl"
+      },
+      {
+        "name": "cooling_device7",
+        "type": "cpu-hotplug0"
+      },
+      {
+        "name": "cooling_device8",
+        "type": "cpu-hotplug1"
+      },
+      {
+        "name": "cooling_device9",
+        "type": "cpu-hotplug2"
+      },
+      {
+        "name": "thermal_zone0",
+        "temp_raw": "31800",
+        "type": "cpullc-0-0"
+      }
+    ]
+  },
+  "timestamp_utc": "2026-07-01T04:16:35Z",
+  "topology": {
+    "sched_affinity": {
+      "cpus": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "readable": true
+    },
+    "std_thread_hardware_concurrency": 8,
+    "thread_scaling": [
+      {
+        "checksum": 3666709889157964563,
+        "iterations_per_thread": 220000,
+        "latency_ms": 2.221094,
+        "threads": 1,
+        "work_items_per_second": 99050287.831132
+      },
+      {
+        "checksum": 9.911838102848459e+18,
+        "iterations_per_thread": 220000,
+        "latency_ms": 2.884791,
+        "threads": 2,
+        "work_items_per_second": 152524047.669311
+      },
+      {
+        "checksum": 1690835006687219828,
+        "iterations_per_thread": 220000,
+        "latency_ms": 5.439792,
+        "threads": 4,
+        "work_items_per_second": 161770891.239959
+      },
+      {
+        "checksum": 1.1578508367599153e+19,
+        "iterations_per_thread": 220000,
+        "latency_ms": 4.972344,
+        "threads": 8,
+        "work_items_per_second": 353957811.446674
+      }
+    ],
+    "warnings": [
+      "thread scaling is a short app-process probe and not a scheduler guarantee"
+    ]
+  },
+  "warnings": [
+    "Phase 6 characterization only; not Qwen 9B inference",
+    "backend load probes do not execute NPU, QNN, NNAPI, or Vulkan kernels",
+    "native CPU timings are harness signals, not performance target claims"
+  ],
+  "warnings_from_java": []
+}
