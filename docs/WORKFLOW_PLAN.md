@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently completing Phase 4B. Each phase should leave behind a small, testable checkpoint.
+This repository is currently completing Phase 5. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -85,12 +85,21 @@ Phase 4B result:
 
 Exit criteria:
 
-- The Android probe app can load a small Java/JNI/NDK native library.
-- Native CPU kernels for fp32 matvec, int4 dequant matvec, RMSNorm, RoPE, and softmax run on Android.
+- The Android probe app loads a small Java/JNI/NDK native library named `qpnpu_probe_native`.
+- Native CPU fixtures for fp32 matvec, int4 dequant matvec, RMSNorm, RoPE, and softmax run from the APK.
 - Results are checked against small deterministic expected outputs.
-- Benchmark JSON is shown on screen and emitted to logcat.
-- Thermal state from the probe path is included with benchmark JSON.
+- Full probe JSON embeds a `microbenchmarks` object when the native library is available.
+- Standalone native benchmark JSON is shown on screen when `Native Bench` is tapped.
+- Native benchmark JSON is emitted to logcat between `QPNPU_NATIVE_BENCH_JSON_BEGIN` and `QPNPU_NATIVE_BENCH_JSON_END`.
+- Native benchmark JSON can be extracted from logcat and validated with the existing benchmark schema helpers.
 - No Qwen 9B model, QNN SDK, NPU execution, or performance target claim is required.
+
+Phase 5 result:
+
+- `android/probe-app/app/src/main/cpp/qpnpu_probe_native.cpp` implements tiny deterministic native CPU benchmark fixtures.
+- `android/probe-app/app/src/main/java/com/qpnpu/trial/MainActivity.java` exposes `Native Bench` and embeds native microbenchmarks in the full probe flow.
+- `scripts/android/extract_probe_json_from_logcat.py --kind native` extracts native benchmark JSON from Device Farm logcat.
+- `docs/PHASE_5_NATIVE_MICROBENCH.md` records the runbook and interpretation guardrails.
 
 ## Phase 6: Quantization Validation
 

@@ -1,4 +1,4 @@
-﻿# Benchmarking
+# Benchmarking
 
 Benchmark artifacts are JSON records with enough context to avoid accidental performance claims.
 
@@ -26,6 +26,27 @@ Benchmark artifacts are JSON records with enough context to avoid accidental per
 }
 ```
 
+## Phase 5 Android Native CPU Microbenchmarks
+
+The probe APK can run tiny CPU-only native fixtures through JNI/NDK and emit a top-level native payload with a `results` list of benchmark-schema objects:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind native \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_native_microbench_<date>.json
+```
+
+The native payload uses:
+
+- `source`: `android-native-microbench`
+- `backend`: `cpu_android_native_reference`
+- `native_library`: `qpnpu_probe_native`
+- `results`: one benchmark object for each tiny native fixture
+
+Current operators are `fp32_matvec`, `int4_dequant_matvec`, `rmsnorm`, `softmax`, and `rope`. Each result includes `correctness_passed` and `max_abs_error` in `metrics` in addition to the required benchmark metrics.
+
+These numbers validate Android packaging, JNI calls, native CPU execution, timing, and result extraction only. They are not Qwen 9B inference, not QNN/NPU execution, and not a performance target claim.
 ## Phase 3 Toy Decode Benchmark
 
 The toy decode smoke command writes a top-level result with an embedded benchmark object:

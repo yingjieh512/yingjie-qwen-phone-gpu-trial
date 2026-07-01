@@ -8,7 +8,9 @@ The long-term performance target is at least 20 decode tokens/sec. No performanc
 
 ## Current Status
 
-Phase 4A adds a minimal Java-only Android probe APK under `android/probe-app` for the first AWS Device Farm Remote Access smoke test. The APK displays best-effort hardware probe JSON on screen, logs it to logcat between clear markers, and tries to save it to app-private external files.
+Phase 5 adds a minimal Android NDK/JNI native CPU microbenchmark harness inside the probe APK. The app can run tiny deterministic native fixtures for fp32 matvec, int4 dequant matvec, RMSNorm, softmax, and RoPE, then display and log benchmark-schema JSON. These are CPU-only harness checks, not Qwen 9B inference, not NPU/QNN execution, and not performance target claims.
+
+Phase 4A/4B added the Android probe APK and first AWS Device Farm Remote Access smoke path. The APK displays best-effort hardware probe JSON on screen, logs it to logcat between clear markers, and tries to save it to app-private external files.
 
 Phase 3 adds a local runnable vertical slice: a tiny deterministic CPU-only toy Qwen-like artifact can be created, inspected, decoded, and written as benchmark-schema JSON without Android hardware, AWS, Hugging Face credentials, Qualcomm QNN SDKs, or model downloads.
 
@@ -44,6 +46,38 @@ python tools/kernelgen/generate_kernels.py --probe benchmarks/results/sample_pro
 python scripts/autotune/run_autotune.py --dry-run
 ```
 
+## Phase 5 Android Native Microbenchmark Quickstart
+
+Build the debug APK with the NDK/JNI harness:
+
+```powershell
+cd android\probe-app
+.\gradlew.bat assembleDebug
+```
+
+Find the built APK:
+
+```bash
+python scripts/android/find_probe_apk.py
+```
+
+In AWS Device Farm Remote Access, upload/install the APK, launch `QPNPU Probe`, and tap `Native Bench` to run the standalone native CPU microbenchmarks. The app logs native benchmark JSON between:
+
+```text
+QPNPU_NATIVE_BENCH_JSON_BEGIN
+QPNPU_NATIVE_BENCH_JSON_END
+```
+
+Extract the native benchmark JSON from downloaded logcat:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind native \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_native_microbench_<date>.json
+```
+
+The native fixtures validate packaging, JNI, timing, and result extraction only. They are not Qwen 9B inference, not NPU/QNN execution, and not a performance claim.
 ## Phase 4A Android Probe APK Quickstart
 
 Build the debug APK with Android Studio or an installed Gradle/Android SDK:
@@ -164,7 +198,7 @@ AWS Remote Access may start after Phase 4A for manual app/hardware smoke validat
 ## What Works Locally
 
 - Python unit tests run without Android hardware, AWS credentials, Qualcomm SDKs, or network access.
-- A minimal Android probe app project exists under `android/probe-app`.
+- A minimal Android probe app project exists under `android/probe-app` with an NDK/JNI CPU microbenchmark harness.
 - A toy QPNPU model can be created, inspected, decoded with a CPU Python reference path, and emitted as benchmark JSON.
 - Sample probe JSON can be validated and summarized.
 - ADB raw-output fixtures validate the Phase 1 parser path without requiring a real device.
@@ -175,18 +209,17 @@ AWS Remote Access may start after Phase 4A for manual app/hardware smoke validat
 
 ## What Is Stubbed
 
-- The Android probe APK does not run inference, benchmarks, QNN, or NPU code.
+- The Android probe APK does not run inference, QNN, or NPU code; Phase 5 native microbenchmarks are tiny CPU-only harness checks.
 - The Phase 3 toy runtime is not a transformer and is not Qwen 9B inference.
 - Vulkan, NNAPI, and QNN backends are safe unavailable stubs.
 - AWS Device Farm scripts only check for `aws`, print usage, and show intended commands.
 - Generated kernels remain placeholders.
-- No phone, accelerator, or NPU benchmark exists in Phase 4A.
+- No Qwen 9B, accelerator, or NPU benchmark exists; Phase 5 only validates native CPU execution plumbing.
 
 ## Next Phases
 
-1. Phase 4B: First manual AWS Device Farm Remote Access smoke session using the probe APK.
-2. Phase 5: Quantization validation with small model shards or fixtures.
-3. Phase 6: Kernel generation and local native microbenchmarks beyond the reference kernels.
-4. Phase 7: Android deployment and on-device microbenchmarks.
-5. Phase 8: Backend probing for NNAPI, Vulkan, and QNN availability.
-6. Phase 9: AWS Device Farm automated runs and full trial analysis after a minimal test runner exists.
+1. Phase 6: Quantization validation with small model shards or fixtures.
+2. Phase 7: Generated native kernels and candidate selection beyond reference fixtures.
+3. Phase 8: Backend probing for NNAPI, Vulkan, and QNN availability with conservative CPU fallback.
+4. Phase 9: Automated Android/Device Farm benchmark runs once a test runner exists.
+5. Phase 10: Full model integration analysis with recorded artifacts before any tokens/sec claim.

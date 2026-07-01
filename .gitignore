@@ -22,6 +22,7 @@ cmake-build-*/
 
 # Android build outputs
 android/**/.gradle/
+android/**/.cxx/
 android/**/build/
 android/**/*.apk
 android/**/*.aab

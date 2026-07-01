@@ -38,10 +38,25 @@ public class MainActivity extends Activity {
     private static final String TAG = "QPNPUProbe";
     private static final String JSON_BEGIN = "QPNPU_PROBE_JSON_BEGIN";
     private static final String JSON_END = "QPNPU_PROBE_JSON_END";
+    private static final String NATIVE_JSON_BEGIN = "QPNPU_NATIVE_BENCH_JSON_BEGIN";
+    private static final String NATIVE_JSON_END = "QPNPU_NATIVE_BENCH_JSON_END";
     private static final int LOG_CHUNK_SIZE = 3000;
+    private static boolean nativeLibraryLoaded = false;
+    private static String nativeLibraryLoadError = "";
+
+    static {
+        try {
+            System.loadLibrary("qpnpu_probe_native");
+            nativeLibraryLoaded = true;
+        } catch (UnsatisfiedLinkError exc) {
+            nativeLibraryLoadError = exc.toString();
+        }
+    }
 
     private TextView outputText;
     private String lastJson = "";
+
+    private native String nativeRunMicrobenchmarks();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +81,8 @@ public class MainActivity extends Activity {
 
         Button runButton = new Button(this);
         runButton.setText("Run Probe");
+        Button nativeButton = new Button(this);
+        nativeButton.setText("Native Bench");
         Button copyButton = new Button(this);
         copyButton.setText("Copy JSON");
         Button clearButton = new Button(this);
@@ -76,6 +93,7 @@ public class MainActivity extends Activity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1.0f);
         buttons.addView(runButton, buttonParams);
+        buttons.addView(nativeButton, buttonParams);
         buttons.addView(copyButton, buttonParams);
         buttons.addView(clearButton, buttonParams);
         root.addView(buttons, new LinearLayout.LayoutParams(
@@ -85,7 +103,7 @@ public class MainActivity extends Activity {
         outputText = new TextView(this);
         outputText.setTypeface(Typeface.MONOSPACE);
         outputText.setTextIsSelectable(true);
-        outputText.setText("Tap Run Probe to collect a best-effort Android hardware JSON report.");
+        outputText.setText("Tap Run Probe to collect hardware JSON, or Native Bench to run tiny CPU-only JNI checks.");
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(outputText, new ScrollView.LayoutParams(
@@ -102,6 +120,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 runProbe();
+            }
+        });
+        nativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runNativeBench();
             }
         });
         copyButton.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +163,31 @@ public class MainActivity extends Activity {
         }).start();
     }
 
+    private void runNativeBench() {
+        outputText.setText("Running native microbenchmarks...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONArray warnings = new JSONArray();
+                try {
+                    JSONObject nativeJson = collectNativeMicrobenchmarks(warnings);
+                    nativeJson.put("timestamp_utc", utcNow());
+                    nativeJson.put("device", collectDeviceInfo(warnings));
+                    nativeJson.put("thermal", collectThermalHints(warnings));
+                    nativeJson.put("warnings_from_java", warnings);
+                    saveJsonToExternalFile(nativeJson, "native_microbenchmarks.json", warnings);
+                    lastJson = nativeJson.toString(2);
+                    logNativeBenchmarkJson(lastJson);
+                    showText(lastJson);
+                } catch (final Exception exc) {
+                    final String message = "Native microbenchmark failed without crashing the app:\n" + exc;
+                    Log.e(TAG, message, exc);
+                    showText(message);
+                }
+            }
+        }).start();
+    }
+
     private void copyLastJson() {
         if (lastJson.isEmpty()) {
             Toast.makeText(this, "No JSON to copy yet", Toast.LENGTH_SHORT).show();
@@ -147,7 +196,7 @@ public class MainActivity extends Activity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboard != null) {
             clipboard.setPrimaryClip(ClipData.newPlainText("QPNPU probe JSON", lastJson));
-            Toast.makeText(this, "Copied probe JSON", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Copied QPNPU JSON", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -172,10 +221,47 @@ public class MainActivity extends Activity {
         root.put("gpu", collectGpuHints(warnings));
         root.put("npu", collectNpuHints(warnings));
         root.put("thermal", collectThermalHints(warnings));
+        root.put("microbenchmarks", collectNativeMicrobenchmarks(warnings));
         root.put("summary", buildCapabilitySummary(root));
-        root.put("microbenchmarks", new JSONObject());
         root.put("warnings", warnings);
         return root;
+    }
+
+    private JSONObject collectNativeMicrobenchmarks(JSONArray warnings) throws JSONException {
+        if (!nativeLibraryLoaded) {
+            JSONObject unavailable = new JSONObject();
+            unavailable.put("schema_version", "0.1");
+            unavailable.put("source", "android-native-microbench");
+            unavailable.put("timestamp_utc", utcNow());
+            unavailable.put("backend", "cpu_android_native_reference");
+            unavailable.put("available", false);
+            unavailable.put("native_library", "qpnpu_probe_native");
+            unavailable.put("error", nativeLibraryLoadError);
+            unavailable.put("results", new JSONArray());
+            unavailable.put("warnings", new JSONArray().put("native library was not loaded; no native microbenchmarks ran"));
+            warnings.put("native microbenchmark library was not loaded: " + nativeLibraryLoadError);
+            return unavailable;
+        }
+
+        try {
+            JSONObject payload = new JSONObject(nativeRunMicrobenchmarks());
+            payload.put("timestamp_utc", utcNow());
+            payload.put("available", true);
+            return payload;
+        } catch (Throwable exc) {
+            JSONObject failed = new JSONObject();
+            failed.put("schema_version", "0.1");
+            failed.put("source", "android-native-microbench");
+            failed.put("timestamp_utc", utcNow());
+            failed.put("backend", "cpu_android_native_reference");
+            failed.put("available", false);
+            failed.put("native_library", "qpnpu_probe_native");
+            failed.put("error", exc.toString());
+            failed.put("results", new JSONArray());
+            failed.put("warnings", new JSONArray().put("native microbenchmarks failed; no native performance claim"));
+            warnings.put("native microbenchmarks failed: " + exc);
+            return failed;
+        }
     }
 
     private JSONObject collectDeviceInfo(JSONArray warnings) throws JSONException {
@@ -432,6 +518,12 @@ public class MainActivity extends Activity {
             summary.put("thermal_status", thermal.optString("status", "unknown"));
             summary.put("thermal_zone_count", lengthOf(thermal.optJSONArray("zones")));
         }
+        JSONObject microbenchmarks = root.optJSONObject("microbenchmarks");
+        if (microbenchmarks != null) {
+            summary.put("native_microbenchmarks_available", microbenchmarks.optBoolean("available", false));
+            summary.put("native_microbenchmarks_passed", microbenchmarks.optBoolean("all_correctness_passed", false));
+            summary.put("native_microbenchmark_count", lengthOf(microbenchmarks.optJSONArray("results")));
+        }
         summary.put("availability_claim", "none; this is probe evidence only, not accelerator execution");
         return summary;
     }
@@ -532,12 +624,35 @@ public class MainActivity extends Activity {
     }
 
     private void logProbeJson(String json) {
-        Log.i(TAG, JSON_BEGIN);
+        logJsonWithMarkers(JSON_BEGIN, JSON_END, json);
+    }
+
+    private void logNativeBenchmarkJson(String json) {
+        logJsonWithMarkers(NATIVE_JSON_BEGIN, NATIVE_JSON_END, json);
+    }
+
+    private void logJsonWithMarkers(String begin, String endMarker, String json) {
+        Log.i(TAG, begin);
         for (int start = 0; start < json.length(); start += LOG_CHUNK_SIZE) {
             int end = Math.min(json.length(), start + LOG_CHUNK_SIZE);
             Log.i(TAG, json.substring(start, end));
         }
-        Log.i(TAG, JSON_END);
+        Log.i(TAG, endMarker);
+    }
+
+    private void saveJsonToExternalFile(JSONObject payload, String fileName, JSONArray warnings) throws JSONException {
+        File dir = getExternalFilesDir(null);
+        if (dir == null) {
+            warnings.put("getExternalFilesDir(null) returned null; " + fileName + " was not saved");
+            return;
+        }
+        File out = new File(dir, fileName);
+        payload.put("output_file", out.getAbsolutePath());
+        try {
+            writeText(out, payload.toString(2));
+        } catch (IOException exc) {
+            warnings.put("failed to save " + fileName + ": " + exc.getMessage());
+        }
     }
 
     private void writeText(File file, String text) throws IOException {

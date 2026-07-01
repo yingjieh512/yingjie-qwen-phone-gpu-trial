@@ -1,4 +1,4 @@
-﻿# Performance Targets
+# Performance Targets
 
 The long-term trial target is at least 20 decode tokens/sec for the configurable Qwen-style 9B decoder model on the target Android phone class.
 
@@ -6,10 +6,22 @@ Current status:
 
 - The target remains unmeasured.
 - No full model execution exists.
-- No on-device benchmark has run.
+- No full-model on-device benchmark has run.
 - No NPU execution exists.
 - No performance target is claimed as achieved.
 
+## Phase 5 Android Native CPU Microbenchmarks
+
+Phase 5 can run tiny native CPU fixtures inside the Android APK. These measurements are useful for validating ABI packaging, JNI calls, native timing, correctness checks, and JSON extraction on a real phone.
+
+They are not:
+
+- Qwen 9B inference
+- NPU results
+- QNN results
+- full-model decode results
+- comparable to the `>=20 decode tokens/sec` target
+- evidence that the target has been met
 ## Phase 3 Toy Local Throughput
 
 Phase 3 can report tokens/sec for a tiny local CPU Python toy decode. That number is only a smoke-test timing for a 32-hidden-size byte-token toy artifact.
