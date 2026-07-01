@@ -1,0 +1,559 @@
+{
+  "device": {
+    "android_release": "16",
+    "board": "canoe",
+    "device": "m3q",
+    "hardware": "qcom",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "device_farm_session": {
+    "first_log_json_timestamp": "2026-07-01T22:15:22.872132Z",
+    "harness_events": [
+      {
+        "data": "Starting 00000 with device R3GL105R47R",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:15:22.872132Z"
+      },
+      {
+        "data": "Using network profile Default network profile",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:15:31.169996Z"
+      },
+      {
+        "data": "Bandwidth (bps): up 104857600, down 104857600.",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:15:31.170281Z"
+      },
+      {
+        "data": "Delay (ms): up 0, down 0.",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:15:31.170433Z"
+      },
+      {
+        "data": "Jitter (ms): up 0, down 0.",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:15:31.170634Z"
+      },
+      {
+        "data": "Loss (%): up 0, down 0.",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:15:31.170748Z"
+      },
+      {
+        "data": "Successful test lifecycle of Setup Test",
+        "level": "Passed",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:15:32.544689Z"
+      },
+      {
+        "data": "Tests stopped: Stopped by request",
+        "level": "Stopped",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:19:14.057728Z"
+      },
+      {
+        "data": "Tests stopped: Timeout exceeded during test execution",
+        "level": "Stopped",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:19:15.915916Z"
+      },
+      {
+        "data": "Interactive test passed",
+        "level": "Passed",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:19:20.925629Z"
+      },
+      {
+        "data": "Finished Tests",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:19:22.398239Z"
+      },
+      {
+        "data": "Finished Tests Suite",
+        "level": "Info",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:19:22.398945Z"
+      },
+      {
+        "data": "Successful test lifecycle of Teardown Test",
+        "level": "Passed",
+        "source": "Harness",
+        "tag": null,
+        "timestamp": "2026-07-01T22:19:35.033801Z"
+      }
+    ],
+    "interactive_test_passed": true,
+    "last_log_json_timestamp": "2026-07-02T05:19:34.696452Z",
+    "log_json_entry_count": 48258,
+    "qpnpu_payload_counts": {
+      "native": 1,
+      "phase6": 1,
+      "phase7a": 1,
+      "probe": 1,
+      "toy_decode": 1
+    },
+    "qpnpu_payload_order": [
+      "probe",
+      "native",
+      "phase6",
+      "phase7a",
+      "toy_decode"
+    ],
+    "schema_version": "0.1",
+    "source": "codex-derived-devicefarm-session-summary",
+    "source_files": {
+      "all_qpnpu_payloads_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_8140fe98071e.all_qpnpu_payloads.json",
+      "download_log_json": "C:\\Users\\Yingjie Huang\\Downloads\\log (3).json",
+      "download_logcat": "C:\\Users\\Yingjie Huang\\Downloads\\logcat-8140fe98071e.logcat"
+    },
+    "stopped_by_request_seen": true,
+    "timeout_stop_seen": true,
+    "timestamp_utc": "2026-07-01T22:27:38.135829Z"
+  },
+  "guardrails": [
+    "toy decode throughput is not a performance target measurement",
+    "not Qwen 9B inference",
+    "not QNN/NPU execution",
+    "Vulkan/NNAPI library loadability is not kernel execution"
+  ],
+  "recommended_next_gates": [
+    "Phase 7C: generated native CPU kernel candidates, selected only from Phase 7A executed_ok ISA features",
+    "Add Android log extraction/validation for generated-kernel correctness before any speed optimization claim",
+    "Phase 8: conservative backend API enumeration for NNAPI/Vulkan/QNN without claiming accelerator execution",
+    "Keep Device Farm artifacts small; do not attempt Qwen 9B downloads inside Remote Access"
+  ],
+  "schema_version": "0.1",
+  "source": "codex-derived-devicefarm-findings",
+  "source_files": {
+    "all_qpnpu_payloads_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_8140fe98071e.all_qpnpu_payloads.json",
+    "download_log_json": "C:\\Users\\Yingjie Huang\\Downloads\\log (3).json",
+    "download_logcat": "C:\\Users\\Yingjie Huang\\Downloads\\logcat-8140fe98071e.logcat",
+    "hw_model_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_8140fe98071e.hw_model.json",
+    "native_json": "benchmarks\\results\\aws_remote_native_microbench_2026-07-01_8140fe98071e.json",
+    "phase6_json": "benchmarks\\results\\aws_remote_phase6_2026-07-01_8140fe98071e.json",
+    "phase7a_json": "benchmarks\\results\\aws_remote_phase7a_2026-07-01_8140fe98071e.json",
+    "probe_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_8140fe98071e.json",
+    "session_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_8140fe98071e.session.json",
+    "summary_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_8140fe98071e.summary.json",
+    "toy_decode_json": "benchmarks\\results\\aws_remote_toy_decode_2026-07-01_8140fe98071e.json"
+  },
+  "timestamp_utc": "2026-07-01T22:27:38.135829Z",
+  "useful_findings": [
+    {
+      "evidence": {
+        "interactive_test_passed": true,
+        "payload_count": 5,
+        "payload_counts": {
+          "native": 1,
+          "phase6": 1,
+          "phase7a": 1,
+          "probe": 1,
+          "toy_decode": 1
+        },
+        "payload_order": [
+          "probe",
+          "native",
+          "phase6",
+          "phase7a",
+          "toy_decode"
+        ]
+      },
+      "finding": "The rebuilt APK ran the full current smoke ladder in one Device Farm session, including the new Phase 7B Toy Decode action."
+    },
+    {
+      "evidence": {
+        "asset_model": {
+          "metadata_asset": "toy_qwen_7b/metadata.json",
+          "tensor_asset": "toy_qwen_7b/model.bin",
+          "tensor_bytes": 32832
+        },
+        "available": true,
+        "benchmark_operator": "toy_decode",
+        "decode": {
+          "latency_ms_total": 0.22151,
+          "max_new_tokens": 8,
+          "tokens_per_second": 36115.750982
+        },
+        "generated_text": "\\x8e\\xb7\\xcf\\xa8\\x12O\\xd8\\x9f",
+        "generated_token_ids": [
+          142,
+          183,
+          207,
+          168,
+          18,
+          79,
+          216,
+          159
+        ],
+        "model": {
+          "architecture": "qwen_toy",
+          "hf_id": "local/toy-qwen-smoke",
+          "hidden_size": 16,
+          "num_layers": 1,
+          "vocab_size": 256
+        },
+        "prompt": "hello",
+        "prompt_token_ids": [
+          104,
+          101,
+          108,
+          108,
+          111
+        ],
+        "warnings": [
+          "toy model only; not Qwen 9B",
+          "Android CPU/JNI reference only; not NPU, QNN, NNAPI, or Vulkan execution",
+          "byte tokenizer stub only; not the Qwen tokenizer",
+          "not a performance target claim"
+        ]
+      },
+      "finding": "Phase 7B toy decode successfully loaded the packaged toy model asset and generated 8 deterministic token IDs on Android native CPU/JNI."
+    },
+    {
+      "evidence": {
+        "all_correctness_passed": true,
+        "operators": [
+          "fp32_matvec",
+          "int4_dequant_matvec",
+          "rmsnorm",
+          "softmax",
+          "rope"
+        ]
+      },
+      "finding": "Native CPU reference fixtures still pass correctness on the target."
+    },
+    {
+      "evidence": {
+        "deferred": [
+          {
+            "feature_name": "sve2",
+            "notes": "reported only in 7A; SVE2 destructive probe deferred",
+            "probe_id": "sve2_instruction_probe"
+          },
+          {
+            "feature_name": "svei8mm",
+            "notes": "reported only in 7A; SVE i8mm probe deferred",
+            "probe_id": "svei8mm_instruction_probe"
+          },
+          {
+            "feature_name": "sme",
+            "notes": "reported only in 7A; SME streaming-mode entry is deferred",
+            "probe_id": "sme_state_probe"
+          }
+        ],
+        "executed_ok": [
+          {
+            "checksum": 2,
+            "feature_name": "asimd",
+            "probe_id": "asimd_neon_add"
+          },
+          {
+            "checksum": 3286908445,
+            "feature_name": "crc32",
+            "probe_id": "crc32cx_scalar"
+          },
+          {
+            "checksum": 8,
+            "feature_name": "asimddp",
+            "probe_id": "asimddp_udot"
+          },
+          {
+            "checksum": 16,
+            "feature_name": "i8mm",
+            "probe_id": "i8mm_smmla"
+          },
+          {
+            "checksum": 0,
+            "feature_name": "bf16",
+            "probe_id": "bf16_bfdot"
+          },
+          {
+            "checksum": 16,
+            "feature_name": "sve",
+            "probe_id": "sve_rdvl"
+          }
+        ],
+        "executed_ok_features": [
+          "asimd",
+          "crc32",
+          "asimddp",
+          "i8mm",
+          "bf16",
+          "sve"
+        ],
+        "safety": {
+          "destructive_unreported_feature_trials": false,
+          "executes_only_reported_features": true,
+          "process_isolation": false,
+          "strategy": "sigaction_sigsetjmp_same_process"
+        },
+        "sigill": [],
+        "summary": {
+          "executed_ok_count": 6,
+          "probe_count": 9,
+          "sigill_count": 0,
+          "skipped_count": 3
+        }
+      },
+      "finding": "Phase 7A continues to convert reported ARM CPU feature hints into executable evidence with zero SIGILL outcomes."
+    },
+    {
+      "evidence": {
+        "all_backend_probes": [
+          {
+            "backend": "vulkan",
+            "library": "libvulkan.so",
+            "loaded": true,
+            "status": "loaded"
+          },
+          {
+            "backend": "nnapi",
+            "library": "libneuralnetworks.so",
+            "loaded": true,
+            "status": "loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnSystem.so\" not found",
+            "library": "libQnnSystem.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnHtp.so\" not found",
+            "library": "libQnnHtp.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnCpu.so\" not found",
+            "library": "libQnnCpu.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnGpu.so\" not found",
+            "library": "libQnnGpu.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnDsp.so\" not found",
+            "library": "libQnnDsp.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "dsp_rpc",
+            "error": "dlopen failed: library \"libcdsprpc.so\" not found",
+            "library": "libcdsprpc.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "dsp_rpc",
+            "error": "dlopen failed: library \"libadsprpc.so\" not found",
+            "library": "libadsprpc.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "snpe",
+            "error": "dlopen failed: library \"libSNPE.so\" not found",
+            "library": "libSNPE.so",
+            "loaded": false,
+            "status": "not_loaded"
+          }
+        ],
+        "loaded_backends": [
+          {
+            "backend": "vulkan",
+            "library": "libvulkan.so",
+            "loaded": true,
+            "status": "loaded"
+          },
+          {
+            "backend": "nnapi",
+            "library": "libneuralnetworks.so",
+            "loaded": true,
+            "status": "loaded"
+          }
+        ],
+        "qnn_not_loaded": [
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnSystem.so\" not found",
+            "library": "libQnnSystem.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnHtp.so\" not found",
+            "library": "libQnnHtp.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnCpu.so\" not found",
+            "library": "libQnnCpu.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnGpu.so\" not found",
+            "library": "libQnnGpu.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnDsp.so\" not found",
+            "library": "libQnnDsp.so",
+            "loaded": false,
+            "status": "not_loaded"
+          }
+        ]
+      },
+      "finding": "Phase 6 backend loading still shows Vulkan and NNAPI libraries load, while QNN/SNPE/DSP RPC libraries do not load from app-accessible paths."
+    },
+    {
+      "evidence": {
+        "hardware_concurrency": 8,
+        "memory_copy_cases": [
+          {
+            "bandwidth_mib_per_second": 8744.311301,
+            "bytes": 4096,
+            "checksum": 254760,
+            "iterations": 2000,
+            "latency_ms": 0.893438
+          },
+          {
+            "bandwidth_mib_per_second": 29600.388831,
+            "bytes": 65536,
+            "checksum": 101648,
+            "iterations": 800,
+            "latency_ms": 1.689167
+          },
+          {
+            "bandwidth_mib_per_second": 44782.201762,
+            "bytes": 1048576,
+            "checksum": 14972,
+            "iterations": 120,
+            "latency_ms": 2.679636
+          },
+          {
+            "bandwidth_mib_per_second": 98698.820549,
+            "bytes": 4194304,
+            "checksum": 2508,
+            "iterations": 24,
+            "latency_ms": 0.972656
+          }
+        ],
+        "page_size_bytes": 4096,
+        "sched_affinity": {
+          "cpus": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "readable": true
+        },
+        "thread_scaling": [
+          {
+            "checksum": 3666709889157964563,
+            "iterations_per_thread": 220000,
+            "latency_ms": 2.252396,
+            "threads": 1,
+            "work_items_per_second": 97673766.069554
+          },
+          {
+            "checksum": 9.911838102848459e+18,
+            "iterations_per_thread": 220000,
+            "latency_ms": 2.314219,
+            "threads": 2,
+            "work_items_per_second": 190128937.667524
+          },
+          {
+            "checksum": 1690835006687219828,
+            "iterations_per_thread": 220000,
+            "latency_ms": 4.079792,
+            "threads": 4,
+            "work_items_per_second": 215697270.841259
+          },
+          {
+            "checksum": 1.1578508367599153e+19,
+            "iterations_per_thread": 220000,
+            "latency_ms": 4.749635,
+            "threads": 8,
+            "work_items_per_second": 370554789.999653
+          }
+        ]
+      },
+      "finding": "CPU topology and memory probes are available for CPU fallback/kernel planning, but they are short app-process probes and not performance targets."
+    },
+    {
+      "evidence": {
+        "native_warnings": [
+          "tiny deterministic native CPU microbenchmarks only",
+          "not Qwen 9B inference",
+          "not NPU or QNN execution",
+          "not a performance target claim"
+        ],
+        "phase6_backend_warnings": [
+          "dlopen probes only test library loadability; they do not execute accelerator kernels"
+        ],
+        "phase7a_warnings": [
+          "Phase 7A executes tiny guarded CPU instruction probes only; not Qwen 9B inference",
+          "SIGILL guard is a same-process safety net; process isolation remains future work for more destructive fuzzing",
+          "ISA probe success only validates that one tiny instruction fixture executed, not full kernel correctness or performance",
+          "not NPU, QNN, NNAPI, or Vulkan execution; not a performance target claim"
+        ],
+        "toy_decode_warnings": [
+          "toy model only; not Qwen 9B",
+          "Android CPU/JNI reference only; not NPU, QNN, NNAPI, or Vulkan execution",
+          "byte tokenizer stub only; not the Qwen tokenizer",
+          "not a performance target claim"
+        ]
+      },
+      "finding": "This session still does not prove Qwen 9B inference, QNN/NPU execution, or the 20 tokens/sec target."
+    }
+  ]
+}

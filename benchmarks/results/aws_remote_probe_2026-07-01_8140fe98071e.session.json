@@ -1,0 +1,123 @@
+{
+  "first_log_json_timestamp": "2026-07-01T22:15:22.872132Z",
+  "harness_events": [
+    {
+      "data": "Starting 00000 with device R3GL105R47R",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:15:22.872132Z"
+    },
+    {
+      "data": "Using network profile Default network profile",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:15:31.169996Z"
+    },
+    {
+      "data": "Bandwidth (bps): up 104857600, down 104857600.",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:15:31.170281Z"
+    },
+    {
+      "data": "Delay (ms): up 0, down 0.",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:15:31.170433Z"
+    },
+    {
+      "data": "Jitter (ms): up 0, down 0.",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:15:31.170634Z"
+    },
+    {
+      "data": "Loss (%): up 0, down 0.",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:15:31.170748Z"
+    },
+    {
+      "data": "Successful test lifecycle of Setup Test",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:15:32.544689Z"
+    },
+    {
+      "data": "Tests stopped: Stopped by request",
+      "level": "Stopped",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:19:14.057728Z"
+    },
+    {
+      "data": "Tests stopped: Timeout exceeded during test execution",
+      "level": "Stopped",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:19:15.915916Z"
+    },
+    {
+      "data": "Interactive test passed",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:19:20.925629Z"
+    },
+    {
+      "data": "Finished Tests",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:19:22.398239Z"
+    },
+    {
+      "data": "Finished Tests Suite",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:19:22.398945Z"
+    },
+    {
+      "data": "Successful test lifecycle of Teardown Test",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T22:19:35.033801Z"
+    }
+  ],
+  "interactive_test_passed": true,
+  "last_log_json_timestamp": "2026-07-02T05:19:34.696452Z",
+  "log_json_entry_count": 48258,
+  "qpnpu_payload_counts": {
+    "native": 1,
+    "phase6": 1,
+    "phase7a": 1,
+    "probe": 1,
+    "toy_decode": 1
+  },
+  "qpnpu_payload_order": [
+    "probe",
+    "native",
+    "phase6",
+    "phase7a",
+    "toy_decode"
+  ],
+  "schema_version": "0.1",
+  "source": "codex-derived-devicefarm-session-summary",
+  "source_files": {
+    "all_qpnpu_payloads_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_8140fe98071e.all_qpnpu_payloads.json",
+    "download_log_json": "C:\\Users\\Yingjie Huang\\Downloads\\log (3).json",
+    "download_logcat": "C:\\Users\\Yingjie Huang\\Downloads\\logcat-8140fe98071e.logcat"
+  },
+  "stopped_by_request_seen": true,
+  "timeout_stop_seen": true,
+  "timestamp_utc": "2026-07-01T22:27:38.135829Z"
+}
