@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently completing Phase 7B. Each phase should leave behind a small, testable checkpoint.
+This repository is currently completing Phase 7C. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -161,7 +161,27 @@ Phase 7B result:
 - `scripts/android/extract_probe_json_from_logcat.py --kind toy_decode` extracts Phase 7B logcat payloads.
 - `docs/PHASE_7B_ANDROID_TOY_DECODE.md` records the runbook and guardrails.
 
-## Phase 7: Kernel Generation
+## Phase 7C: Generated Native CPU Kernel Candidates
+
+Exit criteria:
+
+- The Android APK exposes a `Gen Kernels` action.
+- A native generated-candidate harness builds into `qpnpu_probe_native`.
+- Tiny deterministic candidates run only when their target feature is reported, except scalar baseline.
+- Executed candidates compare against deterministic references and report per-candidate correctness.
+- SVE2, SVEI8MM, and SME are represented as deferred experimental candidates unless a safer isolated runner exists.
+- Phase 7C JSON is logged between `QPNPU_PHASE7C_JSON_BEGIN` and `QPNPU_PHASE7C_JSON_END`.
+- Host extraction and validation tests pass without Android hardware.
+- No real Qwen 9B, QNN/NPU execution, or performance claim is made.
+
+Phase 7C result:
+
+- `android/probe-app/app/src/main/cpp/qpnpu_phase7c_native.cpp` implements generated native candidate fixtures.
+- `qpnpu/android_phase7c.py` validates Phase 7C payloads.
+- `scripts/android/extract_probe_json_from_logcat.py --kind phase7c` extracts Phase 7C logcat payloads.
+- `docs/PHASE_7C_GENERATED_KERNELS.md` records the runbook and guardrails.
+
+## Phase 7D: Kernel Generation Iteration
 
 Exit criteria:
 

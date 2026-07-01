@@ -8,6 +8,8 @@ The long-term performance target is at least 20 decode tokens/sec. No performanc
 
 ## Current Status
 
+Phase 7C adds generated native CPU kernel candidates inside the Android APK. The app can run tiny feature-gated CPU fixtures, compare them against deterministic references, and log candidate-level JSON. It is not Qwen 9B, not QNN/NPU/Vulkan/NNAPI execution, and not a performance-target benchmark.
+
 Phase 7B adds an Android packaged toy decode smoke path. The APK carries a tiny deterministic QPNPU toy model asset and runs a native CPU/JNI reference decode-like loop, then displays and logs JSON. It is not Qwen 9B, not the Qwen tokenizer, not QNN/NPU/Vulkan/NNAPI execution, and not a performance-target benchmark.
 
 Phase 7A adds guarded ARM ISA instruction probes from the Android app process. It validates selected reported CPU features with tiny SIGILL-guarded fixtures and still does not run Qwen 9B, QNN, Vulkan kernels, NPU execution, or performance-target benchmarks.
@@ -52,6 +54,33 @@ python tools/kernelgen/generate_kernels.py --probe benchmarks/results/sample_pro
 python scripts/autotune/run_autotune.py --dry-run
 ```
 
+
+## Phase 7C Generated Kernel Candidate Quickstart
+
+Build the APK:
+
+```powershell
+cd android\probe-app
+.\gradlew.bat assembleDebug
+```
+
+In AWS Device Farm Remote Access, upload/install the APK, launch `QPNPU Hardware Probe`, and tap `Gen Kernels`. The app logs generated-kernel candidate JSON between:
+
+```text
+QPNPU_PHASE7C_JSON_BEGIN
+QPNPU_PHASE7C_JSON_END
+```
+
+Extract it from downloaded logcat:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind phase7c \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_phase7c_<date>.json
+```
+
+Phase 7C validates generated native CPU candidate plumbing and correctness only. SVE2, SVEI8MM, and SME candidates are listed but deferred until safer isolation exists. Do not treat any latency field as a trial performance claim.
 
 ## Phase 7B Android Toy Decode Quickstart
 
@@ -294,7 +323,7 @@ AWS Remote Access may start after Phase 4A for manual app/hardware smoke validat
 ## What Works Locally
 
 - Python unit tests run without Android hardware, AWS credentials, Qualcomm SDKs, or network access.
-- A minimal Android probe app project exists under `android/probe-app` with an NDK/JNI CPU microbenchmark harness and a packaged toy decode asset smoke path.
+- A minimal Android probe app project exists under `android/probe-app` with an NDK/JNI CPU microbenchmark harness, generated CPU kernel candidates, and a packaged toy decode asset smoke path.
 - A toy QPNPU model can be created, inspected, decoded with a CPU Python reference path, and emitted as benchmark JSON.
 - Sample probe JSON can be validated and summarized.
 - ADB raw-output fixtures validate the Phase 1 parser path without requiring a real device.
@@ -305,16 +334,15 @@ AWS Remote Access may start after Phase 4A for manual app/hardware smoke validat
 
 ## What Is Stubbed
 
-- The Android probe APK does not run real Qwen inference, QNN, or NPU code; Phase 5 native microbenchmarks and Phase 7B toy decode are tiny CPU-only harness checks.
+- The Android probe APK does not run real Qwen inference, QNN, or NPU code; Phase 5 native microbenchmarks, Phase 7B toy decode, and Phase 7C generated candidates are tiny CPU-only harness checks.
 - The Phase 3 toy runtime is not a transformer and is not Qwen 9B inference.
 - Vulkan, NNAPI, and QNN backends are safe unavailable stubs.
 - AWS Device Farm scripts only check for `aws`, print usage, and show intended commands.
 - Generated kernels remain placeholders.
-- No Qwen 9B, accelerator, or NPU benchmark exists; Phase 5 and Phase 7B only validate native CPU execution and model-asset plumbing.
+- No Qwen 9B, accelerator, or NPU benchmark exists; Phase 5, Phase 7B, and Phase 7C only validate native CPU execution, model-asset plumbing, and generated-candidate correctness plumbing.
 
 ## Next Phases
 
-1. Phase 7C: Generated native CPU kernel candidates gated by Phase 7A ISA evidence and Phase 5 correctness fixtures.
-2. Phase 8: Backend probing for NNAPI, Vulkan, and QNN availability with conservative CPU fallback.
-3. Phase 9: Automated Android/Device Farm benchmark runs once a test runner exists.
-4. Phase 10: Full model integration analysis with recorded artifacts before any tokens/sec claim.
+1. Phase 8: Conservative backend API enumeration for NNAPI, Vulkan, and QNN availability with CPU fallback.
+2. Phase 9: Automated Android/Device Farm benchmark runs once a test runner exists.
+3. Phase 10: Full model integration analysis with recorded artifacts before any tokens/sec claim.

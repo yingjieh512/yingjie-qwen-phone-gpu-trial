@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Extract QPNPU probe, native benchmark, Phase 6, Phase 7A, toy decode, or bundled JSON from AWS Device Farm logcat text."""
+"""Extract QPNPU probe, native benchmark, Phase 6, Phase 7A, Phase 7C, toy decode, or bundled JSON from AWS Device Farm logcat text."""
 
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ from qpnpu.android_logcat import (  # noqa: E402
     write_extracted_android_toy_decode_json,
     write_extracted_phase6_characterization_json,
     write_extracted_phase7a_isa_probes_json,
+    write_extracted_phase7c_generated_kernels_json,
     write_extracted_native_benchmark_json,
     write_extracted_probe_json,
 )
@@ -27,7 +28,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", required=True, help="Clean JSON output path.")
     parser.add_argument(
         "--kind",
-        choices=["probe", "native", "phase6", "phase7a", "toy_decode", "all"],
+        choices=["probe", "native", "phase6", "phase7a", "phase7c", "toy_decode", "all"],
         default="probe",
         help="Which QPNPU marker pair to extract, or all for a bundled artifact. Default: probe.",
     )
@@ -40,6 +41,8 @@ def main(argv: list[str] | None = None) -> int:
             out = write_extracted_phase6_characterization_json(args.logcat, args.out)
         elif args.kind == "phase7a":
             out = write_extracted_phase7a_isa_probes_json(args.logcat, args.out)
+        elif args.kind == "phase7c":
+            out = write_extracted_phase7c_generated_kernels_json(args.logcat, args.out)
         elif args.kind == "toy_decode":
             out = write_extracted_android_toy_decode_json(args.logcat, args.out)
         elif args.kind == "all":

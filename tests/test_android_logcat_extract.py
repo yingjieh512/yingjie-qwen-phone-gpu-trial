@@ -38,18 +38,27 @@ def test_extract_all_qpnpu_json_from_combined_logcat_fixtures() -> None:
             (fixture_dir / "android_native_microbench_logcat_smoke.txt").read_text(encoding="utf-8"),
             (fixture_dir / "android_phase6_logcat_smoke.txt").read_text(encoding="utf-8"),
             (fixture_dir / "android_phase7a_logcat_smoke.txt").read_text(encoding="utf-8"),
+            (fixture_dir / "android_phase7c_logcat_smoke.txt").read_text(encoding="utf-8"),
             (fixture_dir / "android_toy_decode_logcat_smoke.txt").read_text(encoding="utf-8"),
         ]
     )
 
     data = extract_all_qpnpu_json_from_logcat_text(combined)
 
-    assert data["payload_count"] == 5
-    assert data["counts"] == {"probe": 1, "native": 1, "phase6": 1, "phase7a": 1, "toy_decode": 1}
+    assert data["payload_count"] == 6
+    assert data["counts"] == {
+        "probe": 1,
+        "native": 1,
+        "phase6": 1,
+        "phase7a": 1,
+        "phase7c": 1,
+        "toy_decode": 1,
+    }
     assert [item["kind"] for item in data["payloads"]] == [
         "probe",
         "native",
         "phase6",
         "phase7a",
+        "phase7c",
         "toy_decode",
     ]

@@ -9,6 +9,7 @@ from typing import Any
 
 from qpnpu.android_phase6 import validate_phase6_characterization
 from qpnpu.android_phase7a import validate_phase7a_isa_probes
+from qpnpu.android_phase7c import validate_phase7c_generated_kernels
 from qpnpu.android_toy_decode import validate_android_toy_decode
 from qpnpu.benchmark import benchmark_results_from_payload
 from qpnpu.probe_schema import validate_probe_result
@@ -23,6 +24,8 @@ PHASE6_BEGIN_MARKER = "QPNPU_PHASE6_JSON_BEGIN"
 PHASE6_END_MARKER = "QPNPU_PHASE6_JSON_END"
 PHASE7A_BEGIN_MARKER = "QPNPU_PHASE7A_JSON_BEGIN"
 PHASE7A_END_MARKER = "QPNPU_PHASE7A_JSON_END"
+PHASE7C_BEGIN_MARKER = "QPNPU_PHASE7C_JSON_BEGIN"
+PHASE7C_END_MARKER = "QPNPU_PHASE7C_JSON_END"
 TOY_DECODE_BEGIN_MARKER = "QPNPU_TOY_DECODE_JSON_BEGIN"
 TOY_DECODE_END_MARKER = "QPNPU_TOY_DECODE_JSON_END"
 
@@ -32,6 +35,7 @@ _MARKER_SPECS = [
     ("native", NATIVE_BENCH_BEGIN_MARKER, NATIVE_BENCH_END_MARKER),
     ("phase6", PHASE6_BEGIN_MARKER, PHASE6_END_MARKER),
     ("phase7a", PHASE7A_BEGIN_MARKER, PHASE7A_END_MARKER),
+    ("phase7c", PHASE7C_BEGIN_MARKER, PHASE7C_END_MARKER),
     ("toy_decode", TOY_DECODE_BEGIN_MARKER, TOY_DECODE_END_MARKER),
 ]
 
@@ -129,6 +133,28 @@ def write_extracted_phase7a_isa_probes_json(logcat_path: str | Path, out_path: s
     return _write_json(data, out_path)
 
 
+
+def extract_phase7c_generated_kernels_json_from_logcat_text(text: str) -> dict[str, Any]:
+    """Extract and validate the first Phase 7C generated-kernel JSON from QPNPU logcat markers."""
+
+    data = _extract_json_with_markers(text, PHASE7C_BEGIN_MARKER, PHASE7C_END_MARKER)
+    validation_errors = validate_phase7c_generated_kernels(data)
+    if validation_errors:
+        raise ValueError("invalid extracted Phase 7C generated-kernel JSON: " + "; ".join(validation_errors))
+    return data
+
+
+def extract_phase7c_generated_kernels_json_from_logcat_file(path: str | Path) -> dict[str, Any]:
+    """Read a logcat text file and extract the first Phase 7C generated-kernel JSON object."""
+
+    return extract_phase7c_generated_kernels_json_from_logcat_text(Path(path).read_text(encoding="utf-8"))
+
+
+def write_extracted_phase7c_generated_kernels_json(logcat_path: str | Path, out_path: str | Path) -> Path:
+    """Extract Phase 7C generated-kernel JSON from logcat and write pretty JSON."""
+
+    data = extract_phase7c_generated_kernels_json_from_logcat_file(logcat_path)
+    return _write_json(data, out_path)
 def extract_android_toy_decode_json_from_logcat_text(text: str) -> dict[str, Any]:
     """Extract and validate the first Android toy decode JSON from QPNPU logcat markers."""
 
@@ -152,7 +178,7 @@ def write_extracted_android_toy_decode_json(logcat_path: str | Path, out_path: s
     return _write_json(data, out_path)
 
 def extract_all_qpnpu_json_from_logcat_text(text: str) -> dict[str, Any]:
-    """Extract every valid QPNPU probe/native/Phase 6/Phase 7A/toy decode payload from logcat text."""
+    """Extract every valid QPNPU probe/native/Phase 6/Phase 7A/Phase 7C/toy decode payload from logcat text."""
 
     payloads: list[dict[str, Any]] = []
     active_kind = ""
@@ -193,7 +219,7 @@ def extract_all_qpnpu_json_from_logcat_text(text: str) -> dict[str, Any]:
     if not payloads:
         raise ValueError("missing QPNPU JSON markers")
 
-    counts = {"probe": 0, "native": 0, "phase6": 0, "phase7a": 0, "toy_decode": 0}
+    counts = {"probe": 0, "native": 0, "phase6": 0, "phase7a": 0, "phase7c": 0, "toy_decode": 0}
     for item in payloads:
         counts[item["kind"]] += 1
 
@@ -285,6 +311,8 @@ def _validate_payload_by_kind(kind: str, data: dict[str, Any]) -> list[str]:
         return validate_phase6_characterization(data)
     if kind == "phase7a":
         return validate_phase7a_isa_probes(data)
+    if kind == "phase7c":
+        return validate_phase7c_generated_kernels(data)
     if kind == "toy_decode":
         return validate_android_toy_decode(data)
     return [f"unknown QPNPU payload kind: {kind}"]

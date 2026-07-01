@@ -44,6 +44,8 @@ public class MainActivity extends Activity {
     private static final String PHASE6_JSON_END = "QPNPU_PHASE6_JSON_END";
     private static final String PHASE7A_JSON_BEGIN = "QPNPU_PHASE7A_JSON_BEGIN";
     private static final String PHASE7A_JSON_END = "QPNPU_PHASE7A_JSON_END";
+    private static final String PHASE7C_JSON_BEGIN = "QPNPU_PHASE7C_JSON_BEGIN";
+    private static final String PHASE7C_JSON_END = "QPNPU_PHASE7C_JSON_END";
     private static final String TOY_DECODE_JSON_BEGIN = "QPNPU_TOY_DECODE_JSON_BEGIN";
     private static final String TOY_DECODE_JSON_END = "QPNPU_TOY_DECODE_JSON_END";
     private static final int LOG_CHUNK_SIZE = 3000;
@@ -65,6 +67,7 @@ public class MainActivity extends Activity {
     private native String nativeRunMicrobenchmarks();
     private native String nativeRunPhase6Characterization();
     private native String nativeRunPhase7AIsaProbes();
+    private native String nativeRunPhase7CGeneratedKernels();
     private native String nativeRunToyDecode(String metadataJson, byte[] modelBytes, String prompt, int maxNewTokens);
 
     @Override
@@ -100,6 +103,8 @@ public class MainActivity extends Activity {
         phase6Button.setText("Characterize HW");
         Button isaButton = new Button(this);
         isaButton.setText("ISA Probe");
+        Button generatedKernelButton = new Button(this);
+        generatedKernelButton.setText("Gen Kernels");
         Button toyDecodeButton = new Button(this);
         toyDecodeButton.setText("Toy Decode");
         Button copyButton = new Button(this);
@@ -123,6 +128,7 @@ public class MainActivity extends Activity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
+        modelButtons.addView(generatedKernelButton, buttonParams);
         modelButtons.addView(toyDecodeButton, buttonParams);
         root.addView(modelButtons, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -139,7 +145,7 @@ public class MainActivity extends Activity {
         outputText = new TextView(this);
         outputText.setTypeface(Typeface.MONOSPACE);
         outputText.setTextIsSelectable(true);
-        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, ISA Probe, or Toy Decode for smoke evidence.");
+        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, ISA Probe, Gen Kernels, or Toy Decode for smoke evidence.");
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(outputText, new ScrollView.LayoutParams(
@@ -174,6 +180,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 runPhase7AIsaProbe();
+            }
+        });
+        generatedKernelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runPhase7CGeneratedKernels();
             }
         });
         toyDecodeButton.setOnClickListener(new View.OnClickListener() {
@@ -292,6 +304,31 @@ public class MainActivity extends Activity {
         }).start();
     }
 
+
+    private void runPhase7CGeneratedKernels() {
+        outputText.setText("Running generated kernel candidates...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONArray warnings = new JSONArray();
+                try {
+                    JSONObject kernelJson = collectPhase7CGeneratedKernels(warnings);
+                    kernelJson.put("timestamp_utc", utcNow());
+                    kernelJson.put("device", collectDeviceInfo(warnings));
+                    kernelJson.put("thermal", collectThermalHints(warnings));
+                    kernelJson.put("warnings_from_java", warnings);
+                    saveJsonToExternalFile(kernelJson, "phase7c_generated_kernels.json", warnings);
+                    lastJson = kernelJson.toString(2);
+                    logPhase7CJson(lastJson);
+                    showText(lastJson);
+                } catch (final Exception exc) {
+                    final String message = "Generated kernel candidate run failed without crashing the app:\n" + exc;
+                    Log.e(TAG, message, exc);
+                    showText(message);
+                }
+            }
+        }).start();
+    }
     private void runToyDecode() {
         outputText.setText("Running toy decode...");
         new Thread(new Runnable() {
@@ -428,6 +465,43 @@ public class MainActivity extends Activity {
         }
     }
 
+
+    private JSONObject collectPhase7CGeneratedKernels(JSONArray warnings) throws JSONException {
+        if (!nativeLibraryLoaded) {
+            JSONObject unavailable = new JSONObject();
+            unavailable.put("schema_version", "0.1");
+            unavailable.put("source", "android-phase7c-generated-kernels");
+            unavailable.put("timestamp_utc", utcNow());
+            unavailable.put("backend", "cpu_android_generated_candidate");
+            unavailable.put("available", false);
+            unavailable.put("native_library", "qpnpu_probe_native");
+            unavailable.put("error", nativeLibraryLoadError);
+            unavailable.put("candidates", new JSONArray());
+            unavailable.put("warnings", new JSONArray().put("native library was not loaded; Phase 7C generated kernels did not run"));
+            warnings.put("Phase 7C native library was not loaded: " + nativeLibraryLoadError);
+            return unavailable;
+        }
+
+        try {
+            JSONObject payload = new JSONObject(nativeRunPhase7CGeneratedKernels());
+            payload.put("timestamp_utc", utcNow());
+            payload.put("available", true);
+            return payload;
+        } catch (Throwable exc) {
+            JSONObject failed = new JSONObject();
+            failed.put("schema_version", "0.1");
+            failed.put("source", "android-phase7c-generated-kernels");
+            failed.put("timestamp_utc", utcNow());
+            failed.put("backend", "cpu_android_generated_candidate");
+            failed.put("available", false);
+            failed.put("native_library", "qpnpu_probe_native");
+            failed.put("error", exc.toString());
+            failed.put("candidates", new JSONArray());
+            failed.put("warnings", new JSONArray().put("Phase 7C generated kernels failed; no Qwen 9B or performance claim"));
+            warnings.put("Phase 7C generated kernels failed: " + exc);
+            return failed;
+        }
+    }
     private JSONObject collectToyDecode(JSONArray warnings, String prompt, int maxNewTokens) throws JSONException {
         if (!nativeLibraryLoaded) {
             JSONObject unavailable = new JSONObject();
@@ -877,6 +951,10 @@ public class MainActivity extends Activity {
 
     private void logPhase7AJson(String json) {
         logJsonWithMarkers(PHASE7A_JSON_BEGIN, PHASE7A_JSON_END, json);
+    }
+
+    private void logPhase7CJson(String json) {
+        logJsonWithMarkers(PHASE7C_JSON_BEGIN, PHASE7C_JSON_END, json);
     }
 
     private void logToyDecodeJson(String json) {

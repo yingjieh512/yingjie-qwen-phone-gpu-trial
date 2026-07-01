@@ -217,3 +217,46 @@ Record:
 - The Device Farm device name/model, Android version, session ARN, screenshots, and log artifacts.
 
 This validates APK asset packaging and Android native CPU reference decode plumbing only. The toy model is not Qwen 9B, the tokenizer is a byte stub, execution is not NPU/QNN/NNAPI/Vulkan, and toy throughput is not a trial performance claim.
+
+## Phase 7C Generated Kernel Candidate Smoke Test
+
+After installing the Phase 7C APK in Remote Access:
+
+1. Launch `QPNPU Hardware Probe`.
+2. Tap `Gen Kernels`.
+3. Verify the UI shows generated-kernel candidate JSON and the app does not crash.
+4. Confirm logcat contains:
+
+```text
+QPNPU_PHASE7C_JSON_BEGIN
+QPNPU_PHASE7C_JSON_END
+```
+
+5. Download logcat and extract:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind phase7c \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_phase7c_<date>.json
+```
+
+6. Optionally preserve all button-tap payloads from the same session:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind all \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_probe_<date>.all_qpnpu_payloads.json
+```
+
+Record:
+
+- Whether the APK installed and launched.
+- Whether `Gen Kernels` emitted `source: android-phase7c-generated-kernels`.
+- Candidate names, statuses, target features, and correctness flags.
+- Whether any candidate returned `sigill`.
+- Which candidates were skipped or deferred.
+- Device Farm device name/model, Android version, session ARN, screenshots, and log artifacts.
+
+This validates generated native CPU candidate plumbing only. It is not Qwen 9B inference, not QNN/NPU/NNAPI/Vulkan execution, and not a tokens/sec performance claim.
