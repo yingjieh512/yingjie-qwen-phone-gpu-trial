@@ -44,6 +44,8 @@ public class MainActivity extends Activity {
     private static final String PHASE6_JSON_END = "QPNPU_PHASE6_JSON_END";
     private static final String PHASE7A_JSON_BEGIN = "QPNPU_PHASE7A_JSON_BEGIN";
     private static final String PHASE7A_JSON_END = "QPNPU_PHASE7A_JSON_END";
+    private static final String TOY_DECODE_JSON_BEGIN = "QPNPU_TOY_DECODE_JSON_BEGIN";
+    private static final String TOY_DECODE_JSON_END = "QPNPU_TOY_DECODE_JSON_END";
     private static final int LOG_CHUNK_SIZE = 3000;
     private static boolean nativeLibraryLoaded = false;
     private static String nativeLibraryLoadError = "";
@@ -63,6 +65,7 @@ public class MainActivity extends Activity {
     private native String nativeRunMicrobenchmarks();
     private native String nativeRunPhase6Characterization();
     private native String nativeRunPhase7AIsaProbes();
+    private native String nativeRunToyDecode(String metadataJson, byte[] modelBytes, String prompt, int maxNewTokens);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,8 @@ public class MainActivity extends Activity {
         primaryButtons.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout characterizationButtons = new LinearLayout(this);
         characterizationButtons.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout modelButtons = new LinearLayout(this);
+        modelButtons.setOrientation(LinearLayout.HORIZONTAL);
 
         Button runButton = new Button(this);
         runButton.setText("Run Probe");
@@ -95,6 +100,8 @@ public class MainActivity extends Activity {
         phase6Button.setText("Characterize HW");
         Button isaButton = new Button(this);
         isaButton.setText("ISA Probe");
+        Button toyDecodeButton = new Button(this);
+        toyDecodeButton.setText("Toy Decode");
         Button copyButton = new Button(this);
         copyButton.setText("Copy JSON");
         Button clearButton = new Button(this);
@@ -116,6 +123,11 @@ public class MainActivity extends Activity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
+        modelButtons.addView(toyDecodeButton, buttonParams);
+        root.addView(modelButtons, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
         LinearLayout utilityButtons = new LinearLayout(this);
         utilityButtons.setOrientation(LinearLayout.HORIZONTAL);
         utilityButtons.addView(copyButton, buttonParams);
@@ -127,7 +139,7 @@ public class MainActivity extends Activity {
         outputText = new TextView(this);
         outputText.setTypeface(Typeface.MONOSPACE);
         outputText.setTextIsSelectable(true);
-        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, or ISA Probe for hardware evidence.");
+        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, ISA Probe, or Toy Decode for smoke evidence.");
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(outputText, new ScrollView.LayoutParams(
@@ -164,7 +176,12 @@ public class MainActivity extends Activity {
                 runPhase7AIsaProbe();
             }
         });
-        copyButton.setOnClickListener(new View.OnClickListener() {
+        toyDecodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runToyDecode();
+            }
+        });        copyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 copyLastJson();
@@ -268,6 +285,31 @@ public class MainActivity extends Activity {
                     showText(lastJson);
                 } catch (final Exception exc) {
                     final String message = "Guarded ISA probe failed without crashing the app:\n" + exc;
+                    Log.e(TAG, message, exc);
+                    showText(message);
+                }
+            }
+        }).start();
+    }
+
+    private void runToyDecode() {
+        outputText.setText("Running toy decode...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONArray warnings = new JSONArray();
+                try {
+                    JSONObject toyJson = collectToyDecode(warnings, "hello", 8);
+                    toyJson.put("timestamp_utc", utcNow());
+                    toyJson.put("device", collectDeviceInfo(warnings));
+                    toyJson.put("thermal", collectThermalHints(warnings));
+                    toyJson.put("warnings_from_java", warnings);
+                    saveJsonToExternalFile(toyJson, "toy_decode.json", warnings);
+                    lastJson = toyJson.toString(2);
+                    logToyDecodeJson(lastJson);
+                    showText(lastJson);
+                } catch (final Exception exc) {
+                    final String message = "Toy decode failed without crashing the app:\n" + exc;
                     Log.e(TAG, message, exc);
                     showText(message);
                 }
@@ -382,6 +424,45 @@ public class MainActivity extends Activity {
             failed.put("isa_probes", new JSONArray());
             failed.put("warnings", new JSONArray().put("Phase 7A guarded ISA probes failed; no performance claim"));
             warnings.put("Phase 7A guarded ISA probes failed: " + exc);
+            return failed;
+        }
+    }
+
+    private JSONObject collectToyDecode(JSONArray warnings, String prompt, int maxNewTokens) throws JSONException {
+        if (!nativeLibraryLoaded) {
+            JSONObject unavailable = new JSONObject();
+            unavailable.put("schema_version", "0.1");
+            unavailable.put("source", "android-toy-decode");
+            unavailable.put("timestamp_utc", utcNow());
+            unavailable.put("backend", "cpu_android_native_reference");
+            unavailable.put("available", false);
+            unavailable.put("native_library", "qpnpu_probe_native");
+            unavailable.put("error", nativeLibraryLoadError);
+            unavailable.put("generated_token_ids", new JSONArray());
+            unavailable.put("warnings", new JSONArray().put("native library was not loaded; Android toy decode did not run"));
+            warnings.put("toy decode native library was not loaded: " + nativeLibraryLoadError);
+            return unavailable;
+        }
+
+        try {
+            String metadataJson = readAssetText("toy_qwen_7b/metadata.json", 65536);
+            byte[] modelBytes = readAssetBytes("toy_qwen_7b/model.bin", 256 * 1024);
+            JSONObject payload = new JSONObject(nativeRunToyDecode(metadataJson, modelBytes, prompt, maxNewTokens));
+            payload.put("timestamp_utc", utcNow());
+            payload.put("available", true);
+            return payload;
+        } catch (Throwable exc) {
+            JSONObject failed = new JSONObject();
+            failed.put("schema_version", "0.1");
+            failed.put("source", "android-toy-decode");
+            failed.put("timestamp_utc", utcNow());
+            failed.put("backend", "cpu_android_native_reference");
+            failed.put("available", false);
+            failed.put("native_library", "qpnpu_probe_native");
+            failed.put("error", exc.toString());
+            failed.put("generated_token_ids", new JSONArray());
+            failed.put("warnings", new JSONArray().put("Android toy decode failed; no Qwen 9B or performance claim"));
+            warnings.put("Android toy decode failed: " + exc);
             return failed;
         }
     }
@@ -797,6 +878,11 @@ public class MainActivity extends Activity {
     private void logPhase7AJson(String json) {
         logJsonWithMarkers(PHASE7A_JSON_BEGIN, PHASE7A_JSON_END, json);
     }
+
+    private void logToyDecodeJson(String json) {
+        logJsonWithMarkers(TOY_DECODE_JSON_BEGIN, TOY_DECODE_JSON_END, json);
+    }
+
     private void logJsonWithMarkers(String begin, String endMarker, String json) {
         Log.i(TAG, begin);
         for (int start = 0; start < json.length(); start += LOG_CHUNK_SIZE) {
@@ -831,6 +917,36 @@ public class MainActivity extends Activity {
         }
     }
 
+
+    private String readAssetText(String assetPath, int maxChars) throws IOException {
+        try (InputStream input = getAssets().open(assetPath)) {
+            return readStream(input, maxChars);
+        }
+    }
+
+    private byte[] readAssetBytes(String assetPath, int maxBytes) throws IOException {
+        if (maxBytes <= 0) {
+            return new byte[0];
+        }
+        try (InputStream input = getAssets().open(assetPath)) {
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int total = 0;
+            while (total < maxBytes) {
+                int allowed = Math.min(buffer.length, maxBytes - total);
+                int read = input.read(buffer, 0, allowed);
+                if (read < 0) {
+                    break;
+                }
+                output.write(buffer, 0, read);
+                total += read;
+            }
+            if (input.read() >= 0) {
+                throw new IOException("asset exceeds max byte limit: " + assetPath);
+            }
+            return output.toByteArray();
+        }
+    }
     private String readStream(InputStream input, int maxChars) throws IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         byte[] buffer = new byte[4096];

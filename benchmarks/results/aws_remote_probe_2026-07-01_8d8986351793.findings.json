@@ -1,0 +1,349 @@
+{
+    "schema_version":  "0.1",
+    "source":  "codex-derived-devicefarm-findings",
+    "source_files":  {
+                         "download_log_json":  "C:\\Users\\Yingjie Huang\\Downloads\\log (2).json",
+                         "download_logcat":  "C:\\Users\\Yingjie Huang\\Downloads\\logcat-8d8986351793.logcat",
+                         "all_qpnpu_payloads_json":  "benchmarks\\results\\aws_remote_probe_2026-07-01_8d8986351793.all_qpnpu_payloads.json",
+                         "latest_probe_json":  "benchmarks\\results\\aws_remote_probe_2026-07-01_8d8986351793_latest.json",
+                         "latest_native_json":  "benchmarks\\results\\aws_remote_native_microbench_2026-07-01_8d8986351793_latest.json",
+                         "latest_phase6_json":  "benchmarks\\results\\aws_remote_phase6_2026-07-01_8d8986351793_latest.json",
+                         "latest_phase7a_json":  "benchmarks\\results\\aws_remote_phase7a_2026-07-01_8d8986351793_latest.json"
+                     },
+    "device_farm_session":  {
+                                "first_log_json_timestamp":  "2026-07-01T05:06:57.523531Z",
+                                "last_log_json_timestamp":  "2026-07-01T12:10:26.294890Z",
+                                "log_json_entry_count":  48185,
+                                "harness_events":  [
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:06:57.523531Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Starting 00000 with device RFGL126LSST"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:07:05.853940Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Using network profile Default network profile"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:07:05.854140Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Bandwidth (bps): up 104857600, down 104857600."
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:07:05.854319Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Delay (ms): up 0, down 0."
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:07:05.854429Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Jitter (ms): up 0, down 0."
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:07:05.854576Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Loss (%): up 0, down 0."
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:07:07.290922Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Passed",
+                                                           "tag":  null,
+                                                           "data":  "Successful test lifecycle of Setup Test"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:10:08.695917Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Stopped",
+                                                           "tag":  null,
+                                                           "data":  "Tests stopped: Stopped by request"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:10:08.789910Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Stopped",
+                                                           "tag":  null,
+                                                           "data":  "Tests stopped: Timeout exceeded during test execution"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:10:13.799876Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Passed",
+                                                           "tag":  null,
+                                                           "data":  "Interactive test passed"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:10:15.131572Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Finished Tests"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:10:15.132222Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Info",
+                                                           "tag":  null,
+                                                           "data":  "Finished Tests Suite"
+                                                       },
+                                                       {
+                                                           "timestamp":  "2026-07-01T05:10:26.854350Z",
+                                                           "source":  "Harness",
+                                                           "level":  "Passed",
+                                                           "tag":  null,
+                                                           "data":  "Successful test lifecycle of Teardown Test"
+                                                       }
+                                                   ],
+                                "interactive_test_passed":  true,
+                                "stopped_by_request_seen":  true,
+                                "timeout_stop_seen":  true,
+                                "qpnpu_payload_counts":  {
+                                                             "native":  2,
+                                                             "phase6":  2,
+                                                             "phase7a":  2,
+                                                             "probe":  2
+                                                         }
+                            },
+    "device":  {
+                   "android_release":  "16",
+                   "board":  "canoe",
+                   "device":  "m3q",
+                   "hardware":  "qcom",
+                   "manufacturer":  "samsung",
+                   "model":  "SM-S948U1",
+                   "sdk_version":  36,
+                   "soc_manufacturer":  "QTI",
+                   "soc_model":  "SM8850",
+                   "supported_abis":  [
+                                          "arm64-v8a"
+                                      ]
+               },
+    "useful_findings":  [
+                            {
+                                "finding":  "Device Farm installed and launched the rebuilt Phase 7A APK; the interactive session passed.",
+                                "evidence":  {
+                                                 "interactive_test_passed":  true,
+                                                 "qpnpu_payload_counts":  {
+                                                                              "native":  2,
+                                                                              "phase6":  2,
+                                                                              "phase7a":  2,
+                                                                              "probe":  2
+                                                                          }
+                                             }
+                            },
+                            {
+                                "finding":  "The app emitted repeated full probe, native benchmark, Phase 6 characterization, and Phase 7A guarded ISA payloads.",
+                                "evidence":  {
+                                                 "probe_payloads":  2,
+                                                 "native_payloads":  2,
+                                                 "phase6_payloads":  2,
+                                                 "phase7a_payloads":  2
+                                             }
+                            },
+                            {
+                                "finding":  "Phase 7A converted several ARM CPU feature hints into executable evidence with SIGILL guards.",
+                                "evidence":  {
+                                                 "summary":  {
+                                                                 "executed_ok_count":  6,
+                                                                 "probe_count":  9,
+                                                                 "sigill_count":  0,
+                                                                 "skipped_count":  3
+                                                             },
+                                                 "executed_ok":  [
+                                                                     {
+                                                                         "feature_name":  "asimd",
+                                                                         "probe_id":  "asimd_neon_add",
+                                                                         "checksum":  2
+                                                                     },
+                                                                     {
+                                                                         "feature_name":  "crc32",
+                                                                         "probe_id":  "crc32cx_scalar",
+                                                                         "checksum":  3286908445
+                                                                     },
+                                                                     {
+                                                                         "feature_name":  "asimddp",
+                                                                         "probe_id":  "asimddp_udot",
+                                                                         "checksum":  8
+                                                                     },
+                                                                     {
+                                                                         "feature_name":  "i8mm",
+                                                                         "probe_id":  "i8mm_smmla",
+                                                                         "checksum":  16
+                                                                     },
+                                                                     {
+                                                                         "feature_name":  "bf16",
+                                                                         "probe_id":  "bf16_bfdot",
+                                                                         "checksum":  0
+                                                                     },
+                                                                     {
+                                                                         "feature_name":  "sve",
+                                                                         "probe_id":  "sve_rdvl",
+                                                                         "checksum":  16
+                                                                     }
+                                                                 ],
+                                                 "sigill":  [
+
+                                                            ],
+                                                 "deferred":  [
+                                                                  {
+                                                                      "feature_name":  "sve2",
+                                                                      "probe_id":  "sve2_instruction_probe",
+                                                                      "notes":  "reported only in 7A; SVE2 destructive probe deferred"
+                                                                  },
+                                                                  {
+                                                                      "feature_name":  "svei8mm",
+                                                                      "probe_id":  "svei8mm_instruction_probe",
+                                                                      "notes":  "reported only in 7A; SVE i8mm probe deferred"
+                                                                  },
+                                                                  {
+                                                                      "feature_name":  "sme",
+                                                                      "probe_id":  "sme_state_probe",
+                                                                      "notes":  "reported only in 7A; SME streaming-mode entry is deferred"
+                                                                  }
+                                                              ],
+                                                 "safety":  {
+                                                                "destructive_unreported_feature_trials":  false,
+                                                                "executes_only_reported_features":  true,
+                                                                "process_isolation":  false,
+                                                                "strategy":  "sigaction_sigsetjmp_same_process"
+                                                            }
+                                             }
+                            },
+                            {
+                                "finding":  "The latest Phase 7A run had zero SIGILL outcomes; ASIMD, CRC32, ASIMDDP, I8MM, BF16, and SVE fixtures executed successfully.",
+                                "evidence":  {
+                                                 "executed_ok_features":  [
+                                                                              "asimd",
+                                                                              "crc32",
+                                                                              "asimddp",
+                                                                              "i8mm",
+                                                                              "bf16",
+                                                                              "sve"
+                                                                          ],
+                                                 "sigill_count":  0,
+                                                 "skipped_count":  3
+                                             }
+                            },
+                            {
+                                "finding":  "SVE2, SVEI8MM, and SME remain reported-but-deferred, which is the intended conservative behavior for this phase.",
+                                "evidence":  {
+                                                 "deferred":  [
+                                                                  {
+                                                                      "feature_name":  "sve2",
+                                                                      "probe_id":  "sve2_instruction_probe",
+                                                                      "notes":  "reported only in 7A; SVE2 destructive probe deferred"
+                                                                  },
+                                                                  {
+                                                                      "feature_name":  "svei8mm",
+                                                                      "probe_id":  "svei8mm_instruction_probe",
+                                                                      "notes":  "reported only in 7A; SVE i8mm probe deferred"
+                                                                  },
+                                                                  {
+                                                                      "feature_name":  "sme",
+                                                                      "probe_id":  "sme_state_probe",
+                                                                      "notes":  "reported only in 7A; SME streaming-mode entry is deferred"
+                                                                  }
+                                                              ]
+                                             }
+                            },
+                            {
+                                "finding":  "Native CPU reference kernels still pass correctness on the target.",
+                                "evidence":  {
+                                                 "all_correctness_passed":  true,
+                                                 "operators":  [
+                                                                   "fp32_matvec",
+                                                                   "int4_dequant_matvec",
+                                                                   "rmsnorm",
+                                                                   "softmax",
+                                                                   "rope"
+                                                               ]
+                                             }
+                            },
+                            {
+                                "finding":  "Backend loading evidence remains unchanged: Vulkan and NNAPI libraries load, while QNN libraries do not load from app-accessible linker paths.",
+                                "evidence":  {
+                                                 "loaded_backends":  [
+                                                                         {
+                                                                             "backend":  "vulkan",
+                                                                             "library":  "libvulkan.so",
+                                                                             "status":  "loaded"
+                                                                         },
+                                                                         {
+                                                                             "backend":  "nnapi",
+                                                                             "library":  "libneuralnetworks.so",
+                                                                             "status":  "loaded"
+                                                                         }
+                                                                     ],
+                                                 "qnn":  [
+                                                             {
+                                                                 "library":  "libQnnSystem.so",
+                                                                 "status":  "not_loaded",
+                                                                 "error":  "dlopen failed: library \"libQnnSystem.so\" not found"
+                                                             },
+                                                             {
+                                                                 "library":  "libQnnHtp.so",
+                                                                 "status":  "not_loaded",
+                                                                 "error":  "dlopen failed: library \"libQnnHtp.so\" not found"
+                                                             },
+                                                             {
+                                                                 "library":  "libQnnCpu.so",
+                                                                 "status":  "not_loaded",
+                                                                 "error":  "dlopen failed: library \"libQnnCpu.so\" not found"
+                                                             },
+                                                             {
+                                                                 "library":  "libQnnGpu.so",
+                                                                 "status":  "not_loaded",
+                                                                 "error":  "dlopen failed: library \"libQnnGpu.so\" not found"
+                                                             },
+                                                             {
+                                                                 "library":  "libQnnDsp.so",
+                                                                 "status":  "not_loaded",
+                                                                 "error":  "dlopen failed: library \"libQnnDsp.so\" not found"
+                                                             }
+                                                         ]
+                                             }
+                            },
+                            {
+                                "finding":  "This still does not prove NPU execution, QNN availability, Qwen 9B inference, or the 20 tokens/sec target.",
+                                "evidence":  {
+                                                 "phase7a_warnings":  [
+                                                                          "Phase 7A executes tiny guarded CPU instruction probes only; not Qwen 9B inference",
+                                                                          "SIGILL guard is a same-process safety net; process isolation remains future work for more destructive fuzzing",
+                                                                          "ISA probe success only validates that one tiny instruction fixture executed, not full kernel correctness or performance",
+                                                                          "not NPU, QNN, NNAPI, or Vulkan execution; not a performance target claim"
+                                                                      ],
+                                                 "native_warnings":  [
+                                                                         "tiny deterministic native CPU microbenchmarks only",
+                                                                         "not Qwen 9B inference",
+                                                                         "not NPU or QNN execution",
+                                                                         "not a performance target claim"
+                                                                     ]
+                                             }
+                            }
+                        ],
+    "recommended_next_gates":  [
+                                   "Phase 7B: Android packaged toy Qwen-like decode smoke path with tiny assets and CPU/JNI execution",
+                                   "Phase 8: generated CPU kernels gated by the Phase 7A executed_ok feature set",
+                                   "Phase 9: backend API enumeration for NNAPI/Vulkan/QNN without accelerator performance claims",
+                                   "Phase 10: model packaging/conversion plan outside Device Farm before any real 9B attempt"
+                               ],
+    "guardrails":  [
+                       "not Qwen 9B inference",
+                       "not QNN/NPU execution",
+                       "not a performance target claim",
+                       "Device Farm remains useful for small APKs and JSON/log validation, not large model downloads"
+                   ]
+}

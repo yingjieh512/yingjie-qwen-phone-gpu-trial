@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently completing Phase 7A. Each phase should leave behind a small, testable checkpoint.
+This repository is currently completing Phase 7B. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -140,6 +140,27 @@ Phase 7A result:
 - `qpnpu/android_phase7a.py` validates Phase 7A payloads.
 - `scripts/android/extract_probe_json_from_logcat.py --kind phase7a` extracts Phase 7A logcat payloads.
 - `docs/PHASE_7A_GUARDED_ISA_PROBES.md` records the runbook and guardrails.
+
+## Phase 7B: Android Toy Decode Asset Smoke
+
+Exit criteria:
+
+- The Android APK exposes a `Toy Decode` action.
+- A tiny deterministic QPNPU toy model is packaged under app assets.
+- Native JNI code loads toy metadata and tensor bytes from assets.
+- The native path runs a deterministic CPU reference decode-like loop for prompt `hello`.
+- Toy decode JSON is displayed, saved best-effort, and logged between `QPNPU_TOY_DECODE_JSON_BEGIN` and `QPNPU_TOY_DECODE_JSON_END`.
+- Host extraction and validation tests pass without Android hardware.
+- No real Qwen 9B, QNN/NPU execution, or performance claim is made.
+
+Phase 7B result:
+
+- `android/probe-app/app/src/main/assets/toy_qwen_7b/` contains the packaged toy model.
+- `android/probe-app/app/src/main/cpp/qpnpu_toy_decode_native.cpp` implements Android native toy decode.
+- `qpnpu/android_toy_decode.py` validates toy decode payloads.
+- `scripts/android/extract_probe_json_from_logcat.py --kind toy_decode` extracts Phase 7B logcat payloads.
+- `docs/PHASE_7B_ANDROID_TOY_DECODE.md` records the runbook and guardrails.
+
 ## Phase 7: Kernel Generation
 
 Exit criteria:

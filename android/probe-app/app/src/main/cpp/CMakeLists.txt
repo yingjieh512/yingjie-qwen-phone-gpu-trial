@@ -6,6 +6,7 @@ add_library(qpnpu_probe_native SHARED
     qpnpu_probe_native.cpp
     qpnpu_phase6_native.cpp
     qpnpu_phase7a_native.cpp
+    qpnpu_toy_decode_native.cpp
 )
 
 target_compile_features(qpnpu_probe_native PRIVATE cxx_std_17)

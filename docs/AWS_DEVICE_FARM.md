@@ -117,6 +117,7 @@ Record CPU ISA feature agreement, thread scaling, memory probe output, backend l
 - Whether Vulkan hints were found.
 - Whether thermal/sysfs paths were readable.
 - Whether native CPU microbenchmarks ran and passed correctness checks.
+- Whether Android toy decode ran and emitted generated token IDs.
 - Screenshots, if useful.
 - Logs and artifacts, especially logcat around the JSON markers.
 
@@ -124,7 +125,7 @@ Record CPU ISA feature agreement, thread scaling, memory probe output, backend l
 
 - Remote Access is for manual smoke validation.
 - Do not enter sensitive information in remote sessions.
-- Do not run Qwen inference in Remote Access until a later explicit model phase.
+- Do not run real Qwen inference in Remote Access until a later explicit model phase.
 - Treat Phase 5 native microbenchmarks as CPU harness validation only.
 - Do not interpret QNN, HTP, Hexagon, Vulkan, or NNAPI string hints as proof of usable accelerator execution.
 - Do not claim performance from this app.
@@ -173,3 +174,46 @@ Record:
 - App stability and Device Farm session status.
 
 These ISA probes validate tiny CPU instruction fixtures only. They are not Qwen inference, not accelerator execution, and not a performance claim.
+
+## Phase 7B Android Toy Decode Smoke Test
+
+After installing the Phase 7B APK in Remote Access:
+
+1. Launch `QPNPU Hardware Probe`.
+2. Tap `Toy Decode`.
+3. Verify the UI shows Android toy decode JSON and the app does not crash.
+4. Confirm logcat contains:
+
+```text
+QPNPU_TOY_DECODE_JSON_BEGIN
+QPNPU_TOY_DECODE_JSON_END
+```
+
+5. Download logcat and extract:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind toy_decode \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_toy_decode_<date>.json
+```
+
+6. Optionally preserve all button-tap payloads from the same session:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind all \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_probe_<date>.all_qpnpu_payloads.json
+```
+
+Record:
+
+- Whether the APK installed and launched.
+- Whether `Toy Decode` emitted `source: android-toy-decode`.
+- Prompt token IDs and generated token IDs.
+- Embedded benchmark validation status.
+- Any Java warnings or native errors.
+- The Device Farm device name/model, Android version, session ARN, screenshots, and log artifacts.
+
+This validates APK asset packaging and Android native CPU reference decode plumbing only. The toy model is not Qwen 9B, the tokenizer is a byte stub, execution is not NPU/QNN/NNAPI/Vulkan, and toy throughput is not a trial performance claim.
