@@ -160,8 +160,8 @@ def _validate_candidate(candidate: dict[str, Any], index: int) -> list[str]:
             errors.append(f"{prefix}.correctness.passed must be a boolean")
         if not isinstance(correctness.get("max_abs_error"), (int, float)):
             errors.append(f"{prefix}.correctness.max_abs_error must be numeric")
-        if not isinstance(correctness.get("checksum"), int):
-            errors.append(f"{prefix}.correctness.checksum must be an integer")
+        if not _is_numeric_checksum(correctness.get("checksum")):
+            errors.append(f"{prefix}.correctness.checksum must be numeric")
 
     if candidate.get("executed") is True and candidate.get("sigill") is not True:
         benchmark = candidate.get("benchmark")
@@ -180,3 +180,9 @@ def _validate_candidate(candidate: dict[str, Any], index: int) -> list[str]:
         errors.append(f"{prefix}.deferred_no_safe_kernel candidates must not execute")
 
     return errors
+
+
+def _is_numeric_checksum(value: Any) -> bool:
+    """Return true for JSON numeric checksums, including Android-emitted large floats."""
+
+    return isinstance(value, (int, float)) and not isinstance(value, bool)

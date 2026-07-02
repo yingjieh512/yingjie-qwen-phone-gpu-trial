@@ -52,3 +52,12 @@ def test_phase7c_validator_rejects_bad_summary() -> None:
     data["summary"]["executed_count"] = 99
 
     assert any("summary.executed_count" in error for error in validate_phase7c_generated_kernels(data))
+
+
+def test_phase7c_validator_accepts_large_android_float_checksum() -> None:
+    data = extract_phase7c_generated_kernels_json_from_logcat_file(
+        ROOT / "tests" / "fixtures" / "android_phase7c_logcat_smoke.txt"
+    )
+    data["candidates"][0]["correctness"]["checksum"] = 1.1578508367599153e19
+
+    assert validate_phase7c_generated_kernels(data) == []

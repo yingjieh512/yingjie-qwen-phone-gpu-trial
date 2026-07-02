@@ -1,0 +1,666 @@
+{
+  "cpu": {
+    "available_processors": 8,
+    "proc_cpuinfo_excerpt": "processor\t: 0\nBogoMIPS\t: 38.40\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\nCPU implementer\t: 0x51\nCPU architecture: 8\nCPU variant\t: 0x2\nCPU part\t: 0x002\nCPU revision\t: 1\n\nprocessor\t: 1\nBogoMIPS\t: 38.40\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\nCPU implementer\t: 0x51\nCPU architecture: 8\nCPU variant\t: 0x2\nCPU part\t: 0x002\nCPU revision\t: 1\n\nprocessor\t: 2\nBogoMIPS\t: 38.40\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\nCPU implementer\t: 0x51\nCPU architecture: 8\nCPU variant\t: 0x2\nCPU part\t: 0x002\nCPU revision\t: 1\n\nprocessor\t: 3\nBogoMIPS\t: 38.40\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\nCPU implementer\t: 0x51\nCPU architecture: 8\nCPU variant\t: 0x2\nCPU part\t: 0x002\nCPU revision\t: 1\n\nprocessor\t: 4\nBogoMIPS\t: 38.40\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\nCPU implementer\t: 0x51\nCPU architecture: 8\nCPU variant\t: 0x2\nCPU part\t: 0x002\nCPU revision\t: 1\n\nprocessor\t: 5\nBogoMIPS\t: 38.40\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\nCPU implementer\t: 0x51\nCPU architecture: 8\nCPU variant\t: 0x2\nCPU part\t: 0x002\nCPU revision\t: 1\n\nprocessor\t: 6\nBogoMIPS\t: 38.40\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\nCPU implementer\t: 0x51\nCPU architecture: 8\nCPU variant\t: 0x3\nCPU part\t: 0x002\nCPU revision\t: 1\n\nprocessor\t: 7\nBogoMIPS\t: 38.40\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp sve2 sveaes svepmull svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 rng bti ecv afp rpres sme smei8i32 smef16f32 smeb16f32 smef32f32 lrcpc3\nCPU implementer\t: 0x51\nCPU architecture: 8\nCPU variant\t: 0x3\nCPU part\t: 0x002\nCPU revision\t: 1\n\n",
+    "proc_cpuinfo_readable": true,
+    "selected_getprop": {
+      "ro.board.platform": "canoe",
+      "ro.build.version.release": "16",
+      "ro.build.version.sdk": "36",
+      "ro.hardware": "qcom",
+      "ro.hardware.egl": "adreno",
+      "ro.opengles.version": "196610",
+      "ro.product.device": "m3q",
+      "ro.product.manufacturer": "samsung",
+      "ro.product.model": "SM-S948U1",
+      "ro.soc.manufacturer": "QTI",
+      "ro.soc.model": "SM8850"
+    },
+    "string_hints": []
+  },
+  "device": {
+    "android_release": "16",
+    "board": "canoe",
+    "device": "m3q",
+    "hardware": "qcom",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "gpu": {
+    "availability_claim": "none",
+    "direct_library_hints": [
+      "/vendor/lib64/libOpenCL.so",
+      "/vendor/lib64/libOpenCL_adreno.so",
+      "/vendor/lib64/libGLESv2_adreno.so",
+      "/vendor/lib64/libEGL_adreno.so",
+      "/system/lib64/libvulkan.so",
+      "/system/lib64/libGLESv3.so"
+    ],
+    "library_dirs_readable": true,
+    "library_hints": [
+      "/vendor/lib64/egl",
+      "/vendor/lib64/libEGL_adreno.so",
+      "/vendor/lib64/libGLESv2_adreno.so",
+      "/vendor/lib64/libOpenCL.so",
+      "/vendor/lib64/libOpenCL_adreno.so",
+      "/vendor/lib64/libadreno_app_profiles.so",
+      "/vendor/lib64/libadreno_compiler_cl.so",
+      "/vendor/lib64/libadreno_utils.so",
+      "/system/lib64/libAdrenoQProfiler.so",
+      "/system/lib64/libEGL.so",
+      "/system/lib64/libEGL_angle.so",
+      "/system/lib64/libGLESv1_CM.so",
+      "/system/lib64/libGLESv1_CM_angle.so",
+      "/system/lib64/libGLESv2.so",
+      "/system/lib64/libGLESv2_angle.so",
+      "/system/lib64/libGLESv3.so",
+      "/system/lib64/libaivp_opencl.so",
+      "/system_ext/lib64/libOpenCL_system.so"
+    ],
+    "searched_library_dirs": [
+      {
+        "entry_count": 600,
+        "path": "/vendor/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 2,
+        "path": "/vendor/lib",
+        "readable": true
+      },
+      {
+        "entry_count": 600,
+        "path": "/system/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 1,
+        "path": "/system/lib",
+        "readable": true
+      },
+      {
+        "entry_count": 244,
+        "path": "/system_ext/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 0,
+        "path": "/system_ext/lib",
+        "readable": false
+      },
+      {
+        "entry_count": 73,
+        "path": "/odm/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 0,
+        "path": "/odm/lib",
+        "readable": false
+      },
+      {
+        "entry_count": 39,
+        "path": "/product/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 0,
+        "path": "/product/lib",
+        "readable": false
+      }
+    ],
+    "shell_hints": [],
+    "status": "hints_detected",
+    "vulkan_libraries_detected": true
+  },
+  "memory": {
+    "proc_meminfo_excerpt": "MemTotal:       11389632 kB\nMemFree:         1271476 kB\nMemAvailable:    6145944 kB\nBuffers:           27212 kB\nCached:          4862896 kB\nSwapCached:          600 kB\nActive:          3214128 kB\nInactive:        4381584 kB\nActive(anon):    1975500 kB\nInactive(anon):   790480 kB\nActive(file):    1238628 kB\nInactive(file):  3591104 kB\nUnevictable:       15132 kB\nMlocked:           12720 kB\nSwapTotal:      12582908 kB\nSwapFree:       11992536 kB\nDirty:               448 kB\nWriteback:             0 kB\nAnonPages:       2687748 kB\nMapped:          1926432 kB\nShmem:             54968 kB\nKReclaimable:     294192 kB\nSlab:             726560 kB\nSReclaimable:     265516 kB\nSUnreclaim:       461044 kB\nKernelStack:       89172 kB\nShadowCallStack:       0 kB\nPageTables:       175572 kB\nSecPageTables:     17644 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    18038108 kB\nCommitted_AS:   309009552 kB\nVmallocTotal:   261087232 kB\nVmallocUsed:      392740 kB\nVmallocChunk:          0 kB\nPercpu:            12832 kB\nAnonHugePages:    411648 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:         720896 kB\nCmaFree:               0 kB\nsystem:           230232 kB\nRbinTotal:        409600 kB\nRbinAlloced:        2488 kB\nGcmaTotal:        479232 kB\nGcmaAlloced:       71096 kB\nGcmaFree:         395656 kB\nGcmaCached:        12480 kB\nDmaHeapPool:       15264 kB\nHugepagePool:     770048 kB\nzram0:            140664 kB\nGpuTotal:         285100 kB\nKgslShmemUsage:        0 kB\nGpuSwap:           11892 kB\n",
+    "proc_meminfo_readable": true,
+    "runtime_free_memory_bytes": 62145376,
+    "runtime_max_memory_bytes": 268435456,
+    "runtime_total_memory_bytes": 67108864
+  },
+  "microbenchmarks": {
+    "all_correctness_passed": true,
+    "available": true,
+    "backend": "cpu_android_native_reference",
+    "native_library": "qpnpu_probe_native",
+    "results": [
+      {
+        "backend": "cpu_android_native_reference",
+        "device": {
+          "type": "android_device"
+        },
+        "kernel_config_hash": "phase5_native_reference_v1",
+        "metrics": {
+          "correctness_passed": true,
+          "latency_ms_p50": 0.003281,
+          "latency_ms_p90": 0.003333,
+          "latency_ms_p99": 0.003334,
+          "max_abs_error": 0,
+          "memory_rss_mb": 0,
+          "native_work_items_per_second": 4858609.405256,
+          "tokens_per_second": 0
+        },
+        "model": {
+          "architecture": "native_microfixture",
+          "hf_id": "local/native-microbench"
+        },
+        "operator": "fp32_matvec",
+        "schema_version": "0.1",
+        "shape": {
+          "cols": 32,
+          "rows": 16
+        },
+        "thermal": {},
+        "timestamp_utc": "native_clock_unavailable",
+        "warnings": [
+          "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+        ]
+      },
+      {
+        "backend": "cpu_android_native_reference",
+        "device": {
+          "type": "android_device"
+        },
+        "kernel_config_hash": "phase5_native_reference_v1",
+        "metrics": {
+          "correctness_passed": true,
+          "latency_ms_p50": 0.00875,
+          "latency_ms_p90": 0.008802,
+          "latency_ms_p99": 0.009531,
+          "max_abs_error": 0,
+          "memory_rss_mb": 0,
+          "native_work_items_per_second": 1887870.706028,
+          "tokens_per_second": 0
+        },
+        "model": {
+          "architecture": "native_microfixture",
+          "hf_id": "local/native-microbench"
+        },
+        "operator": "int4_dequant_matvec",
+        "schema_version": "0.1",
+        "shape": {
+          "cols": 32,
+          "group_size": 32,
+          "rows": 16
+        },
+        "thermal": {},
+        "timestamp_utc": "native_clock_unavailable",
+        "warnings": [
+          "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+        ]
+      },
+      {
+        "backend": "cpu_android_native_reference",
+        "device": {
+          "type": "android_device"
+        },
+        "kernel_config_hash": "phase5_native_reference_v1",
+        "metrics": {
+          "correctness_passed": true,
+          "latency_ms_p50": 0.001042,
+          "latency_ms_p90": 0.001094,
+          "latency_ms_p99": 0.001094,
+          "max_abs_error": 0,
+          "memory_rss_mb": 0,
+          "native_work_items_per_second": 60140880.011427,
+          "tokens_per_second": 0
+        },
+        "model": {
+          "architecture": "native_microfixture",
+          "hf_id": "local/native-microbench"
+        },
+        "operator": "rmsnorm",
+        "schema_version": "0.1",
+        "shape": {
+          "n": 64
+        },
+        "thermal": {},
+        "timestamp_utc": "native_clock_unavailable",
+        "warnings": [
+          "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+        ]
+      },
+      {
+        "backend": "cpu_android_native_reference",
+        "device": {
+          "type": "android_device"
+        },
+        "kernel_config_hash": "phase5_native_reference_v1",
+        "metrics": {
+          "correctness_passed": true,
+          "latency_ms_p50": 0.001979,
+          "latency_ms_p90": 0.002031,
+          "latency_ms_p99": 0.002447,
+          "max_abs_error": 0,
+          "memory_rss_mb": 0,
+          "native_work_items_per_second": 31993665.25428,
+          "tokens_per_second": 0
+        },
+        "model": {
+          "architecture": "native_microfixture",
+          "hf_id": "local/native-microbench"
+        },
+        "operator": "softmax",
+        "schema_version": "0.1",
+        "shape": {
+          "n": 64
+        },
+        "thermal": {},
+        "timestamp_utc": "native_clock_unavailable",
+        "warnings": [
+          "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+        ]
+      },
+      {
+        "backend": "cpu_android_native_reference",
+        "device": {
+          "type": "android_device"
+        },
+        "kernel_config_hash": "phase5_native_reference_v1",
+        "metrics": {
+          "correctness_passed": true,
+          "latency_ms_p50": 0.001302,
+          "latency_ms_p90": 0.001354,
+          "latency_ms_p99": 0.001355,
+          "max_abs_error": 0,
+          "memory_rss_mb": 0,
+          "native_work_items_per_second": 48901623.686724,
+          "tokens_per_second": 0
+        },
+        "model": {
+          "architecture": "native_microfixture",
+          "hf_id": "local/native-microbench"
+        },
+        "operator": "rope",
+        "schema_version": "0.1",
+        "shape": {
+          "n": 64,
+          "position": 7,
+          "rope_theta": 10000
+        },
+        "thermal": {},
+        "timestamp_utc": "native_clock_unavailable",
+        "warnings": [
+          "tiny native CPU microbenchmark; not Qwen 9B, not Android NPU, not a performance claim"
+        ]
+      }
+    ],
+    "schema_version": "0.1",
+    "source": "android-native-microbench",
+    "timestamp_utc": "2026-07-01T23:09:03Z",
+    "warnings": [
+      "tiny deterministic native CPU microbenchmarks only",
+      "not Qwen 9B inference",
+      "not NPU or QNN execution",
+      "not a performance target claim"
+    ]
+  },
+  "npu": {
+    "availability_claim": "none; string hints are not proof of NPU availability",
+    "direct_library_hints": [
+      "/vendor/lib64/libSnpeHtpV81Stub.so",
+      "/vendor/lib64/libcdsprpc.so",
+      "/vendor/lib64/libadsprpc.so"
+    ],
+    "library_dirs_readable": true,
+    "library_hints": [
+      "/vendor/lib64/cdsp_face.so",
+      "/vendor/lib64/libSnpeHtpV81Stub.so",
+      "/vendor/lib64/libadsp_default_listener.so",
+      "/vendor/lib64/libadsprpc.so",
+      "/vendor/lib64/libcdsp_default_listener.so",
+      "/vendor/lib64/libcdsprpc.so"
+    ],
+    "nnapi_string_hints_detected": false,
+    "qnn_libraries_detected": false,
+    "searched_library_dirs": [
+      {
+        "entry_count": 600,
+        "path": "/vendor/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 2,
+        "path": "/vendor/lib",
+        "readable": true
+      },
+      {
+        "entry_count": 600,
+        "path": "/system/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 1,
+        "path": "/system/lib",
+        "readable": true
+      },
+      {
+        "entry_count": 244,
+        "path": "/system_ext/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 0,
+        "path": "/system_ext/lib",
+        "readable": false
+      },
+      {
+        "entry_count": 73,
+        "path": "/odm/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 0,
+        "path": "/odm/lib",
+        "readable": false
+      },
+      {
+        "entry_count": 39,
+        "path": "/product/lib64",
+        "readable": true
+      },
+      {
+        "entry_count": 0,
+        "path": "/product/lib",
+        "readable": false
+      }
+    ],
+    "shell_hints": [],
+    "status": "hints_detected"
+  },
+  "output_file": "/storage/emulated/0/Android/data/com.qpnpu.trial/files/probe_result.json",
+  "schema_version": "0.1",
+  "source": "android-probe-app",
+  "summary": {
+    "android_release": "16",
+    "availability_claim": "none; this is probe evidence only, not accelerator execution",
+    "available_processors": 8,
+    "device_model": "SM-S948U1",
+    "gpu_hint_count": 24,
+    "gpu_status": "hints_detected",
+    "native_microbenchmark_count": 5,
+    "native_microbenchmarks_available": true,
+    "native_microbenchmarks_passed": true,
+    "nnapi_string_hints_detected": false,
+    "npu_hint_count": 9,
+    "npu_status": "hints_detected",
+    "qnn_libraries_detected": false,
+    "soc_model": "SM8850",
+    "thermal_status": "hints_detected",
+    "thermal_zone_count": 64,
+    "vulkan_libraries_detected": true
+  },
+  "thermal": {
+    "status": "hints_detected",
+    "zones": [
+      {
+        "name": "cooling_device0",
+        "type": "cpufreq-cpu0"
+      },
+      {
+        "name": "cooling_device1",
+        "type": "cpufreq-cpu6"
+      },
+      {
+        "name": "cooling_device10",
+        "type": "cpu-hotplug3"
+      },
+      {
+        "name": "cooling_device11",
+        "type": "cpu-hotplug4"
+      },
+      {
+        "name": "cooling_device12",
+        "type": "cpu-hotplug5"
+      },
+      {
+        "name": "cooling_device13",
+        "type": "cpu-hotplug6"
+      },
+      {
+        "name": "cooling_device14",
+        "type": "cpu-hotplug7"
+      },
+      {
+        "name": "cooling_device15",
+        "type": "pause-cpu1"
+      },
+      {
+        "name": "cooling_device16",
+        "type": "thermal-pause-2"
+      },
+      {
+        "name": "cooling_device17",
+        "type": "pause-cpu3"
+      },
+      {
+        "name": "cooling_device18",
+        "type": "thermal-pause-8"
+      },
+      {
+        "name": "cooling_device19",
+        "type": "pause-cpu2"
+      },
+      {
+        "name": "cooling_device2",
+        "type": "ufs"
+      },
+      {
+        "name": "cooling_device20",
+        "type": "pause-cpu4"
+      },
+      {
+        "name": "cooling_device21",
+        "type": "pause-cpu5"
+      },
+      {
+        "name": "cooling_device22",
+        "type": "pause-cpu6"
+      },
+      {
+        "name": "cooling_device23",
+        "type": "pause-cpu7"
+      },
+      {
+        "name": "cooling_device24",
+        "type": "thermal-pause-80"
+      },
+      {
+        "name": "cooling_device25",
+        "type": "thermal-pause-C0"
+      },
+      {
+        "name": "cooling_device26",
+        "type": "thermal-pause-3C"
+      },
+      {
+        "name": "cooling_device27",
+        "type": "thermal-pause-10"
+      },
+      {
+        "name": "cooling_device28",
+        "type": "thermal-pause-4"
+      },
+      {
+        "name": "cooling_device29",
+        "type": "thermal-pause-40"
+      },
+      {
+        "name": "cooling_device3",
+        "type": "display-fps"
+      },
+      {
+        "name": "cooling_device30",
+        "type": "thermal-pause-20"
+      },
+      {
+        "name": "cooling_device31",
+        "type": "pause-cpu0"
+      },
+      {
+        "name": "cooling_device32",
+        "type": "thermal-pause-1"
+      },
+      {
+        "name": "cooling_device33",
+        "type": "kgsl"
+      },
+      {
+        "name": "cooling_device34",
+        "type": "cdsp_ss"
+      },
+      {
+        "name": "cooling_device35",
+        "type": "cdsp_hw"
+      },
+      {
+        "name": "cooling_device36",
+        "type": "gpu"
+      },
+      {
+        "name": "cooling_device37",
+        "type": "cdsp"
+      },
+      {
+        "name": "cooling_device38",
+        "type": "cdsp_sw_hvx"
+      },
+      {
+        "name": "cooling_device39",
+        "type": "cdsp_sw_hmx"
+      },
+      {
+        "name": "cooling_device4",
+        "type": "cpu-cluster0"
+      },
+      {
+        "name": "cooling_device40",
+        "type": "panel0-backlight"
+      },
+      {
+        "name": "cooling_device41",
+        "type": "modem_lte_dsc"
+      },
+      {
+        "name": "cooling_device42",
+        "type": "modem_lte_sub1_dsc"
+      },
+      {
+        "name": "cooling_device43",
+        "type": "modem_nr_dsc"
+      },
+      {
+        "name": "cooling_device44",
+        "type": "modem_nr_sub1_dsc"
+      },
+      {
+        "name": "cooling_device45",
+        "type": "modem_nr_scg_dsc"
+      },
+      {
+        "name": "cooling_device46",
+        "type": "modem_nr_scg_sub1_dsc"
+      },
+      {
+        "name": "cooling_device47",
+        "type": "pa_lte_sdr0_dsc"
+      },
+      {
+        "name": "cooling_device48",
+        "type": "pa_lte_sdr0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device49",
+        "type": "pa_nr_sdr0_dsc"
+      },
+      {
+        "name": "cooling_device5",
+        "type": "cpu-cluster1"
+      },
+      {
+        "name": "cooling_device50",
+        "type": "pa_nr_sdr0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device51",
+        "type": "pa_nr_sdr0_scg_dsc"
+      },
+      {
+        "name": "cooling_device52",
+        "type": "pa_nr_sdr0_scg_sub1_dsc"
+      },
+      {
+        "name": "cooling_device53",
+        "type": "mmw0_dsc"
+      },
+      {
+        "name": "cooling_device54",
+        "type": "mmw0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device55",
+        "type": "mmw1_dsc"
+      },
+      {
+        "name": "cooling_device56",
+        "type": "mmw1_sub1_dsc"
+      },
+      {
+        "name": "cooling_device57",
+        "type": "mmw2_dsc"
+      },
+      {
+        "name": "cooling_device58",
+        "type": "mmw2_sub1_dsc"
+      },
+      {
+        "name": "cooling_device59",
+        "type": "mmw3_dsc"
+      },
+      {
+        "name": "cooling_device6",
+        "type": "ddr-cdev"
+      },
+      {
+        "name": "cooling_device60",
+        "type": "mmw3_sub1_dsc"
+      },
+      {
+        "name": "cooling_device61",
+        "type": "modem_bcl"
+      },
+      {
+        "name": "cooling_device7",
+        "type": "cpu-hotplug0"
+      },
+      {
+        "name": "cooling_device8",
+        "type": "cpu-hotplug1"
+      },
+      {
+        "name": "cooling_device9",
+        "type": "cpu-hotplug2"
+      },
+      {
+        "name": "thermal_zone0",
+        "temp_raw": "34100",
+        "type": "cpullc-0-0"
+      },
+      {
+        "name": "thermal_zone1",
+        "temp_raw": "34100",
+        "type": "cpullc-0-1"
+      }
+    ]
+  },
+  "timestamp_utc": "2026-07-01T23:08:57Z",
+  "warnings": []
+}

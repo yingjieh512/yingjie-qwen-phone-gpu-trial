@@ -1,0 +1,122 @@
+{
+  "cpu": {
+    "available_processors": 8,
+    "feature_summary": {
+      "missing": [],
+      "present": [
+        "asimddp",
+        "i8mm",
+        "bf16",
+        "sve",
+        "sve2",
+        "svei8mm",
+        "sme",
+        "sha3"
+      ]
+    },
+    "proc_cpuinfo_readable": true
+  },
+  "device": {
+    "android_release": "16",
+    "board": "canoe",
+    "device": "m3q",
+    "hardware": "qcom",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "gpu": {
+    "availability_claim": "none",
+    "hint_count": 24,
+    "library_dirs_readable": true,
+    "notable_hints": [
+      "/vendor/lib64/libEGL_adreno.so",
+      "/vendor/lib64/libGLESv2_adreno.so",
+      "/vendor/lib64/libOpenCL.so",
+      "/vendor/lib64/libOpenCL_adreno.so",
+      "/vendor/lib64/libadreno_app_profiles.so",
+      "/vendor/lib64/libadreno_compiler_cl.so",
+      "/vendor/lib64/libadreno_utils.so",
+      "/system/lib64/libAdrenoQProfiler.so",
+      "/system/lib64/libGLESv1_CM.so",
+      "/system/lib64/libGLESv1_CM_angle.so",
+      "/system/lib64/libGLESv2.so",
+      "/system/lib64/libGLESv2_angle.so",
+      "/system/lib64/libGLESv3.so",
+      "/system/lib64/libaivp_opencl.so",
+      "/system_ext/lib64/libOpenCL_system.so",
+      "/system/lib64/libvulkan.so"
+    ],
+    "status": "hints_detected",
+    "vulkan_libraries_detected": true
+  },
+  "interpretation": [
+    "CPU fallback should be treated as mandatory; the probe confirms app-side execution and readable CPU/memory data.",
+    "NPU/DSP string hints were detected, but no QNN library availability was proven by this probe.",
+    "Vulkan library names were detected; a later phase should make real Vulkan API calls.",
+    "Thermal/cooling entries were readable, so future benchmark JSON should capture thermal state."
+  ],
+  "memory": {
+    "mem_available_kb": 6145944,
+    "mem_total_kb": 11389632,
+    "proc_meminfo_readable": true,
+    "runtime_max_memory_bytes": 268435456
+  },
+  "npu": {
+    "availability_claim": "none; string hints are not proof of NPU availability",
+    "hint_count": 9,
+    "library_dirs_readable": true,
+    "nnapi_string_hints_detected": false,
+    "notable_hints": [
+      "/vendor/lib64/cdsp_face.so",
+      "/vendor/lib64/libSnpeHtpV81Stub.so",
+      "/vendor/lib64/libadsp_default_listener.so",
+      "/vendor/lib64/libadsprpc.so",
+      "/vendor/lib64/libcdsp_default_listener.so",
+      "/vendor/lib64/libcdsprpc.so"
+    ],
+    "qnn_libraries_detected": false,
+    "status": "hints_detected"
+  },
+  "schema_version": "0.1",
+  "source_probe": {
+    "source": "android-probe-app",
+    "timestamp_utc": "2026-07-01T23:08:57Z"
+  },
+  "thermal": {
+    "notable_zones": [
+      "cpufreq-cpu0",
+      "cpufreq-cpu6",
+      "cpu-hotplug3",
+      "cpu-hotplug4",
+      "cpu-hotplug5",
+      "cpu-hotplug6",
+      "cpu-hotplug7",
+      "pause-cpu1",
+      "pause-cpu3",
+      "pause-cpu2",
+      "ufs",
+      "pause-cpu4",
+      "pause-cpu5",
+      "pause-cpu6",
+      "pause-cpu7",
+      "pause-cpu0",
+      "kgsl",
+      "cdsp_ss",
+      "cdsp_hw",
+      "gpu",
+      "cdsp",
+      "cdsp_sw_hvx",
+      "cdsp_sw_hmx",
+      "cpu-cluster0"
+    ],
+    "status": "hints_detected",
+    "zone_count": 64
+  },
+  "warnings": []
+}

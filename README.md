@@ -10,6 +10,8 @@ The long-term performance target is at least 20 decode tokens/sec. No performanc
 
 Phase 7C adds generated native CPU kernel candidates inside the Android APK. The app can run tiny feature-gated CPU fixtures, compare them against deterministic references, and log candidate-level JSON. It is not Qwen 9B, not QNN/NPU/Vulkan/NNAPI execution, and not a performance-target benchmark.
 
+The real Qwen-style 9B path must use external model artifacts, not APK-embedded weights. Keep the APK small, deliver sharded model files at runtime, verify checksums, and start with tiny fake shards before any multi-GB artifact. See `docs/QWEN_9B_DEVICE_FARM_PLAN.md`.
+
 Phase 7B adds an Android packaged toy decode smoke path. The APK carries a tiny deterministic QPNPU toy model asset and runs a native CPU/JNI reference decode-like loop, then displays and logs JSON. It is not Qwen 9B, not the Qwen tokenizer, not QNN/NPU/Vulkan/NNAPI execution, and not a performance-target benchmark.
 
 Phase 7A adds guarded ARM ISA instruction probes from the Android app process. It validates selected reported CPU features with tiny SIGILL-guarded fixtures and still does not run Qwen 9B, QNN, Vulkan kernels, NPU execution, or performance-target benchmarks.

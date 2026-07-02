@@ -1,0 +1,312 @@
+{
+  "first_log_json_timestamp": "2026-07-01T23:08:02.286146Z",
+  "harness_events": [
+    {
+      "data": "Starting 00000 with device RFGL126L4PV",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:02.286146Z"
+    },
+    {
+      "data": "Using test content version <module 'ktc.__version__' from '/opt/amazon/devicefarm/KanapkaEC2DeviceHostService/lib/python3.10/site-packages/ktc/__version__.py'>",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:02.286264Z"
+    },
+    {
+      "data": "Starting Setup Suite",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:02.286667Z"
+    },
+    {
+      "data": "Starting Setup Test",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:02.287096Z"
+    },
+    {
+      "data": "Using network profile Default network profile",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:10.383769Z"
+    },
+    {
+      "data": "Bandwidth (bps): up 104857600, down 104857600.",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:10.383930Z"
+    },
+    {
+      "data": "Delay (ms): up 0, down 0.",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:10.384092Z"
+    },
+    {
+      "data": "Jitter (ms): up 0, down 0.",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:10.384198Z"
+    },
+    {
+      "data": "Loss (%): up 0, down 0.",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:10.384339Z"
+    },
+    {
+      "data": "Successful test lifecycle of Setup Test",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:11.795988Z"
+    },
+    {
+      "data": "Finished Setup Test",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:11.796335Z"
+    },
+    {
+      "data": "Finished Setup Suite",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:11.797084Z"
+    },
+    {
+      "data": "Starting Tests Suite",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:11.799391Z"
+    },
+    {
+      "data": "Starting Tests",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:08:11.801278Z"
+    },
+    {
+      "data": "Tests stopped: Stopped by request",
+      "level": "Stopped",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:33.175326Z"
+    },
+    {
+      "data": "Tests stopped: Timeout exceeded during test execution",
+      "level": "Stopped",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:37.099961Z"
+    },
+    {
+      "data": "Interactive test passed",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:42.110201Z"
+    },
+    {
+      "data": "Finished Tests",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:43.603484Z"
+    },
+    {
+      "data": "Finished Tests Suite",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:43.604334Z"
+    },
+    {
+      "data": "Starting Teardown Suite",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:43.615401Z"
+    },
+    {
+      "data": "Starting Teardown Test",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:43.616904Z"
+    },
+    {
+      "data": "Successful test lifecycle of Teardown Test",
+      "level": "Passed",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:55.290455Z"
+    },
+    {
+      "data": "Finished Teardown Test",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:55.290854Z"
+    },
+    {
+      "data": "Finished Teardown Suite",
+      "level": "Info",
+      "source": "Harness",
+      "tag": null,
+      "timestamp": "2026-07-01T23:10:55.291414Z"
+    }
+  ],
+  "interactive_test_passed": true,
+  "last_log_json_timestamp": "2026-07-02T06:10:55.373245Z",
+  "log_json_entry_count": 53016,
+  "package_install_completed": true,
+  "qpnpu_app_fatal_exception_seen": false,
+  "qpnpu_log_level_counts": {
+    "Debug": 145,
+    "Error": 1,
+    "Info": 6848,
+    "Verbose": 43,
+    "Warning": 496
+  },
+  "qpnpu_payload_counts": {
+    "native": 2,
+    "phase6": 2,
+    "phase7a": 2,
+    "phase7c": 2,
+    "probe": 2,
+    "toy_decode": 2
+  },
+  "qpnpu_payload_order": [
+    "probe",
+    "native",
+    "phase6",
+    "phase7a",
+    "phase7c",
+    "toy_decode",
+    "probe",
+    "native",
+    "phase6",
+    "phase7a",
+    "phase7c",
+    "toy_decode"
+  ],
+  "schema_version": "0.1",
+  "source": "codex-derived-devicefarm-session-summary",
+  "source_files": {
+    "all_qpnpu_payloads_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_9ec7c8500911.all_qpnpu_payloads.json",
+    "download_log_json": "C:\\Users\\Yingjie Huang\\Downloads\\log (4).json",
+    "download_logcat": "C:\\Users\\Yingjie Huang\\Downloads\\logcat-9ec7c8500911.logcat",
+    "download_tcpdump": "C:\\Users\\Yingjie Huang\\Downloads\\tcp-dump-log-00268e9b80a8.txt"
+  },
+  "stopped_by_request_seen": true,
+  "tcpdump_summary": {
+    "first_lines": [
+      "tcpdump: verbose output suppressed, use -v[v]... for full protocol decode",
+      "listening on br0, link-type EN10MB (Ethernet), snapshot length 262144 bytes"
+    ],
+    "https_traffic_present": true,
+    "interpretation": "tcpdump shows encrypted HTTPS traffic during the session, but this APK did not implement a model download path and the dump does not provide plaintext evidence of Qwen/model transfer.",
+    "line_count": 8800,
+    "model_plaintext_keywords_seen": false,
+    "qpnpu_plaintext_seen": false,
+    "source_file": "C:\\Users\\Yingjie Huang\\Downloads\\tcp-dump-log-00268e9b80a8.txt",
+    "top_destinations": [
+      {
+        "count": 3894,
+        "destination": "ip-192-168-1-101.us-west-2.compute.internal.47948"
+      },
+      {
+        "count": 1265,
+        "destination": "ip-192-168-1-101.us-west-2.compute.internal.47964"
+      },
+      {
+        "count": 1210,
+        "destination": "123.35.104.34.bc.googleusercontent.com.http"
+      },
+      {
+        "count": 944,
+        "destination": "ip-192-168-1-101.us-west-2.compute.internal.32976"
+      },
+      {
+        "count": 357,
+        "destination": "216.239.32.223.https"
+      },
+      {
+        "count": 292,
+        "destination": "ip-192-168-1-101.us-west-2.compute.internal.43154"
+      },
+      {
+        "count": 109,
+        "destination": "pz-in-f95.1e100.net.https"
+      },
+      {
+        "count": 58,
+        "destination": "216.239.38.223.https"
+      },
+      {
+        "count": 41,
+        "destination": "ec2-34-227-19-112.compute-1.amazonaws.com.https"
+      },
+      {
+        "count": 39,
+        "destination": "ip-192-168-1-101.us-west-2.compute.internal.57636"
+      }
+    ]
+  },
+  "timeout_stop_seen": true,
+  "timestamp_utc": "2026-07-01T23:23:38Z",
+  "unrelated_androidruntime_fatal_stacks": [
+    {
+      "pid_line": "PID: 24563",
+      "qpnpu_app_stack": false,
+      "timestamp": "2026-07-02T06:08:09.444245Z",
+      "top_frames": [
+        "FATAL EXCEPTION: main",
+        "PID: 24563",
+        "java.lang.SecurityException: Package android does not belong to 2000",
+        "at android.os.Parcel.createExceptionOrNull(Parcel.java:3388)",
+        "at android.os.Parcel.createException(Parcel.java:3372)",
+        "at android.os.Parcel.readException(Parcel.java:3355)",
+        "at android.os.Parcel.readException(Parcel.java:3297)",
+        "at android.nfc.INfcAdapter$Stub$Proxy.enable(INfcAdapter.java:1377)",
+        "at android.nfc.NfcAdapter.lambda$enable$3(NfcAdapter.java:1144)",
+        "at android.nfc.NfcAdapter.$r8$lambda$li_RGu2fRD9ZdRFSzpq9of5N_ec(Unknown Source:0)",
+        "at android.nfc.NfcAdapter$$ExternalSyntheticLambda46.call(D8$$SyntheticClass:0)",
+        "at android.nfc.NfcAdapter.callServiceReturn(NfcAdapter.java:2679)"
+      ]
+    },
+    {
+      "pid_line": "PID: 27183",
+      "qpnpu_app_stack": false,
+      "timestamp": "2026-07-02T06:10:45.500245Z",
+      "top_frames": [
+        "FATAL EXCEPTION: main",
+        "PID: 27183",
+        "java.lang.SecurityException: Package android does not belong to 2000",
+        "at android.os.Parcel.createExceptionOrNull(Parcel.java:3388)",
+        "at android.os.Parcel.createException(Parcel.java:3372)",
+        "at android.os.Parcel.readException(Parcel.java:3355)",
+        "at android.os.Parcel.readException(Parcel.java:3297)",
+        "at android.nfc.INfcAdapter$Stub$Proxy.disable(INfcAdapter.java:1359)",
+        "at android.nfc.NfcAdapter.lambda$disable$5(NfcAdapter.java:1183)",
+        "at android.nfc.NfcAdapter.$r8$lambda$W7M_a938atinjG63TVxtBEVvnao(Unknown Source:0)",
+        "at android.nfc.NfcAdapter$$ExternalSyntheticLambda0.call(D8$$SyntheticClass:0)",
+        "at android.nfc.NfcAdapter.callServiceReturn(NfcAdapter.java:2679)"
+      ]
+    }
+  ]
+}

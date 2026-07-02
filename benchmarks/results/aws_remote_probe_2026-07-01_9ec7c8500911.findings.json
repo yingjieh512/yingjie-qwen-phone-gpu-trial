@@ -1,0 +1,608 @@
+{
+  "device": {
+    "android_release": "16",
+    "board": "canoe",
+    "device": "m3q",
+    "hardware": "qcom",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "download_source_files": {
+    "download_log_json": "C:\\Users\\Yingjie Huang\\Downloads\\log (4).json",
+    "download_logcat": "C:\\Users\\Yingjie Huang\\Downloads\\logcat-9ec7c8500911.logcat",
+    "download_tcpdump": "C:\\Users\\Yingjie Huang\\Downloads\\tcp-dump-log-00268e9b80a8.txt"
+  },
+  "guardrails": [
+    "not Qwen 9B inference",
+    "not QNN/NPU execution",
+    "not a performance target claim",
+    "generated kernels are tiny CPU fixtures, not a full inference library"
+  ],
+  "model_delivery_implications": [
+    "A real Qwen 9B artifact must not be embedded in the APK. Keep the APK small and deliver model shards at runtime.",
+    "Use a signed manifest plus sharded, checksum-verified downloads into app-private storage; do not put Hugging Face credentials or long-lived AWS credentials on the phone.",
+    "Start with tiny synthetic shards and one-layer/slice tests before attempting a multi-GB quantized Qwen artifact.",
+    "Treat all current timings as smoke telemetry only; no real Qwen 9B performance target has been measured."
+  ],
+  "recommended_next_gates": [
+    "Phase 8A: external model artifact manifest and shard cache using tiny fake shards first.",
+    "Phase 8B: Android downloader/cache manager with SHA-256, resumable downloads, storage checks, and no embedded credentials.",
+    "Phase 9: mmap/streaming model loader and tokenizer path on Android using tiny artifacts, then progressively larger shard tests.",
+    "Phase 10+: real quantization/operator/layer correctness ladder before any full Qwen 9B attempt."
+  ],
+  "schema_version": "0.1",
+  "session": {
+    "interactive_test_passed": true,
+    "package_install_completed": true,
+    "payload_count": 12,
+    "payload_counts": {
+      "native": 2,
+      "phase6": 2,
+      "phase7a": 2,
+      "phase7c": 2,
+      "probe": 2,
+      "toy_decode": 2
+    },
+    "payload_order": [
+      "probe",
+      "native",
+      "phase6",
+      "phase7a",
+      "phase7c",
+      "toy_decode",
+      "probe",
+      "native",
+      "phase6",
+      "phase7a",
+      "phase7c",
+      "toy_decode"
+    ],
+    "qpnpu_app_fatal_exception_seen": false,
+    "unrelated_androidruntime_fatal_exception_count": 2
+  },
+  "source": "codex-derived-devicefarm-findings",
+  "source_files": {
+    "all_qpnpu_payloads_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_9ec7c8500911.all_qpnpu_payloads.json",
+    "hw_model_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_9ec7c8500911.hw_model.json",
+    "native_json": "benchmarks\\results\\aws_remote_native_microbench_2026-07-01_9ec7c8500911.json",
+    "phase6_json": "benchmarks\\results\\aws_remote_phase6_2026-07-01_9ec7c8500911.json",
+    "phase7a_json": "benchmarks\\results\\aws_remote_phase7a_2026-07-01_9ec7c8500911.json",
+    "phase7c_json": "benchmarks\\results\\aws_remote_phase7c_2026-07-01_9ec7c8500911.json",
+    "probe_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_9ec7c8500911.json",
+    "summary_json": "benchmarks\\results\\aws_remote_probe_2026-07-01_9ec7c8500911.summary.json",
+    "toy_decode_json": "benchmarks\\results\\aws_remote_toy_decode_2026-07-01_9ec7c8500911.json"
+  },
+  "timestamp_utc": "2026-07-01T23:23:38Z",
+  "useful_findings": [
+    {
+      "evidence": {
+        "payload_count": 12,
+        "payload_counts": {
+          "native": 2,
+          "phase6": 2,
+          "phase7a": 2,
+          "phase7c": 2,
+          "probe": 2,
+          "toy_decode": 2
+        },
+        "payload_order": [
+          "probe",
+          "native",
+          "phase6",
+          "phase7a",
+          "phase7c",
+          "toy_decode",
+          "probe",
+          "native",
+          "phase6",
+          "phase7a",
+          "phase7c",
+          "toy_decode"
+        ]
+      },
+      "finding": "The generated-kernel APK emitted two complete QPNPU ladder sequences in one Device Farm session."
+    },
+    {
+      "evidence": {
+        "phase7c_runs": [
+          {
+            "deferred_candidates": [
+              {
+                "name": "experimental_sve2_candidate_v1",
+                "notes": "reported on the target but deferred until an isolated SVE2 generated kernel fixture is added",
+                "reported": true,
+                "status": "deferred_no_safe_kernel",
+                "target_feature": "sve2"
+              },
+              {
+                "name": "experimental_svei8mm_candidate_v1",
+                "notes": "reported on the target but deferred until an isolated SVE I8MM fixture is added",
+                "reported": true,
+                "status": "deferred_no_safe_kernel",
+                "target_feature": "svei8mm"
+              },
+              {
+                "name": "experimental_sme_candidate_v1",
+                "notes": "reported on the target but deferred; entering SME streaming mode needs stricter process isolation",
+                "reported": true,
+                "status": "deferred_no_safe_kernel",
+                "target_feature": "sme"
+              }
+            ],
+            "executed_candidates": [
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 0.000886,
+                "name": "generated_scalar_fp32_matvec_v1",
+                "operator": "fp32_matvec",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "scalar"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 0.000625,
+                "name": "generated_asimd_fp32_matvec_4lane_v1",
+                "operator": "fp32_matvec",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "asimd"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 5.2e-05,
+                "name": "generated_asimddp_udot_tile_v1",
+                "operator": "int8_dot_tile",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "asimddp"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 5.2e-05,
+                "name": "generated_i8mm_smmla_tile_v1",
+                "operator": "int8_matrix_tile",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "i8mm"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 5.2e-05,
+                "name": "generated_bf16_bfdot_tile_v1",
+                "operator": "bf16_dot_tile",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "bf16"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 5.2e-05,
+                "name": "generated_sve_vector_length_tile_selector_v1",
+                "operator": "sve_tile_selector",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "sve"
+              }
+            ],
+            "summary": {
+              "all_executed_correctness_passed": true,
+              "candidate_count": 9,
+              "deferred_count": 3,
+              "executed_count": 6,
+              "experimental_count": 3,
+              "passed_count": 6,
+              "sigill_count": 0,
+              "skipped_count": 0
+            },
+            "timestamp_utc": "2026-07-01T23:09:29Z"
+          },
+          {
+            "deferred_candidates": [
+              {
+                "name": "experimental_sve2_candidate_v1",
+                "notes": "reported on the target but deferred until an isolated SVE2 generated kernel fixture is added",
+                "reported": true,
+                "status": "deferred_no_safe_kernel",
+                "target_feature": "sve2"
+              },
+              {
+                "name": "experimental_svei8mm_candidate_v1",
+                "notes": "reported on the target but deferred until an isolated SVE I8MM fixture is added",
+                "reported": true,
+                "status": "deferred_no_safe_kernel",
+                "target_feature": "svei8mm"
+              },
+              {
+                "name": "experimental_sme_candidate_v1",
+                "notes": "reported on the target but deferred; entering SME streaming mode needs stricter process isolation",
+                "reported": true,
+                "status": "deferred_no_safe_kernel",
+                "target_feature": "sme"
+              }
+            ],
+            "executed_candidates": [
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 0.000886,
+                "name": "generated_scalar_fp32_matvec_v1",
+                "operator": "fp32_matvec",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "scalar"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 0.000625,
+                "name": "generated_asimd_fp32_matvec_4lane_v1",
+                "operator": "fp32_matvec",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "asimd"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 5.2e-05,
+                "name": "generated_asimddp_udot_tile_v1",
+                "operator": "int8_dot_tile",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "asimddp"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 5.2e-05,
+                "name": "generated_i8mm_smmla_tile_v1",
+                "operator": "int8_matrix_tile",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "i8mm"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 5.2e-05,
+                "name": "generated_bf16_bfdot_tile_v1",
+                "operator": "bf16_dot_tile",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "bf16"
+              },
+              {
+                "correctness_passed": true,
+                "executed": true,
+                "latency_ms_p50": 5.2e-05,
+                "name": "generated_sve_vector_length_tile_selector_v1",
+                "operator": "sve_tile_selector",
+                "reported": true,
+                "sigill": false,
+                "status": "passed_correctness",
+                "target_feature": "sve"
+              }
+            ],
+            "summary": {
+              "all_executed_correctness_passed": true,
+              "candidate_count": 9,
+              "deferred_count": 3,
+              "executed_count": 6,
+              "experimental_count": 3,
+              "passed_count": 6,
+              "sigill_count": 0,
+              "skipped_count": 0
+            },
+            "timestamp_utc": "2026-07-01T23:10:25Z"
+          }
+        ]
+      },
+      "finding": "Phase 7C generated-kernel candidates executed safely: 9 candidates were reported, 6 executed, 6 passed correctness, and 0 SIGILL events were observed in each run."
+    },
+    {
+      "evidence": {
+        "deferred_features": [
+          "sme",
+          "sve2",
+          "svei8mm"
+        ],
+        "executed_features": [
+          "asimd",
+          "asimddp",
+          "bf16",
+          "i8mm",
+          "scalar",
+          "sve"
+        ]
+      },
+      "finding": "The executable Phase 7C candidates now cover scalar, ASIMD, ASIMDDP, I8MM, BF16, and SVE smoke paths. SVE2, SVEI8MM, and SME remain listed but deferred because same-process probing is not safe enough for those experimental paths."
+    },
+    {
+      "evidence": {
+        "deferred_features": [
+          "sve2",
+          "svei8mm",
+          "sme"
+        ],
+        "executed_features": [
+          "asimd",
+          "crc32",
+          "asimddp",
+          "i8mm",
+          "bf16",
+          "sve"
+        ],
+        "summary": {
+          "executed_ok_count": 6,
+          "probe_count": 9,
+          "sigill_count": 0,
+          "skipped_count": 3
+        }
+      },
+      "finding": "Phase 7A guarded ISA probes executed OK for ASIMD, CRC32, ASIMDDP, I8MM, BF16, and SVE; no SIGILL was caught. SVE2, SVEI8MM, and SME were reported by feature flags but deliberately deferred."
+    },
+    {
+      "evidence": {
+        "native_ops": [
+          {
+            "correctness_passed": true,
+            "latency_ms_p50": 0.003333,
+            "operator": "fp32_matvec",
+            "shape": {
+              "cols": 32,
+              "rows": 16
+            }
+          },
+          {
+            "correctness_passed": true,
+            "latency_ms_p50": 0.008021,
+            "operator": "int4_dequant_matvec",
+            "shape": {
+              "cols": 32,
+              "group_size": 32,
+              "rows": 16
+            }
+          },
+          {
+            "correctness_passed": true,
+            "latency_ms_p50": 0.001146,
+            "operator": "rmsnorm",
+            "shape": {
+              "n": 64
+            }
+          },
+          {
+            "correctness_passed": true,
+            "latency_ms_p50": 0.002084,
+            "operator": "softmax",
+            "shape": {
+              "n": 64
+            }
+          },
+          {
+            "correctness_passed": true,
+            "latency_ms_p50": 0.001406,
+            "operator": "rope",
+            "shape": {
+              "n": 64,
+              "position": 7,
+              "rope_theta": 10000
+            }
+          }
+        ]
+      },
+      "finding": "Native CPU fallback harness still works on the phone for fp32 matvec, int4 dequant matvec, RMSNorm, softmax, and RoPE fixtures."
+    },
+    {
+      "evidence": {
+        "backend_load": [
+          {
+            "backend": "vulkan",
+            "error": null,
+            "library": "libvulkan.so",
+            "loaded": true,
+            "status": "loaded"
+          },
+          {
+            "backend": "nnapi",
+            "error": null,
+            "library": "libneuralnetworks.so",
+            "loaded": true,
+            "status": "loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnSystem.so\" not found",
+            "library": "libQnnSystem.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnHtp.so\" not found",
+            "library": "libQnnHtp.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnCpu.so\" not found",
+            "library": "libQnnCpu.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnGpu.so\" not found",
+            "library": "libQnnGpu.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "qnn",
+            "error": "dlopen failed: library \"libQnnDsp.so\" not found",
+            "library": "libQnnDsp.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "dsp_rpc",
+            "error": "dlopen failed: library \"libcdsprpc.so\" not found",
+            "library": "libcdsprpc.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "dsp_rpc",
+            "error": "dlopen failed: library \"libadsprpc.so\" not found",
+            "library": "libadsprpc.so",
+            "loaded": false,
+            "status": "not_loaded"
+          },
+          {
+            "backend": "snpe",
+            "error": "dlopen failed: library \"libSNPE.so\" not found",
+            "library": "libSNPE.so",
+            "loaded": false,
+            "status": "not_loaded"
+          }
+        ]
+      },
+      "finding": "Phase 6 backend loading can dlopen Vulkan and NNAPI libraries from app context, but the checked QNN, DSP RPC, and SNPE library names were not loadable. This is not proof that the NPU is absent; it only means ordinary app-side access did not expose those libraries by those names."
+    },
+    {
+      "evidence": {
+        "phase6_thermal_status": "hints_detected",
+        "thermal_summary": {
+          "notable_zones": [
+            "cpufreq-cpu0",
+            "cpufreq-cpu6",
+            "cpu-hotplug3",
+            "cpu-hotplug4",
+            "cpu-hotplug5",
+            "cpu-hotplug6",
+            "cpu-hotplug7",
+            "pause-cpu1",
+            "pause-cpu3",
+            "pause-cpu2",
+            "ufs",
+            "pause-cpu4",
+            "pause-cpu5",
+            "pause-cpu6",
+            "pause-cpu7",
+            "pause-cpu0",
+            "kgsl",
+            "cdsp_ss",
+            "cdsp_hw",
+            "gpu",
+            "cdsp",
+            "cdsp_sw_hvx",
+            "cdsp_sw_hmx",
+            "cpu-cluster0"
+          ],
+          "status": "hints_detected",
+          "zone_count": 64
+        }
+      },
+      "finding": "The target has app-visible thermal/cooling hints for CPU, GPU/KGSL, CDSP, and DDR contexts, which should be captured around any future benchmark gates."
+    },
+    {
+      "evidence": {
+        "example_checksum": 9.385431836789352e+18,
+        "fixed_file": "qpnpu/android_phase7c.py",
+        "regression_test": "tests/test_android_phase7c.py::test_phase7c_validator_accepts_large_android_float_checksum"
+      },
+      "finding": "The Phase 7C log uncovered a host-side parser issue: Android JSON serialized very large checksum values as JSON numbers that may become Python floats. The validator now treats checksum as numeric instead of int-only."
+    },
+    {
+      "evidence": {
+        "interactive_test_passed": true,
+        "package_install_completed": true,
+        "qpnpu_app_fatal_exception_seen": false,
+        "unrelated_androidruntime_fatal_exception_count": 2
+      },
+      "finding": "The downloaded Device Farm JSON log shows package install completed and no QPNPU app fatal exception stack. Broader AndroidRuntime fatal exceptions came from system NFC svc commands, not com.qpnpu.trial."
+    },
+    {
+      "evidence": {
+        "first_lines": [
+          "tcpdump: verbose output suppressed, use -v[v]... for full protocol decode",
+          "listening on br0, link-type EN10MB (Ethernet), snapshot length 262144 bytes"
+        ],
+        "https_traffic_present": true,
+        "interpretation": "tcpdump shows encrypted HTTPS traffic during the session, but this APK did not implement a model download path and the dump does not provide plaintext evidence of Qwen/model transfer.",
+        "line_count": 8800,
+        "model_plaintext_keywords_seen": false,
+        "qpnpu_plaintext_seen": false,
+        "source_file": "C:\\Users\\Yingjie Huang\\Downloads\\tcp-dump-log-00268e9b80a8.txt",
+        "top_destinations": [
+          {
+            "count": 3894,
+            "destination": "ip-192-168-1-101.us-west-2.compute.internal.47948"
+          },
+          {
+            "count": 1265,
+            "destination": "ip-192-168-1-101.us-west-2.compute.internal.47964"
+          },
+          {
+            "count": 1210,
+            "destination": "123.35.104.34.bc.googleusercontent.com.http"
+          },
+          {
+            "count": 944,
+            "destination": "ip-192-168-1-101.us-west-2.compute.internal.32976"
+          },
+          {
+            "count": 357,
+            "destination": "216.239.32.223.https"
+          },
+          {
+            "count": 292,
+            "destination": "ip-192-168-1-101.us-west-2.compute.internal.43154"
+          },
+          {
+            "count": 109,
+            "destination": "pz-in-f95.1e100.net.https"
+          },
+          {
+            "count": 58,
+            "destination": "216.239.38.223.https"
+          },
+          {
+            "count": 41,
+            "destination": "ec2-34-227-19-112.compute-1.amazonaws.com.https"
+          },
+          {
+            "count": 39,
+            "destination": "ip-192-168-1-101.us-west-2.compute.internal.57636"
+          }
+        ]
+      },
+      "finding": "The TCP dump confirms encrypted network traffic was present during the Device Farm session, but it does not show plaintext QPNPU/Qwen/model transfer evidence and the current APK has no real model download path."
+    }
+  ]
+}

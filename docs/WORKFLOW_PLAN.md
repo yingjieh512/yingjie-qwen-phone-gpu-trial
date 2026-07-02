@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository is currently completing Phase 7C. Each phase should leave behind a small, testable checkpoint.
+This repository has completed the Phase 7C generated-kernel smoke path and is preparing for external model artifact delivery. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -189,28 +189,93 @@ Exit criteria:
 - Generated kernels build in the native project.
 - Microbenchmarks can compare candidates on local CPU and Android.
 
-## Phase 8: Android Benchmark Harness
+## Phase 8A: External Model Artifact Manifest
 
 Exit criteria:
 
-- Benchmark runner deploys through ADB.
-- Results are pulled as benchmark JSON.
-- Thermal and device state are captured with every run.
+- A QPNPU sharded model manifest schema exists for externally delivered model artifacts.
+- Tiny fake model shards can be generated locally.
+- Manifest fields, shard byte sizes, SHA-256 checksums, and tensor ranges validate in Python tests.
+- No Android download, real Qwen model, Hugging Face credentials, or network access is required.
 
-## Phase 9: Backend Capability Selection
-
-Exit criteria:
-
-- Probe data drives conservative backend selection.
-- CPU fallback always works.
-- Vulkan, NNAPI, and QNN paths are only enabled when runtime capability is detected.
-
-## Phase 10: AWS Device Farm Runs And Full Trial Analysis
+## Phase 8B: Android Downloader And Cache
 
 Exit criteria:
 
-- Device Farm scripts can create projects, upload artifacts, and schedule runs with user-provided credentials.
-- Runs produce repeatable probe and benchmark artifacts.
-- Configurable Qwen-style 9B trial runs on real target hardware.
+- The APK can accept a model manifest URL or use a tiny bundled test manifest.
+- The APK downloads tiny test shards into app-private storage.
+- Resume, SHA-256 verification, free-space checks, and clear error JSON are implemented.
+- Download/cache JSON is displayed and logged with clear markers.
+- Device Farm validates only tiny shards at first; no Qwen 9B artifact is downloaded in this phase.
+
+## Phase 9: Android Sharded Model Loader
+
+Exit criteria:
+
+- Native code opens verified shards from app-private storage.
+- Tensor ranges can be mmaped or streamed without copying the whole artifact into Java heap.
+- A tiny external toy model loads from downloaded shards instead of APK assets.
+- Tokenizer and metadata loading remain deterministic.
+
+## Phase 10: Layer-Slice Correctness Ladder
+
+Exit criteria:
+
+- Offline tools export one small Qwen-like layer slice in QPNPU format.
+- Android CPU reference runs embedding, RMSNorm, linear/matvec, RoPE, softmax, and MLP slice checks.
+- Each operator and layer slice compares against Python reference outputs.
+- No speed or NPU claim is made.
+
+## Phase 11: Quantized Operator Expansion
+
+Exit criteria:
+
+- Int4/int8 tensor block formats match the offline converter.
+- Generated CPU kernels cover the exact matmul/dequant shapes needed by the model.
+- Every operator validates against Python reference fixtures.
+- CPU fallback remains mandatory.
+
+## Phase 12: Backend API Enumeration
+
+Exit criteria:
+
+- Vulkan and NNAPI capabilities are queried through real APIs, not just library-name hints.
+- QNN is attempted only if a legally usable Qualcomm SDK/runtime path is available.
+- Capability JSON drives conservative backend selection.
+- No NPU availability is claimed from string hints alone.
+
+## Phase 13: First Accelerator-Backed Subgraph
+
+Exit criteria:
+
+- One tiny supported op or subgraph runs through Vulkan, NNAPI, or QNN if available.
+- Output is compared against CPU reference.
+- Unsupported ops fall back to CPU.
+- Backend, shape, correctness, and thermal context are recorded.
+
+## Phase 14: Progressive Model Scale-Up
+
+Exit criteria:
+
+- External artifact checks progress through tiny fake shards, toy model, one-layer slice, small real model, larger real model, then quantized 9B.
+- For 9B, load and one-token decode correctness are proven before throughput work.
+- Memory, storage, thermal, and failure modes are captured at every scale.
+
+## Phase 15: Automated Device Farm Regression
+
+Exit criteria:
+
+- Manual tapping is replaced with an instrumentation or command-driven test runner.
+- APK upload, bounded test execution, log/artifact retrieval, and JSON validation are automated.
+- Large model tests remain optional and externally configured.
+
+## Phase 16: Full Trial Analysis And Performance Gate
+
+Exit criteria:
+
+- A configurable Qwen-style 9B trial runs on the real target with recorded artifact hashes and backend config hashes.
+- Decode throughput is measured only after correctness gates pass.
 - Results are reproducible and include thermal context.
-- Any decode tokens/sec claims are backed by recorded benchmark artifacts.
+- Any `>=20` decode tokens/sec claim is backed by recorded benchmark artifacts from the full real model path.
+
+See `docs/QWEN_9B_DEVICE_FARM_PLAN.md` for the runtime model delivery strategy. The APK should not embed the real 9B model.
