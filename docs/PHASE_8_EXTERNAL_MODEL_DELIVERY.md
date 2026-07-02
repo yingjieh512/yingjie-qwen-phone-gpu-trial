@@ -35,6 +35,12 @@ The artifact contains:
 
 The generated artifact is about 35 KB. It can be uploaded to S3, a static HTTPS server, GitHub raw content, or a Hugging Face dataset/repo. If hosted, update `manifest.json` URLs or regenerate it with `--base-url`.
 
+Current hosted test manifest:
+
+```text
+https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json
+```
+
 ## Android Smoke Test
 
 Build the APK:

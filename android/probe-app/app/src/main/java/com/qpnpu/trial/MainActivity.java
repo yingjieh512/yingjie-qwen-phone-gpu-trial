@@ -147,6 +147,7 @@ public class MainActivity extends Activity {
         manifestUrlInput = new EditText(this);
         manifestUrlInput.setSingleLine(true);
         manifestUrlInput.setHint("Manifest URL; blank uses bundled tiny demo");
+        manifestUrlInput.setText("https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json");
         root.addView(manifestUrlInput, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
