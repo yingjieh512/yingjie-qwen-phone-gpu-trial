@@ -189,24 +189,26 @@ Exit criteria:
 - Generated kernels build in the native project.
 - Microbenchmarks can compare candidates on local CPU and Android.
 
-## Phase 8A: External Model Artifact Manifest
+## Phase 8: External Toy Model Delivery Demo
 
 Exit criteria:
 
-- A QPNPU sharded model manifest schema exists for externally delivered model artifacts.
-- Tiny fake model shards can be generated locally.
-- Manifest fields, shard byte sizes, SHA-256 checksums, and tensor ranges validate in Python tests.
-- No Android download, real Qwen model, Hugging Face credentials, or network access is required.
+- A QPNPU sharded toy model manifest schema exists for externally delivered artifacts.
+- `scripts/model/create_external_toy_artifact.py` creates a tiny manifest plus shard artifact locally.
+- The Android APK exposes an `External Model` action.
+- Blank manifest URL uses a bundled tiny manifest fallback; non-empty HTTP(S) URL downloads a hosted manifest.
+- Manifest files are cached in app-private storage and verified with SHA-256.
+- Cached toy model bytes feed the Android native toy decode path.
+- Phase 8 JSON is displayed and logged between `QPNPU_PHASE8_JSON_BEGIN` and `QPNPU_PHASE8_JSON_END`.
+- Host extraction supports `--kind phase8` and validates the JSON.
+- No real Qwen 9B, Hugging Face credentials on device, QNN/NPU execution, or performance claim is made.
 
-## Phase 8B: Android Downloader And Cache
+Phase 8 result:
 
-Exit criteria:
-
-- The APK can accept a model manifest URL or use a tiny bundled test manifest.
-- The APK downloads tiny test shards into app-private storage.
-- Resume, SHA-256 verification, free-space checks, and clear error JSON are implemented.
-- Download/cache JSON is displayed and logged with clear markers.
-- Device Farm validates only tiny shards at first; no Qwen 9B artifact is downloaded in this phase.
+- `qpnpu/model_artifact.py` validates external toy model manifests.
+- `qpnpu/android_phase8.py` validates Android Phase 8 payloads.
+- `android/probe-app/app/src/main/assets/phase8_external_toy_manifest.json` provides a no-network fallback demo.
+- `docs/PHASE_8_EXTERNAL_MODEL_DELIVERY.md` records the runbook and guardrails.
 
 ## Phase 9: Android Sharded Model Loader
 

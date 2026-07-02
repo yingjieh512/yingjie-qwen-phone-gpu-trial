@@ -1,0 +1,10 @@
+{
+  "description": "Encodes UTF-8 bytes directly as token ids 0..255 and decodes bytes with replacement.",
+  "schema_version": "0.1",
+  "type": "byte_tokenizer_stub",
+  "vocab_size": 256,
+  "warnings": [
+    "This is not the Qwen tokenizer.",
+    "It exists only for deterministic local smoke tests."
+  ]
+}

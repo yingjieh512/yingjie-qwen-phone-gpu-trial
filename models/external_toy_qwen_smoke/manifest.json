@@ -1,0 +1,58 @@
+{
+  "artifact": {
+    "file_count": 3,
+    "format": "qpnpu_external_sharded",
+    "model_id": "toy-qwen-external-smoke",
+    "total_bytes": 34695
+  },
+  "created_utc": "2026-07-01T23:46:25Z",
+  "decode_smoke": {
+    "max_new_tokens": 8,
+    "prompt": "hello"
+  },
+  "files": [
+    {
+      "byte_length": 1546,
+      "path": "metadata.json",
+      "role": "metadata",
+      "sha256": "d2675179f0bf9c9ef0fabbdf708ec1a7c06394bcfb4120963859d5bd95826f55",
+      "url": "metadata.json"
+    },
+    {
+      "byte_length": 317,
+      "path": "tokenizer_stub.json",
+      "role": "tokenizer_stub",
+      "sha256": "eab46956c43033c2456dc00820bfb614471d92d0d70a5a1954ee999324681bdd",
+      "url": "tokenizer_stub.json"
+    },
+    {
+      "byte_length": 32832,
+      "path": "shards/model-00000.qpnpu",
+      "role": "tensor_shard",
+      "sha256": "c83c250650f8df3785d03e3bbd0b89a8cf7441aeb4751bd20cf967503af8b126",
+      "url": "shards/model-00000.qpnpu"
+    }
+  ],
+  "model": {
+    "architecture": "qwen_toy",
+    "dtype": "fp32",
+    "hf_id": "local/toy-qwen-smoke",
+    "hidden_size": 16,
+    "intermediate_size": 64,
+    "max_position_embeddings": 128,
+    "num_attention_heads": 4,
+    "num_key_value_heads": 4,
+    "num_layers": 1,
+    "quantization": "none",
+    "rope_theta": 10000.0,
+    "vocab_size": 256
+  },
+  "schema_version": "0.1",
+  "source": "qpnpu-external-model-manifest",
+  "warnings": [
+    "external toy model delivery demo only",
+    "toy model only; not Qwen 9B",
+    "not NPU, QNN, NNAPI, or Vulkan execution",
+    "not a performance claim"
+  ]
+}

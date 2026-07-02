@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -26,7 +27,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -46,6 +50,8 @@ public class MainActivity extends Activity {
     private static final String PHASE7A_JSON_END = "QPNPU_PHASE7A_JSON_END";
     private static final String PHASE7C_JSON_BEGIN = "QPNPU_PHASE7C_JSON_BEGIN";
     private static final String PHASE7C_JSON_END = "QPNPU_PHASE7C_JSON_END";
+    private static final String PHASE8_JSON_BEGIN = "QPNPU_PHASE8_JSON_BEGIN";
+    private static final String PHASE8_JSON_END = "QPNPU_PHASE8_JSON_END";
     private static final String TOY_DECODE_JSON_BEGIN = "QPNPU_TOY_DECODE_JSON_BEGIN";
     private static final String TOY_DECODE_JSON_END = "QPNPU_TOY_DECODE_JSON_END";
     private static final int LOG_CHUNK_SIZE = 3000;
@@ -62,6 +68,7 @@ public class MainActivity extends Activity {
     }
 
     private TextView outputText;
+    private EditText manifestUrlInput;
     private String lastJson = "";
 
     private native String nativeRunMicrobenchmarks();
@@ -107,6 +114,8 @@ public class MainActivity extends Activity {
         generatedKernelButton.setText("Gen Kernels");
         Button toyDecodeButton = new Button(this);
         toyDecodeButton.setText("Toy Decode");
+        Button externalModelButton = new Button(this);
+        externalModelButton.setText("External Model");
         Button copyButton = new Button(this);
         copyButton.setText("Copy JSON");
         Button clearButton = new Button(this);
@@ -130,7 +139,15 @@ public class MainActivity extends Activity {
 
         modelButtons.addView(generatedKernelButton, buttonParams);
         modelButtons.addView(toyDecodeButton, buttonParams);
+        modelButtons.addView(externalModelButton, buttonParams);
         root.addView(modelButtons, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        manifestUrlInput = new EditText(this);
+        manifestUrlInput.setSingleLine(true);
+        manifestUrlInput.setHint("Manifest URL; blank uses bundled tiny demo");
+        root.addView(manifestUrlInput, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
@@ -145,7 +162,7 @@ public class MainActivity extends Activity {
         outputText = new TextView(this);
         outputText.setTypeface(Typeface.MONOSPACE);
         outputText.setTextIsSelectable(true);
-        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, ISA Probe, Gen Kernels, or Toy Decode for smoke evidence.");
+        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, ISA Probe, Gen Kernels, Toy Decode, or External Model for smoke evidence.");
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(outputText, new ScrollView.LayoutParams(
@@ -193,7 +210,15 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 runToyDecode();
             }
-        });        copyButton.setOnClickListener(new View.OnClickListener() {
+        });
+        externalModelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String manifestUrl = manifestUrlInput == null ? "" : manifestUrlInput.getText().toString().trim();
+                runPhase8ExternalModelDemo(manifestUrl);
+            }
+        });
+        copyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 copyLastJson();
@@ -353,6 +378,31 @@ public class MainActivity extends Activity {
             }
         }).start();
     }
+    private void runPhase8ExternalModelDemo(final String manifestUrl) {
+        outputText.setText("Running external model delivery demo...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONArray warnings = new JSONArray();
+                try {
+                    JSONObject phase8Json = collectPhase8ExternalModelDemo(manifestUrl, warnings);
+                    phase8Json.put("timestamp_utc", utcNow());
+                    phase8Json.put("device", collectDeviceInfo(warnings));
+                    phase8Json.put("thermal", collectThermalHints(warnings));
+                    phase8Json.put("warnings_from_java", warnings);
+                    saveJsonToExternalFile(phase8Json, "phase8_external_model.json", warnings);
+                    lastJson = phase8Json.toString(2);
+                    logPhase8Json(lastJson);
+                    showText(lastJson);
+                } catch (final Exception exc) {
+                    final String message = "External model delivery demo failed without crashing the app:\n" + exc;
+                    Log.e(TAG, message, exc);
+                    showText(message);
+                }
+            }
+        }).start();
+    }
+
     private void copyLastJson() {
         if (lastJson.isEmpty()) {
             Toast.makeText(this, "No JSON to copy yet", Toast.LENGTH_SHORT).show();
@@ -540,6 +590,155 @@ public class MainActivity extends Activity {
             return failed;
         }
     }
+    private JSONObject collectPhase8ExternalModelDemo(String manifestUrl, JSONArray javaWarnings) throws Exception {
+        JSONArray warnings = new JSONArray();
+        warnings.put("external model delivery demo only");
+        warnings.put("toy model only; not Qwen 9B");
+        warnings.put("Android CPU/JNI reference only; not NPU, QNN, NNAPI, or Vulkan execution");
+        warnings.put("not a performance target claim");
+        warnings.put("bounded tiny artifact path; do not use for large Qwen weights yet");
+
+        JSONObject manifest;
+        String manifestSource;
+        URL baseUrl = null;
+        boolean networkUsed = false;
+        if (manifestUrl == null || manifestUrl.trim().isEmpty()) {
+            manifestSource = "bundled_asset_manifest";
+            manifest = new JSONObject(readAssetText("phase8_external_toy_manifest.json", 512 * 1024));
+            warnings.put("blank manifest URL used bundled tiny manifest fallback; no network download was required");
+        } else {
+            manifestSource = "url";
+            baseUrl = new URL(manifestUrl.trim());
+            manifest = new JSONObject(new String(fetchUrlBytes(baseUrl, 512 * 1024), StandardCharsets.UTF_8));
+            networkUsed = true;
+        }
+
+        JSONObject delivery = cachePhase8Manifest(manifest, manifestSource, manifestUrl, baseUrl, warnings);
+        delivery.put("network_used", networkUsed);
+
+        JSONObject payload = new JSONObject();
+        payload.put("schema_version", "0.1");
+        payload.put("source", "android-phase8-external-model-demo");
+        payload.put("backend", "cpu_android_native_reference");
+        payload.put("native_library", "qpnpu_probe_native");
+        payload.put("available", nativeLibraryLoaded);
+        payload.put("model", manifest.getJSONObject("model"));
+        payload.put("model_delivery", delivery);
+
+        if (!nativeLibraryLoaded) {
+            throw new IllegalStateException("native library was not loaded; external toy decode cannot run: " + nativeLibraryLoadError);
+        }
+
+        String metadataJson = readTextFileRequired(findCachedFilePath(delivery, "metadata"), 512 * 1024);
+        byte[] modelBytes = readTensorShardBytes(delivery, 4 * 1024 * 1024);
+        JSONObject decodeSmoke = manifest.optJSONObject("decode_smoke");
+        String prompt = decodeSmoke == null ? "hello" : decodeSmoke.optString("prompt", "hello");
+        int maxNewTokens = decodeSmoke == null ? 8 : decodeSmoke.optInt("max_new_tokens", 8);
+
+        JSONObject toyDecode = new JSONObject(nativeRunToyDecode(metadataJson, modelBytes, prompt, maxNewTokens));
+        toyDecode.put("timestamp_utc", utcNow());
+        toyDecode.put("available", true);
+        JSONObject assetModel = toyDecode.optJSONObject("asset_model");
+        if (assetModel == null) {
+            assetModel = new JSONObject();
+        }
+        assetModel.put("metadata_asset", "phase8-cache:" + findCachedRelativePath(delivery, "metadata"));
+        assetModel.put("tensor_asset", "phase8-cache:tensor_shards");
+        assetModel.put("tensor_bytes", modelBytes.length);
+        toyDecode.put("asset_model", assetModel);
+
+        payload.put("toy_decode", toyDecode);
+        payload.put("prompt", toyDecode.optString("prompt", prompt));
+        payload.put("generated_token_ids", toyDecode.optJSONArray("generated_token_ids"));
+        payload.put("generated_text", toyDecode.optString("generated_text", ""));
+        payload.put("warnings", warnings);
+        for (int i = 0; i < warnings.length(); i++) {
+            javaWarnings.put(warnings.optString(i));
+        }
+        return payload;
+    }
+
+    private JSONObject cachePhase8Manifest(JSONObject manifest, String manifestSource, String manifestUrl,
+                                           URL baseUrl, JSONArray warnings) throws Exception {
+        JSONObject artifact = manifest.getJSONObject("artifact");
+        String modelId = sanitizeCacheName(artifact.optString("model_id", "phase8-toy-model"));
+        File externalRoot = getExternalFilesDir(null);
+        if (externalRoot == null) {
+            throw new IOException("getExternalFilesDir(null) returned null; cannot cache external model demo");
+        }
+        File cacheDir = new File(new File(externalRoot, "phase8_model_cache"), modelId);
+        if (!cacheDir.exists() && !cacheDir.mkdirs()) {
+            throw new IOException("could not create Phase 8 cache dir: " + cacheDir);
+        }
+
+        JSONArray manifestFiles = manifest.getJSONArray("files");
+        JSONArray cachedFiles = new JSONArray();
+        int downloadedCount = 0;
+        int cacheHitCount = 0;
+        long totalBytes = 0L;
+        for (int i = 0; i < manifestFiles.length(); i++) {
+            JSONObject entry = manifestFiles.getJSONObject(i);
+            String role = entry.getString("role");
+            String relativePath = entry.getString("path");
+            String urlSpec = entry.getString("url");
+            int expectedBytes = entry.getInt("byte_length");
+            String expectedSha = entry.getString("sha256").toLowerCase(Locale.US);
+            File out = safeChildFile(cacheDir, relativePath);
+
+            boolean cacheHit = out.exists()
+                    && out.isFile()
+                    && out.length() == expectedBytes
+                    && expectedSha.equals(sha256Hex(out));
+            boolean downloaded = false;
+            if (!cacheHit) {
+                byte[] bytes = fetchManifestFileBytes(urlSpec, baseUrl, 4 * 1024 * 1024);
+                if (bytes.length != expectedBytes) {
+                    throw new IOException("downloaded byte length mismatch for " + relativePath
+                            + ": expected " + expectedBytes + " got " + bytes.length);
+                }
+                String actualSha = sha256Hex(bytes);
+                if (!expectedSha.equals(actualSha)) {
+                    throw new IOException("sha256 mismatch for " + relativePath);
+                }
+                writeBytes(out, bytes);
+                downloaded = true;
+                downloadedCount += 1;
+            } else {
+                cacheHitCount += 1;
+            }
+
+            if (!expectedSha.equals(sha256Hex(out))) {
+                throw new IOException("cached sha256 verification failed for " + relativePath);
+            }
+            totalBytes += expectedBytes;
+
+            JSONObject cached = new JSONObject();
+            cached.put("role", role);
+            cached.put("path", relativePath);
+            cached.put("url", urlSpec);
+            cached.put("byte_length", expectedBytes);
+            cached.put("sha256", expectedSha);
+            cached.put("cache_path", out.getAbsolutePath());
+            cached.put("cache_hit", cacheHit);
+            cached.put("downloaded", downloaded);
+            cached.put("verified", true);
+            cachedFiles.put(cached);
+        }
+
+        JSONObject delivery = new JSONObject();
+        delivery.put("manifest_source", manifestSource);
+        delivery.put("manifest_url", manifestUrl == null ? "" : manifestUrl);
+        delivery.put("model_id", modelId);
+        delivery.put("cache_dir", cacheDir.getAbsolutePath());
+        delivery.put("files", cachedFiles);
+        delivery.put("total_bytes", totalBytes);
+        delivery.put("downloaded_file_count", downloadedCount);
+        delivery.put("cache_hit_count", cacheHitCount);
+        delivery.put("all_sha256_verified", true);
+        delivery.put("warnings", warnings);
+        return delivery;
+    }
+
     private JSONObject collectNativeMicrobenchmarks(JSONArray warnings) throws JSONException {
         if (!nativeLibraryLoaded) {
             JSONObject unavailable = new JSONObject();
@@ -957,6 +1156,10 @@ public class MainActivity extends Activity {
         logJsonWithMarkers(PHASE7C_JSON_BEGIN, PHASE7C_JSON_END, json);
     }
 
+    private void logPhase8Json(String json) {
+        logJsonWithMarkers(PHASE8_JSON_BEGIN, PHASE8_JSON_END, json);
+    }
+
     private void logToyDecodeJson(String json) {
         logJsonWithMarkers(TOY_DECODE_JSON_BEGIN, TOY_DECODE_JSON_END, json);
     }
@@ -983,6 +1186,188 @@ public class MainActivity extends Activity {
         } catch (IOException exc) {
             warnings.put("failed to save " + fileName + ": " + exc.getMessage());
         }
+    }
+
+    private void writeBytes(File file, byte[] bytes) throws IOException {
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+            throw new IOException("could not create directory: " + parent);
+        }
+        try (FileOutputStream output = new FileOutputStream(file)) {
+            output.write(bytes);
+        }
+    }
+
+    private String readTextFileRequired(String path, int maxBytes) throws IOException {
+        return new String(readFileBytesRequired(new File(path), maxBytes), StandardCharsets.UTF_8);
+    }
+
+    private byte[] readTensorShardBytes(JSONObject delivery, int maxBytes) throws IOException, JSONException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        JSONArray files = delivery.getJSONArray("files");
+        for (int i = 0; i < files.length(); i++) {
+            JSONObject entry = files.getJSONObject(i);
+            if (!"tensor_shard".equals(entry.optString("role", ""))) {
+                continue;
+            }
+            byte[] bytes = readFileBytesRequired(new File(entry.getString("cache_path")), maxBytes);
+            if (output.size() + bytes.length > maxBytes) {
+                throw new IOException("tensor shards exceed Phase 8 demo byte limit");
+            }
+            output.write(bytes, 0, bytes.length);
+        }
+        if (output.size() == 0) {
+            throw new IOException("manifest did not provide a tensor_shard file");
+        }
+        return output.toByteArray();
+    }
+
+    private byte[] readFileBytesRequired(File file, int maxBytes) throws IOException {
+        if (!file.exists() || !file.isFile()) {
+            throw new IOException("required file is missing: " + file);
+        }
+        if (file.length() > maxBytes) {
+            throw new IOException("file exceeds Phase 8 demo byte limit: " + file);
+        }
+        try (FileInputStream input = new FileInputStream(file)) {
+            return readBytesBounded(input, maxBytes);
+        }
+    }
+
+    private byte[] fetchManifestFileBytes(String urlSpec, URL baseUrl, int maxBytes) throws IOException {
+        if (urlSpec.startsWith("asset://")) {
+            String assetPath = urlSpec.substring("asset://".length());
+            return readAssetBytes(assetPath, maxBytes);
+        }
+        URL url = baseUrl == null ? new URL(urlSpec) : new URL(baseUrl, urlSpec);
+        return fetchUrlBytes(url, maxBytes);
+    }
+
+    private byte[] fetchUrlBytes(URL url, int maxBytes) throws IOException {
+        String protocol = url.getProtocol();
+        if (!"https".equalsIgnoreCase(protocol) && !"http".equalsIgnoreCase(protocol)) {
+            throw new IOException("unsupported manifest URL protocol: " + protocol);
+        }
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setConnectTimeout(10000);
+        connection.setReadTimeout(20000);
+        connection.setInstanceFollowRedirects(true);
+        int status = connection.getResponseCode();
+        if (status < 200 || status >= 300) {
+            throw new IOException("HTTP " + status + " while fetching " + url);
+        }
+        try (InputStream input = connection.getInputStream()) {
+            return readBytesBounded(input, maxBytes);
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    private byte[] readBytesBounded(InputStream input, int maxBytes) throws IOException {
+        if (maxBytes <= 0) {
+            return new byte[0];
+        }
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        int total = 0;
+        while (true) {
+            int allowed = Math.min(buffer.length, maxBytes - total);
+            if (allowed <= 0) {
+                if (input.read() >= 0) {
+                    throw new IOException("input exceeds Phase 8 demo byte limit");
+                }
+                break;
+            }
+            int read = input.read(buffer, 0, allowed);
+            if (read < 0) {
+                break;
+            }
+            output.write(buffer, 0, read);
+            total += read;
+        }
+        return output.toByteArray();
+    }
+
+    private String findCachedFilePath(JSONObject delivery, String role) throws JSONException {
+        JSONArray files = delivery.getJSONArray("files");
+        for (int i = 0; i < files.length(); i++) {
+            JSONObject entry = files.getJSONObject(i);
+            if (role.equals(entry.optString("role", ""))) {
+                return entry.getString("cache_path");
+            }
+        }
+        throw new JSONException("missing cached role: " + role);
+    }
+
+    private String findCachedRelativePath(JSONObject delivery, String role) throws JSONException {
+        JSONArray files = delivery.getJSONArray("files");
+        for (int i = 0; i < files.length(); i++) {
+            JSONObject entry = files.getJSONObject(i);
+            if (role.equals(entry.optString("role", ""))) {
+                return entry.getString("path");
+            }
+        }
+        throw new JSONException("missing cached role: " + role);
+    }
+
+    private File safeChildFile(File root, String relativePath) throws IOException {
+        if (relativePath.startsWith("/") || relativePath.contains("..")) {
+            throw new IOException("unsafe relative path in manifest: " + relativePath);
+        }
+        File child = new File(root, relativePath);
+        String rootPath = root.getCanonicalPath();
+        String childPath = child.getCanonicalPath();
+        if (!childPath.equals(rootPath) && !childPath.startsWith(rootPath + File.separator)) {
+            throw new IOException("manifest path escapes cache directory: " + relativePath);
+        }
+        return child;
+    }
+
+    private String sanitizeCacheName(String value) {
+        if (value == null || value.isEmpty()) {
+            return "phase8-toy-model";
+        }
+        return value.replaceAll("[^A-Za-z0-9_.-]", "_");
+    }
+
+    private String sha256Hex(File file) throws IOException {
+        try (FileInputStream input = new FileInputStream(file)) {
+            MessageDigest digest = newSha256Digest();
+            byte[] buffer = new byte[8192];
+            while (true) {
+                int read = input.read(buffer);
+                if (read < 0) {
+                    break;
+                }
+                digest.update(buffer, 0, read);
+            }
+            return bytesToHex(digest.digest());
+        }
+    }
+
+    private String sha256Hex(byte[] bytes) {
+        MessageDigest digest = newSha256Digest();
+        digest.update(bytes);
+        return bytesToHex(digest.digest());
+    }
+
+    private MessageDigest newSha256Digest() {
+        try {
+            return MessageDigest.getInstance("SHA-256");
+        } catch (Exception exc) {
+            throw new IllegalStateException("SHA-256 digest unavailable", exc);
+        }
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        char[] digits = "0123456789abcdef".toCharArray();
+        char[] out = new char[bytes.length * 2];
+        for (int i = 0; i < bytes.length; i++) {
+            int value = bytes[i] & 0xff;
+            out[i * 2] = digits[value >>> 4];
+            out[i * 2 + 1] = digits[value & 0x0f];
+        }
+        return new String(out);
     }
 
     private void writeText(File file, String text) throws IOException {

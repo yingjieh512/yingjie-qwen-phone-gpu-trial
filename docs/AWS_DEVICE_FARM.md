@@ -260,3 +260,40 @@ Record:
 - Device Farm device name/model, Android version, session ARN, screenshots, and log artifacts.
 
 This validates generated native CPU candidate plumbing only. It is not Qwen 9B inference, not QNN/NPU/NNAPI/Vulkan execution, and not a tokens/sec performance claim.
+
+
+## Phase 8 External Toy Model Delivery Smoke Test
+
+After installing the Phase 8 APK in Remote Access:
+
+1. Launch `QPNPU Hardware Probe`.
+2. Leave the manifest URL blank for the bundled tiny fallback, or paste an HTTPS URL to a hosted Phase 8 `manifest.json`.
+3. Tap `External Model`.
+4. Verify the UI shows `source: android-phase8-external-model-demo`.
+5. Verify `model_delivery.all_sha256_verified` is `true`.
+6. Confirm logcat contains:
+
+```text
+QPNPU_PHASE8_JSON_BEGIN
+QPNPU_PHASE8_JSON_END
+```
+
+7. Download logcat and extract:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py \
+  --kind phase8 \
+  --logcat path/to/devicefarm-logcat.txt \
+  --out benchmarks/results/aws_remote_phase8_<date>.json
+```
+
+Record:
+
+- Whether the APK installed and launched.
+- Whether the manifest source was `bundled_asset_manifest` or `url`.
+- Cache directory and file count.
+- Whether every file verified SHA-256.
+- Generated token IDs from the nested toy decode result.
+- Any network/download/cache errors.
+
+This validates external-style artifact delivery and cached toy decode only. It is not Qwen 9B inference, not accelerator execution, and not a tokens/sec performance claim.

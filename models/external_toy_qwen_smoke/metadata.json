@@ -1,0 +1,65 @@
+{
+  "format": "qpnpu",
+  "model": {
+    "architecture": "qwen_toy",
+    "dtype": "fp32",
+    "hf_id": "local/toy-qwen-smoke",
+    "hidden_size": 16,
+    "intermediate_size": 64,
+    "max_position_embeddings": 128,
+    "num_attention_heads": 4,
+    "num_key_value_heads": 4,
+    "num_layers": 1,
+    "quantization": "none",
+    "rope_theta": 10000.0,
+    "vocab_size": 256
+  },
+  "notes": [
+    "This smoke artifact validates local model-format plumbing only.",
+    "It is intentionally too small and simple to represent Qwen 9B behavior."
+  ],
+  "schema_version": "0.1",
+  "tensors": [
+    {
+      "byte_length": 16384,
+      "byte_offset": 0,
+      "dtype": "fp32",
+      "file": "shards/model-00000.qpnpu",
+      "name": "token_embedding.weight",
+      "quantization": "none",
+      "shape": [
+        256,
+        16
+      ]
+    },
+    {
+      "byte_length": 64,
+      "byte_offset": 16384,
+      "dtype": "fp32",
+      "file": "shards/model-00000.qpnpu",
+      "name": "norm.weight",
+      "quantization": "none",
+      "shape": [
+        16
+      ]
+    },
+    {
+      "byte_length": 16384,
+      "byte_offset": 16448,
+      "dtype": "fp32",
+      "file": "shards/model-00000.qpnpu",
+      "name": "lm_head.weight",
+      "quantization": "none",
+      "shape": [
+        256,
+        16
+      ]
+    }
+  ],
+  "warnings": [
+    "toy model only; not Qwen 9B",
+    "local CPU Python reference only; not Android",
+    "not NPU or QNN execution",
+    "not a performance claim"
+  ]
+}
