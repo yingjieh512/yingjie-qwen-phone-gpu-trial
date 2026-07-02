@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository has completed the Phase 9 native cached-shard loader smoke path and is preparing for layer-slice correctness work. Each phase should leave behind a small, testable checkpoint.
+This repository has completed the Phase 10 local layer-slice correctness ladder and is preparing to port that ladder into Android native code. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -230,13 +230,30 @@ Phase 9 result:
 - `scripts/android/extract_probe_json_from_logcat.py --kind phase9` extracts Phase 9 logcat payloads.
 - `docs/PHASE_9_NATIVE_SHARD_LOADER.md` records the runbook and guardrails.
 
-## Phase 10: Layer-Slice Correctness Ladder
+## Phase 10: Local Layer-Slice Correctness Ladder
 
 Exit criteria:
 
 - Offline tools export one small Qwen-like layer slice in QPNPU format.
-- Android CPU reference runs embedding, RMSNorm, linear/matvec, RoPE, softmax, and MLP slice checks.
-- Each operator and layer slice compares against Python reference outputs.
+- The artifact includes deterministic reference outputs for embedding, RMSNorm, linear/matvec projections, RoPE, causal softmax attention, MLP, final logits, and next-token argmax.
+- A CPU Python reference reloads the artifact and compares every stored checkpoint with tolerance-bounded checks.
+- The check emits JSON with `summary.all_passed: true` before any Android port is attempted.
+- No speed, Android, QNN/NPU, or full-model claim is made.
+
+Phase 10 result:
+
+- `qpnpu/layer_slice.py` creates and validates tiny deterministic one-layer slice artifacts.
+- `scripts/model/create_layer_slice.py` creates `models/layer_slice_smoke`.
+- `scripts/model/run_layer_slice_check.py` writes `benchmarks/results/layer_slice_smoke.json`.
+- `docs/PHASE_10_LAYER_SLICE_CORRECTNESS.md` records the runbook and guardrails.
+
+## Phase 10B: Android Native Layer-Slice Check
+
+Exit criteria:
+
+- The Android APK loads the Phase 10 layer-slice artifact through verified external shards.
+- Native CPU code compares Android outputs against the Phase 10 reference checkpoints.
+- JSON is displayed and logged with clear markers.
 - No speed or NPU claim is made.
 
 ## Phase 11: Quantized Operator Expansion

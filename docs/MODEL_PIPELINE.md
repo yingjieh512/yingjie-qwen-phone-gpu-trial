@@ -101,3 +101,16 @@ Planned later-phase workflow:
 6. Package model artifacts for Android deployment.
 
 No model weights are stored in git.
+
+## Phase 10 Layer-Slice Artifact
+
+Phase 10 adds a tiny deterministic Qwen-like one-layer slice. It uses QPNPU `metadata.json` plus a small fp32 `model.bin` and `reference_outputs.json` checkpoints for embedding, RMSNorm, linear projections, RoPE, causal softmax attention, MLP, final logits, and next-token argmax.
+
+Create and check it locally:
+
+```bash
+python scripts/model/create_layer_slice.py --out models/layer_slice_smoke --overwrite
+python scripts/model/run_layer_slice_check.py --model-dir models/layer_slice_smoke --out benchmarks/results/layer_slice_smoke.json
+```
+
+This is a correctness artifact only. It is not a full Qwen checkpoint conversion, not Android execution, not NPU execution, and not a performance result.

@@ -1,0 +1,74 @@
+{
+  "byte_length": 20050791,
+  "contains_anr": false,
+  "contains_fatal_exception": true,
+  "contains_install_failure": false,
+  "contains_phase9_marker": true,
+  "contains_qpnpu_package": true,
+  "exists": true,
+  "path": "C:\\Users\\Yingjie Huang\\Downloads\\log (6).json",
+  "record_count": 62357,
+  "top_level_type": "list",
+  "top_sources": [
+    [
+      "Device",
+      62333
+    ],
+    [
+      "Harness",
+      24
+    ]
+  ],
+  "top_statuses": [
+    [
+      "Info",
+      31429
+    ],
+    [
+      "Debug",
+      20668
+    ],
+    [
+      "Error",
+      5005
+    ],
+    [
+      "Warning",
+      4193
+    ],
+    [
+      "Verbose",
+      1057
+    ],
+    [
+      "Passed",
+      3
+    ],
+    [
+      "Stopped",
+      2
+    ]
+  ],
+  "useful_record_samples": [
+    "{\"attachment_id\": null, \"data\": \"Successful test lifecycle of Setup Test\", \"id\": 3826, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3728, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3737, \"timestamp\": \"2026-07-02T00:46:15.289748Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"Interactive test passed\", \"id\": 56191, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3728, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3737, \"timestamp\": \"2026-07-02T00:50:57.718378Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"Successful test lifecycle of Teardown Test\", \"id\": 62504, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3728, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3737, \"timestamp\": \"2026-07-02T00:51:11.810527Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 41, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:06.698557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 47, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:07.201557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 67, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1987, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 15938, \"timestamp\": \"2026-07-02T07:46:07.306557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 68, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1987, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 15938, \"timestamp\": \"2026-07-02T07:46:07.306557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 76, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1987, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 15938, \"timestamp\": \"2026-07-02T07:46:07.306557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 77, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1987, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 15938, \"timestamp\": \"2026-07-02T07:46:07.306557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 78, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:07.702557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 81, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:08.203557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 114, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:08.703557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 175, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:09.207557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 181, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:09.710557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 182, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:10.215557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 191, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:10.716557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 193, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:11.216557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"Package event received: 0\", \"id\": 198, \"level\": \"Debug\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"BackgroundInstallControlService\", \"tid\": 3735, \"timestamp\": \"2026-07-02T07:46:11.245557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"Writing exception to parcel\", \"id\": 204, \"level\": \"Error\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DatabaseUtils\", \"tid\": 4469, \"timestamp\": \"2026-07-02T07:46:11.253557Z\", \"type\": \"Message\"}",
+    "{\"attachment_id\": null, \"data\": \"java.lang.SecurityException: Permission Denial: get/set setting for user asks to run as user -2 but is calling from uid u0a333; this requires android.permission.INTERACT_ACROSS_USERS_FULL\", \"id\": 205, \"level\": \"Error\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DatabaseUtils\", \"tid\": 4469, \"timestamp\": \"2026-07-02T07:46:11.253557..."
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "format": "qpnpu",
+  "model": {
+    "architecture": "qwen_toy_layer_slice",
+    "dtype": "fp32",
+    "hf_id": "local/qwen-toy-layer-slice-smoke",
+    "hidden_size": 32,
+    "intermediate_size": 64,
+    "max_position_embeddings": 128,
+    "num_attention_heads": 4,
+    "num_key_value_heads": 4,
+    "num_layers": 1,
+    "quantization": "none",
+    "rope_theta": 10000.0,
+    "vocab_size": 256
+  },
+  "notes": [
+    "This artifact validates per-operator and one-layer slice correctness plumbing.",
+    "It is intentionally tiny and should not be interpreted as real Qwen 9B inference."
+  ],
+  "phase": "10",
+  "phase10_reference": {
+    "file": "reference_outputs.json",
+    "outputs": [
+      "embedding",
+      "input_rmsnorm",
+      "q_rope",
+      "k_rope",
+      "attention_scores",
+      "attention_probs",
+      "attention_context",
+      "attention_out",
+      "post_attention_residual",
+      "post_attention_rmsnorm",
+      "mlp_gate",
+      "mlp_up",
+      "mlp_activation",
+      "mlp_out",
+      "final_hidden",
+      "logits_last"
+    ],
+    "prompt": "hello",
+    "rms_norm_eps": 1e-06,
+    "seq_len": 8
+  },
+  "schema_version": "0.1",
+  "tensors": [
+    {
+      "byte_length": 32768,
+      "byte_offset": 0,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "token_embedding.weight",
+      "quantization": "none",
+      "shape": [
+        256,
+        32
+      ]
+    },
+    {
+      "byte_length": 128,
+      "byte_offset": 32768,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.input_norm.weight",
+      "quantization": "none",
+      "shape": [
+        32
+      ]
+    },
+    {
+      "byte_length": 4096,
+      "byte_offset": 32896,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.q_proj.weight",
+      "quantization": "none",
+      "shape": [
+        32,
+        32
+      ]
+    },
+    {
+      "byte_length": 4096,
+      "byte_offset": 36992,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.k_proj.weight",
+      "quantization": "none",
+      "shape": [
+        32,
+        32
+      ]
+    },
+    {
+      "byte_length": 4096,
+      "byte_offset": 41088,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.v_proj.weight",
+      "quantization": "none",
+      "shape": [
+        32,
+        32
+      ]
+    },
+    {
+      "byte_length": 4096,
+      "byte_offset": 45184,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.o_proj.weight",
+      "quantization": "none",
+      "shape": [
+        32,
+        32
+      ]
+    },
+    {
+      "byte_length": 128,
+      "byte_offset": 49280,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.post_attention_norm.weight",
+      "quantization": "none",
+      "shape": [
+        32
+      ]
+    },
+    {
+      "byte_length": 8192,
+      "byte_offset": 49408,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.mlp_gate.weight",
+      "quantization": "none",
+      "shape": [
+        64,
+        32
+      ]
+    },
+    {
+      "byte_length": 8192,
+      "byte_offset": 57600,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.mlp_up.weight",
+      "quantization": "none",
+      "shape": [
+        64,
+        32
+      ]
+    },
+    {
+      "byte_length": 8192,
+      "byte_offset": 65792,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "layer.0.mlp_down.weight",
+      "quantization": "none",
+      "shape": [
+        32,
+        64
+      ]
+    },
+    {
+      "byte_length": 32768,
+      "byte_offset": 73984,
+      "dtype": "fp32",
+      "file": "model.bin",
+      "name": "lm_head.weight",
+      "quantization": "none",
+      "shape": [
+        256,
+        32
+      ]
+    }
+  ],
+  "warnings": [
+    "Phase 10 layer-slice smoke only",
+    "tiny deterministic Qwen-like slice; not Qwen 9B",
+    "CPU Python reference only; not Android execution",
+    "not NPU, QNN, NNAPI, or Vulkan execution",
+    "not a performance claim"
+  ]
+}

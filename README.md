@@ -8,6 +8,8 @@ The long-term performance target is at least 20 decode tokens/sec. No performanc
 
 ## Current Status
 
+Phase 10 adds a local layer-slice correctness ladder. A tiny deterministic Qwen-like one-layer artifact can be created, and a CPU Python reference checks embedding, RMSNorm, linear projections, RoPE, causal softmax attention, MLP, final logits, and next-token argmax against stored reference values. This is still not Qwen 9B, not Android/NPU/QNN execution, and not a performance claim.
+
 Phase 9 adds a native cached-shard loader for the externally delivered toy model. The APK can verify a hosted manifest and cached shard files, then call JNI/C++ with file paths so native code opens the metadata and mmap-reads shard bytes before running the toy decode reference. This is still not Qwen 9B, not NPU/QNN execution, and not a performance claim.
 
 Phase 8 adds an external toy model delivery demo. The APK can cache a tiny manifest-described model artifact in app-private storage, verify SHA-256, and run toy decode from cached bytes. A blank manifest URL uses a bundled fallback; an HTTPS manifest URL can be used after hosting the tiny artifact. This is still not Qwen 9B, not NPU/QNN execution, and not a performance claim.
@@ -60,6 +62,22 @@ python tools/kernelgen/generate_kernels.py --probe benchmarks/results/sample_pro
 python scripts/autotune/run_autotune.py --dry-run
 ```
 
+
+## Phase 10 Layer-Slice Correctness Quickstart
+
+Create the tiny layer-slice artifact:
+
+```bash
+python scripts/model/create_layer_slice.py --out models/layer_slice_smoke --overwrite
+```
+
+Run the correctness ladder:
+
+```bash
+python scripts/model/run_layer_slice_check.py   --model-dir models/layer_slice_smoke   --out benchmarks/results/layer_slice_smoke.json
+```
+
+This validates deterministic reference math for a tiny one-layer slice only. It is a preparation step for Android/native correctness checks; it is not full Qwen 9B decoding, not NPU execution, and not a tokens/sec result.
 
 ## Phase 9 Native Cached-Shard Loader Quickstart
 
@@ -415,7 +433,7 @@ AWS Remote Access may start after Phase 4A for manual app/hardware smoke validat
 
 ## Next Phases
 
-1. Phase 10: Build a layer-slice correctness ladder for a small exported Qwen-like slice.
+1. Phase 10B: Port the layer-slice correctness ladder into Android native code using the Phase 9 cached-shard loader.
 2. Phase 11: Expand quantized operator formats and CPU fallback kernels against Python references.
 3. Phase 12: Enumerate real backend APIs for NNAPI, Vulkan, and any legally usable QNN runtime before attempting accelerator execution.
 4. Later phases: automate Device Farm runs, scale external artifacts carefully, and measure performance only after correctness gates pass.

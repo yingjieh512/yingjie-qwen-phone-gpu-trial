@@ -1,0 +1,303 @@
+{
+  "phase10_readiness": {
+    "ready_to_implement": true,
+    "reason": "Phase 9 proves verified external files can be handed to native code on the target phone, so a deterministic layer-slice artifact and reference checker is the next safe scale-up."
+  },
+  "phase9_native_shard_loader_findings": [
+    {
+      "all_sha256_verified": true,
+      "all_sha256_verified_before_native_load": true,
+      "backend": "cpu_android_native_file_loader",
+      "cache_hit_count": 3,
+      "downloaded_file_count": 0,
+      "generated_text_preview": "(\\xfd\\xdc\\xd6\\x89\\xdd\\xe9\\x84",
+      "generated_token_ids": [
+        40,
+        253,
+        220,
+        214,
+        137,
+        221,
+        233,
+        132
+      ],
+      "index": 0,
+      "java_tensor_bytes_passed": false,
+      "loader_location": "native_jni",
+      "manifest_source": "url",
+      "manifest_url": "https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json",
+      "network_used": true,
+      "open_method": "mmap_readonly",
+      "source": "android-phase9-native-shard-loader",
+      "tensor_bytes": 32832,
+      "tensor_shard_count": 1
+    },
+    {
+      "all_sha256_verified": true,
+      "all_sha256_verified_before_native_load": true,
+      "backend": "cpu_android_native_file_loader",
+      "cache_hit_count": 3,
+      "downloaded_file_count": 0,
+      "generated_text_preview": "(\\xfd\\xdc\\xd6\\x89\\xdd\\xe9\\x84",
+      "generated_token_ids": [
+        40,
+        253,
+        220,
+        214,
+        137,
+        221,
+        233,
+        132
+      ],
+      "index": 1,
+      "java_tensor_bytes_passed": false,
+      "loader_location": "native_jni",
+      "manifest_source": "url",
+      "manifest_url": "https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json",
+      "network_used": true,
+      "open_method": "mmap_readonly",
+      "source": "android-phase9-native-shard-loader",
+      "tensor_bytes": 32832,
+      "tensor_shard_count": 1
+    },
+    {
+      "all_sha256_verified": true,
+      "all_sha256_verified_before_native_load": true,
+      "backend": "cpu_android_native_file_loader",
+      "cache_hit_count": 3,
+      "downloaded_file_count": 0,
+      "generated_text_preview": "(\\xfd\\xdc\\xd6\\x89\\xdd\\xe9\\x84",
+      "generated_token_ids": [
+        40,
+        253,
+        220,
+        214,
+        137,
+        221,
+        233,
+        132
+      ],
+      "index": 2,
+      "java_tensor_bytes_passed": false,
+      "loader_location": "native_jni",
+      "manifest_source": "url",
+      "manifest_url": "https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json",
+      "network_used": true,
+      "open_method": "mmap_readonly",
+      "source": "android-phase9-native-shard-loader",
+      "tensor_bytes": 32832,
+      "tensor_shard_count": 1
+    },
+    {
+      "all_sha256_verified": true,
+      "all_sha256_verified_before_native_load": true,
+      "backend": "cpu_android_native_file_loader",
+      "cache_hit_count": 3,
+      "downloaded_file_count": 0,
+      "generated_text_preview": "(\\xfd\\xdc\\xd6\\x89\\xdd\\xe9\\x84",
+      "generated_token_ids": [
+        40,
+        253,
+        220,
+        214,
+        137,
+        221,
+        233,
+        132
+      ],
+      "index": 3,
+      "java_tensor_bytes_passed": false,
+      "loader_location": "native_jni",
+      "manifest_source": "url",
+      "manifest_url": "https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json",
+      "network_used": true,
+      "open_method": "mmap_readonly",
+      "source": "android-phase9-native-shard-loader",
+      "tensor_bytes": 32832,
+      "tensor_shard_count": 1
+    }
+  ],
+  "qpnpu_payload_summary": {
+    "counts": {
+      "native": 2,
+      "phase6": 2,
+      "phase7a": 2,
+      "phase7c": 2,
+      "phase8": 4,
+      "phase9": 4,
+      "probe": 2,
+      "toy_decode": 2
+    },
+    "payload_count": 20
+  },
+  "schema_version": "0.1",
+  "session_summary": {
+    "byte_length": 20050791,
+    "contains_anr": false,
+    "contains_fatal_exception": true,
+    "contains_install_failure": false,
+    "contains_phase9_marker": true,
+    "contains_qpnpu_package": true,
+    "exists": true,
+    "path": "C:\\Users\\Yingjie Huang\\Downloads\\log (6).json",
+    "record_count": 62357,
+    "top_level_type": "list",
+    "top_sources": [
+      [
+        "Device",
+        62333
+      ],
+      [
+        "Harness",
+        24
+      ]
+    ],
+    "top_statuses": [
+      [
+        "Info",
+        31429
+      ],
+      [
+        "Debug",
+        20668
+      ],
+      [
+        "Error",
+        5005
+      ],
+      [
+        "Warning",
+        4193
+      ],
+      [
+        "Verbose",
+        1057
+      ],
+      [
+        "Passed",
+        3
+      ],
+      [
+        "Stopped",
+        2
+      ]
+    ],
+    "useful_record_samples": [
+      "{\"attachment_id\": null, \"data\": \"Successful test lifecycle of Setup Test\", \"id\": 3826, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3728, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3737, \"timestamp\": \"2026-07-02T00:46:15.289748Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Interactive test passed\", \"id\": 56191, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3728, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3737, \"timestamp\": \"2026-07-02T00:50:57.718378Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Successful test lifecycle of Teardown Test\", \"id\": 62504, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3728, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3737, \"timestamp\": \"2026-07-02T00:51:11.810527Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 41, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:06.698557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 47, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:07.201557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 67, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1987, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 15938, \"timestamp\": \"2026-07-02T07:46:07.306557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 68, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1987, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 15938, \"timestamp\": \"2026-07-02T07:46:07.306557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 76, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1987, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 15938, \"timestamp\": \"2026-07-02T07:46:07.306557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 77, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1987, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 15938, \"timestamp\": \"2026-07-02T07:46:07.306557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 78, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:07.702557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 81, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:08.203557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 114, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:08.703557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 175, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:09.207557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 181, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:09.710557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 182, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:10.215557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 191, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:10.716557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 193, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3743, \"timestamp\": \"2026-07-02T07:46:11.216557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Package event received: 0\", \"id\": 198, \"level\": \"Debug\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"BackgroundInstallControlService\", \"tid\": 3735, \"timestamp\": \"2026-07-02T07:46:11.245557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Writing exception to parcel\", \"id\": 204, \"level\": \"Error\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DatabaseUtils\", \"tid\": 4469, \"timestamp\": \"2026-07-02T07:46:11.253557Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"java.lang.SecurityException: Permission Denial: get/set setting for user asks to run as user -2 but is calling from uid u0a333; this requires android.permission.INTERACT_ACROSS_USERS_FULL\", \"id\": 205, \"level\": \"Error\", \"parent_id\": null, \"pid\": 3174, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DatabaseUtils\", \"tid\": 4469, \"timestamp\": \"2026-07-02T07:46:11.253557..."
+    ]
+  },
+  "source_files": {
+    "all_qpnpu_payloads": "C:\\Users\\Yingjie Huang\\qwen-phone-npu-trial\\benchmarks\\results\\aws_remote_probe_2026-07-01_159ea0b7965f.all_qpnpu_payloads.json",
+    "phase9_json": "C:\\Users\\Yingjie Huang\\qwen-phone-npu-trial\\benchmarks\\results\\aws_remote_phase9_2026-07-01_159ea0b7965f.json",
+    "session_json": "C:\\Users\\Yingjie Huang\\Downloads\\log (6).json",
+    "tcp_dump": "C:\\Users\\Yingjie Huang\\Downloads\\tcp-dump-log-0aa436849d35.txt"
+  },
+  "tcp_dump_summary": {
+    "byte_length": 382102,
+    "exists": true,
+    "http_80_mentions": 2,
+    "https_443_mentions": 1830,
+    "keyword_counts": {
+      "amazonaws": 208,
+      "cdn-lfs": 0,
+      "huggingface": 0,
+      "libqnn": 0,
+      "libvulkan": 0,
+      "manifest.json": 0,
+      "model-00000": 0,
+      "qpnpu": 0,
+      "toy-model-for-testing": 0
+    },
+    "line_count": 1840,
+    "path": "C:\\Users\\Yingjie Huang\\Downloads\\tcp-dump-log-0aa436849d35.txt",
+    "top_destination_tokens": [
+      [
+        "ip-192-168-1-100.us-west-2.compute.internal.56532",
+        292
+      ],
+      [
+        "pnseaa-ao-in-f14.1e100.net.https",
+        168
+      ],
+      [
+        "ip-192-168-1-100.us-west-2.compute.internal.60622",
+        126
+      ],
+      [
+        "ip-192-168-1-100.us-west-2.compute.internal.43304",
+        102
+      ],
+      [
+        "ph-in-f95.1e100.net.https",
+        94
+      ],
+      [
+        "server-143-204-1-3.hio52.r.cloudfront.net.https",
+        71
+      ],
+      [
+        "ec2-18-206-28-240.compute-1.amazonaws.com.https",
+        42
+      ],
+      [
+        "ip-192-168-1-100.us-west-2.compute.internal.57838",
+        38
+      ],
+      [
+        "pf-in-f101.1e100.net.https",
+        38
+      ],
+      [
+        "pnseaa-ap-in-f10.1e100.net.https",
+        31
+      ],
+      [
+        "ie-in-f113.1e100.net.https",
+        29
+      ],
+      [
+        "146.75.41.91.https",
+        27
+      ],
+      [
+        "216.239.32.223.https",
+        27
+      ],
+      [
+        "pnseaa-ap-in-f14.1e100.net.https",
+        27
+      ],
+      [
+        "216.239.38.95.https",
+        26
+      ]
+    ]
+  },
+  "timestamp_utc": "2026-07-02T00:55:39+00:00",
+  "useful_conclusions": [
+    "Phase 9 JSON extracted and validated from Device Farm logcat.",
+    "The Android native shard-loader path reached JNI/C++ on the real phone and reported mmap_readonly native file loading.",
+    "The JSON reports SHA-256 verification before native load and java_tensor_bytes_passed=false, which is the intended Phase 9 architectural step.",
+    "The model remains a tiny external toy artifact; this is not Qwen 9B, not accelerator execution, and not a performance claim.",
+    "The next practical phase is a tiny layer-slice correctness ladder before any larger model or tokens/sec measurement."
+  ]
+}
