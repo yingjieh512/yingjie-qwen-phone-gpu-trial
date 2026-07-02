@@ -18,6 +18,7 @@ from qpnpu.android_logcat import (  # noqa: E402
     write_extracted_phase7a_isa_probes_json,
     write_extracted_phase7c_generated_kernels_json,
     write_extracted_phase8_external_model_json,
+    write_extracted_phase9_native_shard_loader_json,
     write_extracted_native_benchmark_json,
     write_extracted_probe_json,
 )
@@ -29,7 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", required=True, help="Clean JSON output path.")
     parser.add_argument(
         "--kind",
-        choices=["probe", "native", "phase6", "phase7a", "phase7c", "phase8", "toy_decode", "all"],
+        choices=["probe", "native", "phase6", "phase7a", "phase7c", "phase8", "phase9", "toy_decode", "all"],
         default="probe",
         help="Which QPNPU marker pair to extract, or all for a bundled artifact. Default: probe.",
     )
@@ -46,6 +47,8 @@ def main(argv: list[str] | None = None) -> int:
             out = write_extracted_phase7c_generated_kernels_json(args.logcat, args.out)
         elif args.kind == "phase8":
             out = write_extracted_phase8_external_model_json(args.logcat, args.out)
+        elif args.kind == "phase9":
+            out = write_extracted_phase9_native_shard_loader_json(args.logcat, args.out)
         elif args.kind == "toy_decode":
             out = write_extracted_android_toy_decode_json(args.logcat, args.out)
         elif args.kind == "all":

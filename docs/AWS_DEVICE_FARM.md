@@ -118,6 +118,7 @@ Record CPU ISA feature agreement, thread scaling, memory probe output, backend l
 - Whether thermal/sysfs paths were readable.
 - Whether native CPU microbenchmarks ran and passed correctness checks.
 - Whether Android toy decode ran and emitted generated token IDs.
+- Whether Phase 9 native shard loading opened verified cached files from native code.
 - Screenshots, if useful.
 - Logs and artifacts, especially logcat around the JSON markers.
 
@@ -297,3 +298,30 @@ Record:
 - Any network/download/cache errors.
 
 This validates external-style artifact delivery and cached toy decode only. It is not Qwen 9B inference, not accelerator execution, and not a tokens/sec performance claim.
+
+## Phase 9 Native Cached-Shard Loader Smoke Test
+
+After installing the Phase 9 APK in Remote Access:
+
+1. Launch `QPNPU Hardware Probe`.
+2. Confirm the manifest URL field contains the hosted toy manifest URL, or paste it manually.
+3. Tap `Shard Load`.
+4. Verify the UI shows `source: android-phase9-native-shard-loader`.
+5. Verify `native_model_loader.open_method` is `mmap_readonly`.
+6. Verify `native_model_loader.java_tensor_bytes_passed` is `false`.
+7. Verify `native_model_loader.all_sha256_verified_before_native_load` is `true`.
+8. Confirm logcat contains:
+
+```text
+QPNPU_PHASE9_JSON_BEGIN
+QPNPU_PHASE9_JSON_END
+```
+
+9. Download logcat and extract:
+
+```bash
+python scripts/android/extract_probe_json_from_logcat.py   --kind phase9   --logcat path/to/devicefarm-logcat.txt   --out benchmarks/results/aws_remote_phase9_<date>.json
+```
+
+Record cache hit/download counts, checksum status, native loader fields, generated toy token IDs, and whether the app stayed stable. This validates native file loading of verified toy shards only; it is not real Qwen 9B inference and not accelerator execution.
+

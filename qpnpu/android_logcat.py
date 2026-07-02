@@ -11,6 +11,7 @@ from qpnpu.android_phase6 import validate_phase6_characterization
 from qpnpu.android_phase7a import validate_phase7a_isa_probes
 from qpnpu.android_phase7c import validate_phase7c_generated_kernels
 from qpnpu.android_phase8 import validate_phase8_external_model
+from qpnpu.android_phase9 import validate_phase9_native_shard_loader
 from qpnpu.android_toy_decode import validate_android_toy_decode
 from qpnpu.benchmark import benchmark_results_from_payload
 from qpnpu.probe_schema import validate_probe_result
@@ -29,6 +30,8 @@ PHASE7C_BEGIN_MARKER = "QPNPU_PHASE7C_JSON_BEGIN"
 PHASE7C_END_MARKER = "QPNPU_PHASE7C_JSON_END"
 PHASE8_BEGIN_MARKER = "QPNPU_PHASE8_JSON_BEGIN"
 PHASE8_END_MARKER = "QPNPU_PHASE8_JSON_END"
+PHASE9_BEGIN_MARKER = "QPNPU_PHASE9_JSON_BEGIN"
+PHASE9_END_MARKER = "QPNPU_PHASE9_JSON_END"
 TOY_DECODE_BEGIN_MARKER = "QPNPU_TOY_DECODE_JSON_BEGIN"
 TOY_DECODE_END_MARKER = "QPNPU_TOY_DECODE_JSON_END"
 
@@ -40,6 +43,7 @@ _MARKER_SPECS = [
     ("phase7a", PHASE7A_BEGIN_MARKER, PHASE7A_END_MARKER),
     ("phase7c", PHASE7C_BEGIN_MARKER, PHASE7C_END_MARKER),
     ("phase8", PHASE8_BEGIN_MARKER, PHASE8_END_MARKER),
+    ("phase9", PHASE9_BEGIN_MARKER, PHASE9_END_MARKER),
     ("toy_decode", TOY_DECODE_BEGIN_MARKER, TOY_DECODE_END_MARKER),
 ]
 
@@ -182,6 +186,29 @@ def write_extracted_phase8_external_model_json(logcat_path: str | Path, out_path
 
     data = extract_phase8_external_model_json_from_logcat_file(logcat_path)
     return _write_json(data, out_path)
+
+def extract_phase9_native_shard_loader_json_from_logcat_text(text: str) -> dict[str, Any]:
+    """Extract and validate the first Phase 9 native shard-loader JSON."""
+
+    data = _extract_json_with_markers(text, PHASE9_BEGIN_MARKER, PHASE9_END_MARKER)
+    validation_errors = validate_phase9_native_shard_loader(data)
+    if validation_errors:
+        raise ValueError("invalid extracted Phase 9 native shard-loader JSON: " + "; ".join(validation_errors))
+    return data
+
+
+def extract_phase9_native_shard_loader_json_from_logcat_file(path: str | Path) -> dict[str, Any]:
+    """Read a logcat text file and extract the first Phase 9 native shard-loader JSON object."""
+
+    return extract_phase9_native_shard_loader_json_from_logcat_text(Path(path).read_text(encoding="utf-8"))
+
+
+def write_extracted_phase9_native_shard_loader_json(logcat_path: str | Path, out_path: str | Path) -> Path:
+    """Extract Phase 9 native shard-loader JSON from logcat and write pretty JSON."""
+
+    data = extract_phase9_native_shard_loader_json_from_logcat_file(logcat_path)
+    return _write_json(data, out_path)
+
 def extract_android_toy_decode_json_from_logcat_text(text: str) -> dict[str, Any]:
     """Extract and validate the first Android toy decode JSON from QPNPU logcat markers."""
 
@@ -205,7 +232,7 @@ def write_extracted_android_toy_decode_json(logcat_path: str | Path, out_path: s
     return _write_json(data, out_path)
 
 def extract_all_qpnpu_json_from_logcat_text(text: str) -> dict[str, Any]:
-    """Extract every valid QPNPU probe/native/Phase 6/Phase 7A/Phase 7C/Phase 8/toy decode payload."""
+    """Extract every valid QPNPU probe/native/Phase 6/Phase 7A/Phase 7C/Phase 8/Phase 9/toy decode payload."""
 
     payloads: list[dict[str, Any]] = []
     active_kind = ""
@@ -246,7 +273,7 @@ def extract_all_qpnpu_json_from_logcat_text(text: str) -> dict[str, Any]:
     if not payloads:
         raise ValueError("missing QPNPU JSON markers")
 
-    counts = {"probe": 0, "native": 0, "phase6": 0, "phase7a": 0, "phase7c": 0, "phase8": 0, "toy_decode": 0}
+    counts = {"probe": 0, "native": 0, "phase6": 0, "phase7a": 0, "phase7c": 0, "phase8": 0, "phase9": 0, "toy_decode": 0}
     for item in payloads:
         counts[item["kind"]] += 1
 
@@ -342,6 +369,8 @@ def _validate_payload_by_kind(kind: str, data: dict[str, Any]) -> list[str]:
         return validate_phase7c_generated_kernels(data)
     if kind == "phase8":
         return validate_phase8_external_model(data)
+    if kind == "phase9":
+        return validate_phase9_native_shard_loader(data)
     if kind == "toy_decode":
         return validate_android_toy_decode(data)
     return [f"unknown QPNPU payload kind: {kind}"]
@@ -374,3 +403,4 @@ def _write_json(data: dict[str, Any], out_path: str | Path) -> Path:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return out
+

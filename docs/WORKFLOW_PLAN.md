@@ -1,6 +1,6 @@
 # Workflow Plan
 
-This repository has completed the Phase 7C generated-kernel smoke path and is preparing for external model artifact delivery. Each phase should leave behind a small, testable checkpoint.
+This repository has completed the Phase 9 native cached-shard loader smoke path and is preparing for layer-slice correctness work. Each phase should leave behind a small, testable checkpoint.
 
 ## Phase 0: Repository Skeleton
 
@@ -210,14 +210,25 @@ Phase 8 result:
 - `android/probe-app/app/src/main/assets/phase8_external_toy_manifest.json` provides a no-network fallback demo.
 - `docs/PHASE_8_EXTERNAL_MODEL_DELIVERY.md` records the runbook and guardrails.
 
-## Phase 9: Android Sharded Model Loader
+## Phase 9: Android Native Cached-Shard Loader
 
 Exit criteria:
 
 - Native code opens verified shards from app-private storage.
-- Tensor ranges can be mmaped or streamed without copying the whole artifact into Java heap.
+- Tensor ranges can be mmaped or streamed without passing the whole artifact through the Java heap.
 - A tiny external toy model loads from downloaded shards instead of APK assets.
 - Tokenizer and metadata loading remain deterministic.
+- Phase 9 JSON is logged between `QPNPU_PHASE9_JSON_BEGIN` and `QPNPU_PHASE9_JSON_END`.
+- Host extraction supports `--kind phase9` and validates the JSON.
+- No real Qwen 9B, QNN/NPU execution, or performance claim is made.
+
+Phase 9 result:
+
+- `android/probe-app/app/src/main/cpp/qpnpu_toy_decode_native.cpp` exposes a native file-loader entry point that opens metadata and mmap-reads shard files.
+- `android/probe-app/app/src/main/java/com/qpnpu/trial/MainActivity.java` exposes the `Shard Load` action and emits Phase 9 JSON.
+- `qpnpu/android_phase9.py` validates native shard-loader payloads.
+- `scripts/android/extract_probe_json_from_logcat.py --kind phase9` extracts Phase 9 logcat payloads.
+- `docs/PHASE_9_NATIVE_SHARD_LOADER.md` records the runbook and guardrails.
 
 ## Phase 10: Layer-Slice Correctness Ladder
 

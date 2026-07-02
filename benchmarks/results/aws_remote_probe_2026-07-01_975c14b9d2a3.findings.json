@@ -1,0 +1,238 @@
+{
+  "artifacts_written": {
+    "all_qpnpu_payloads": "C:\\Users\\Yingjie Huang\\qwen-phone-npu-trial\\benchmarks\\results\\aws_remote_probe_2026-07-01_975c14b9d2a3.all_qpnpu_payloads.json",
+    "phase8_external_model": "C:\\Users\\Yingjie Huang\\qwen-phone-npu-trial\\benchmarks\\results\\aws_remote_probe_2026-07-01_975c14b9d2a3.phase8_external_model.json"
+  },
+  "phase8_external_model_findings": [
+    {
+      "all_sha256_verified": true,
+      "backend": "cpu_android_native_reference",
+      "cache_hit_count": 0,
+      "downloaded_file_count": 3,
+      "generated_token_ids": [
+        40,
+        253,
+        220,
+        214,
+        137,
+        221,
+        233,
+        132
+      ],
+      "index": 0,
+      "manifest_source": "url",
+      "manifest_url": "https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json",
+      "network_used": true,
+      "source": "android-phase8-external-model-demo",
+      "total_bytes": 34695
+    },
+    {
+      "all_sha256_verified": true,
+      "backend": "cpu_android_native_reference",
+      "cache_hit_count": 3,
+      "downloaded_file_count": 0,
+      "generated_token_ids": [
+        40,
+        253,
+        220,
+        214,
+        137,
+        221,
+        233,
+        132
+      ],
+      "index": 1,
+      "manifest_source": "url",
+      "manifest_url": "https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json",
+      "network_used": true,
+      "source": "android-phase8-external-model-demo",
+      "total_bytes": 34695
+    }
+  ],
+  "phase9_readiness": {
+    "ready_to_implement": true,
+    "reason": "Phase 8 proved external hosted toy model delivery, cache reuse, and checksum verification on the real Device Farm phone."
+  },
+  "qpnpu_payload_summary": {
+    "counts": {
+      "native": 2,
+      "phase6": 2,
+      "phase7a": 2,
+      "phase7c": 2,
+      "phase8": 2,
+      "phase9": 0,
+      "probe": 2,
+      "toy_decode": 2
+    },
+    "payload_count": 14
+  },
+  "schema_version": "0.1",
+  "session_summary": {
+    "byte_length": 18004382,
+    "contains_anr": false,
+    "contains_fatal_exception": true,
+    "contains_install_failure": false,
+    "contains_phase8_marker": true,
+    "contains_qpnpu_package": true,
+    "exists": true,
+    "path": "C:\\Users\\Yingjie Huang\\Downloads\\log (5).json",
+    "record_count": 56474,
+    "top_level_type": "list",
+    "top_levels": [
+      [
+        "Info",
+        30394
+      ],
+      [
+        "Debug",
+        18684
+      ],
+      [
+        "Error",
+        3312
+      ],
+      [
+        "Warning",
+        3077
+      ],
+      [
+        "Verbose",
+        1002
+      ],
+      [
+        "Passed",
+        3
+      ],
+      [
+        "Stopped",
+        2
+      ]
+    ],
+    "top_sources": [
+      [
+        "Device",
+        56450
+      ],
+      [
+        "Harness",
+        24
+      ]
+    ],
+    "useful_record_samples": [
+      "{\"attachment_id\": null, \"data\": \"Successful test lifecycle of Setup Test\", \"id\": 3952, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3704, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3713, \"timestamp\": \"2026-07-02T00:22:02.797405Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Interactive test passed\", \"id\": 50390, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3704, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3713, \"timestamp\": \"2026-07-02T00:24:33.194156Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Successful test lifecycle of Teardown Test\", \"id\": 56621, \"level\": \"Passed\", \"parent_id\": null, \"pid\": 3704, \"source\": \"Harness\", \"subtype\": \"Text\", \"tag\": null, \"tid\": 3713, \"timestamp\": \"2026-07-02T00:24:46.361815Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 32, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"2026...",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 71, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"2026...",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 87, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"2026...",
+      "{\"attachment_id\": null, \"data\": \"Package event received: 0\", \"id\": 99, \"level\": \"Debug\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"BackgroundInstallControlService\", \"tid\": 3762, \"timestamp\": \"2026-07-02T07:21:55.952461Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 155, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"202...",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 159, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"202...",
+      "{\"attachment_id\": null, \"data\": \"Capture layer list: \\t com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity$_4859#771(preserveDisplayColors:0)\", \"id\": 174, \"level\": \"Info\", \"parent_id\": null, \"pid\": 2018, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"SurfaceFlin...",
+      "{\"attachment_id\": null, \"data\": \"Capture layer list: \\t com.sec.android.app.launcher/com.samsung.app.honeyspace.edge.edgepanel.app.CocktailBarService$_4859#588(preserveDisplayColors:0)\", \"id\": 176, \"level\": \"Info\", \"parent_id\": null, \"pid\": 2018, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"Sur...",
+      "{\"attachment_id\": null, \"data\": \"[SEC_SF_EFFECTS] drawLayersInternal,1334, Rendering layer com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity$_4859#771 at index 2\", \"id\": 180, \"level\": \"Debug\", \"parent_id\": null, \"pid\": 2018, \"source\": \"Device\", \"subtype\": \"Text...",
+      "{\"attachment_id\": null, \"data\": \"[SEC_SF_EFFECTS] drawLayersInternal,1334, Rendering layer com.sec.android.app.launcher/com.samsung.app.honeyspace.edge.edgepanel.app.CocktailBarService$_4859#588 at index 4\", \"id\": 182, \"level\": \"Debug\", \"parent_id\": null, \"pid\": 2018, \"source\": \"Device\", \"subtype...",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 254, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"202...",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 261, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"202...",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 266, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"202...",
+      "{\"attachment_id\": null, \"data\": \"App-specific configuration not found for packageName: com.sec.android.app.launcher and userId: 0\", \"id\": 267, \"level\": \"Warning\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"PackageConfigPersister\", \"tid\": 3774, \"timestamp\": \"202...",
+      "{\"attachment_id\": null, \"data\": \"Package event received: 0\", \"id\": 280, \"level\": \"Debug\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"BackgroundInstallControlService\", \"tid\": 3762, \"timestamp\": \"2026-07-02T07:21:59.001461Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Package event received: 0\", \"id\": 281, \"level\": \"Debug\", \"parent_id\": null, \"pid\": 3159, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"BackgroundInstallControlService\", \"tid\": 3762, \"timestamp\": \"2026-07-02T07:21:59.001461Z\", \"type\": \"Message\"}",
+      "{\"attachment_id\": null, \"data\": \"Function: parseAndSetVendorParameters Line: 414 Failed\", \"id\": 292, \"level\": \"Error\", \"parent_id\": null, \"pid\": 1997, \"source\": \"Device\", \"subtype\": \"Text\", \"tag\": \"DeviceHalAidl\", \"tid\": 2106, \"timestamp\": \"2026-07-02T07:21:59.003461Z\", \"type\": \"Message\"}"
+    ]
+  },
+  "source_files": {
+    "logcat": "C:\\Users\\Yingjie Huang\\Downloads\\logcat-975c14b9d2a3.logcat",
+    "session_json": "C:\\Users\\Yingjie Huang\\Downloads\\log (5).json",
+    "tcp_dump": "C:\\Users\\Yingjie Huang\\Downloads\\tcp-dump-log-3e7e0574f965.txt"
+  },
+  "tcp_dump_summary": {
+    "byte_length": 253129,
+    "exists": true,
+    "http_80_mentions": 10,
+    "https_443_mentions": 1202,
+    "keyword_counts": {
+      "amazonaws": 172,
+      "cdn-lfs": 0,
+      "huggingface": 0,
+      "libqnn": 0,
+      "libvulkan": 0,
+      "manifest.json": 0,
+      "model-00000": 0,
+      "qpnpu": 0,
+      "toy-model-for-testing": 0
+    },
+    "line_count": 1219,
+    "path": "C:\\Users\\Yingjie Huang\\Downloads\\tcp-dump-log-3e7e0574f965.txt",
+    "top_destination_tokens": [
+      [
+        "ip-192-168-1-101.us-west-2.compute.internal.59540",
+        295
+      ],
+      [
+        "py-in-f95.1e100.net.https",
+        141
+      ],
+      [
+        "ip-192-168-1-101.us-west-2.compute.internal.34046",
+        66
+      ],
+      [
+        "ip-192-168-1-101.us-west-2.compute.internal.50052",
+        57
+      ],
+      [
+        "server-143-204-1-116.hio52.r.cloudfront.net.https",
+        45
+      ],
+      [
+        "pnseab-aa-in-f14.1e100.net.https",
+        42
+      ],
+      [
+        "ec2-34-227-19-112.compute-1.amazonaws.com.https",
+        41
+      ],
+      [
+        "151.101.21.91.https",
+        35
+      ],
+      [
+        "pnseab-ab-in-f10.1e100.net.https",
+        30
+      ],
+      [
+        "ec2-34-212-18-49.us-west-2.compute.amazonaws.com.https",
+        26
+      ],
+      [
+        "216.239.38.95.https",
+        23
+      ],
+      [
+        "ip-192-168-1-101.us-west-2.compute.internal.50896",
+        23
+      ],
+      [
+        "ip-192-168-1-101.us-west-2.compute.internal.50894",
+        21
+      ],
+      [
+        "ip-192-168-1-101.us-west-2.compute.internal.51332",
+        21
+      ],
+      [
+        "ec2-52-222-11-245.us-gov-west-1.compute.amazonaws.com.https",
+        20
+      ]
+    ]
+  },
+  "timestamp_utc": "2026-07-02T00:38:15+00:00",
+  "useful_conclusions": [
+    "The Device Farm run emitted complete QPNPU JSON marker pairs for the existing probe/native/Phase 6/Phase 7/Phase 8 flows.",
+    "The hosted Hugging Face toy model manifest path worked on the phone: the first Phase 8 run used network download and SHA-256 verification; the later run used cache hits with SHA-256 still verified.",
+    "No Phase 9 markers are expected in this upload because Phase 9 had not been built into the APK yet.",
+    "The TCP dump is useful only as coarse network evidence because HTTPS payloads are encrypted; the authoritative model-delivery evidence is the app JSON with manifest URL, cache counts, and checksum verification.",
+    "This is still a toy model workflow, not Qwen 9B, not NPU/QNN execution, and not a performance claim."
+  ]
+}

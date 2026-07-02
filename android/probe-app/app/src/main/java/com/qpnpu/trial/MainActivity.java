@@ -52,6 +52,8 @@ public class MainActivity extends Activity {
     private static final String PHASE7C_JSON_END = "QPNPU_PHASE7C_JSON_END";
     private static final String PHASE8_JSON_BEGIN = "QPNPU_PHASE8_JSON_BEGIN";
     private static final String PHASE8_JSON_END = "QPNPU_PHASE8_JSON_END";
+    private static final String PHASE9_JSON_BEGIN = "QPNPU_PHASE9_JSON_BEGIN";
+    private static final String PHASE9_JSON_END = "QPNPU_PHASE9_JSON_END";
     private static final String TOY_DECODE_JSON_BEGIN = "QPNPU_TOY_DECODE_JSON_BEGIN";
     private static final String TOY_DECODE_JSON_END = "QPNPU_TOY_DECODE_JSON_END";
     private static final int LOG_CHUNK_SIZE = 3000;
@@ -76,6 +78,7 @@ public class MainActivity extends Activity {
     private native String nativeRunPhase7AIsaProbes();
     private native String nativeRunPhase7CGeneratedKernels();
     private native String nativeRunToyDecode(String metadataJson, byte[] modelBytes, String prompt, int maxNewTokens);
+    private native String nativeRunToyDecodeFromFiles(String metadataPath, String tensorShardPathsJson, String prompt, int maxNewTokens);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +119,8 @@ public class MainActivity extends Activity {
         toyDecodeButton.setText("Toy Decode");
         Button externalModelButton = new Button(this);
         externalModelButton.setText("External Model");
+        Button nativeShardButton = new Button(this);
+        nativeShardButton.setText("Shard Load");
         Button copyButton = new Button(this);
         copyButton.setText("Copy JSON");
         Button clearButton = new Button(this);
@@ -140,6 +145,7 @@ public class MainActivity extends Activity {
         modelButtons.addView(generatedKernelButton, buttonParams);
         modelButtons.addView(toyDecodeButton, buttonParams);
         modelButtons.addView(externalModelButton, buttonParams);
+        modelButtons.addView(nativeShardButton, buttonParams);
         root.addView(modelButtons, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -163,7 +169,7 @@ public class MainActivity extends Activity {
         outputText = new TextView(this);
         outputText.setTypeface(Typeface.MONOSPACE);
         outputText.setTextIsSelectable(true);
-        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, ISA Probe, Gen Kernels, Toy Decode, or External Model for smoke evidence.");
+        outputText.setText("Tap Run Probe, Native Bench, Characterize HW, ISA Probe, Gen Kernels, Toy Decode, External Model, or Shard Load for smoke evidence.");
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(outputText, new ScrollView.LayoutParams(
@@ -217,6 +223,13 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 String manifestUrl = manifestUrlInput == null ? "" : manifestUrlInput.getText().toString().trim();
                 runPhase8ExternalModelDemo(manifestUrl);
+            }
+        });
+        nativeShardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String manifestUrl = manifestUrlInput == null ? "" : manifestUrlInput.getText().toString().trim();
+                runPhase9NativeShardLoad(manifestUrl);
             }
         });
         copyButton.setOnClickListener(new View.OnClickListener() {
@@ -397,6 +410,31 @@ public class MainActivity extends Activity {
                     showText(lastJson);
                 } catch (final Exception exc) {
                     final String message = "External model delivery demo failed without crashing the app:\n" + exc;
+                    Log.e(TAG, message, exc);
+                    showText(message);
+                }
+            }
+        }).start();
+    }
+
+    private void runPhase9NativeShardLoad(final String manifestUrl) {
+        outputText.setText("Running native shard loader demo...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONArray warnings = new JSONArray();
+                try {
+                    JSONObject phase9Json = collectPhase9NativeShardLoad(manifestUrl, warnings);
+                    phase9Json.put("timestamp_utc", utcNow());
+                    phase9Json.put("device", collectDeviceInfo(warnings));
+                    phase9Json.put("thermal", collectThermalHints(warnings));
+                    phase9Json.put("warnings_from_java", warnings);
+                    saveJsonToExternalFile(phase9Json, "phase9_native_shard_loader.json", warnings);
+                    lastJson = phase9Json.toString(2);
+                    logPhase9Json(lastJson);
+                    showText(lastJson);
+                } catch (final Exception exc) {
+                    final String message = "Native shard loader demo failed without crashing the app:\n" + exc;
                     Log.e(TAG, message, exc);
                     showText(message);
                 }
@@ -738,6 +776,85 @@ public class MainActivity extends Activity {
         delivery.put("all_sha256_verified", true);
         delivery.put("warnings", warnings);
         return delivery;
+    }
+
+    private JSONObject collectPhase9NativeShardLoad(String manifestUrl, JSONArray javaWarnings) throws Exception {
+        JSONArray warnings = new JSONArray();
+        warnings.put("native cached-shard loader demo only");
+        warnings.put("toy model only; not Qwen 9B");
+        warnings.put("Android native CPU file loader only; not NPU, QNN, NNAPI, or Vulkan execution");
+        warnings.put("not a performance target claim");
+        warnings.put("uses the Phase 8 cache and loads tensor shards from native code by file path");
+
+        JSONObject manifest;
+        String manifestSource;
+        URL baseUrl = null;
+        boolean networkUsed = false;
+        if (manifestUrl == null || manifestUrl.trim().isEmpty()) {
+            manifestSource = "bundled_asset_manifest";
+            manifest = new JSONObject(readAssetText("phase8_external_toy_manifest.json", 512 * 1024));
+            warnings.put("blank manifest URL used bundled tiny manifest fallback; no network download was required");
+        } else {
+            manifestSource = "url";
+            baseUrl = new URL(manifestUrl.trim());
+            manifest = new JSONObject(new String(fetchUrlBytes(baseUrl, 512 * 1024), StandardCharsets.UTF_8));
+            networkUsed = true;
+        }
+
+        JSONObject delivery = cachePhase8Manifest(manifest, manifestSource, manifestUrl, baseUrl, warnings);
+        delivery.put("network_used", networkUsed);
+        if (!nativeLibraryLoaded) {
+            throw new IllegalStateException("native library was not loaded; native shard loader cannot run: " + nativeLibraryLoadError);
+        }
+
+        String metadataPath = findCachedFilePath(delivery, "metadata");
+        JSONArray shardPaths = cachedTensorShardPathArray(delivery);
+        long tensorBytes = cachedTensorShardByteLength(delivery);
+        JSONObject decodeSmoke = manifest.optJSONObject("decode_smoke");
+        String prompt = decodeSmoke == null ? "hello" : decodeSmoke.optString("prompt", "hello");
+        int maxNewTokens = decodeSmoke == null ? 8 : decodeSmoke.optInt("max_new_tokens", 8);
+
+        JSONObject toyDecode = new JSONObject(nativeRunToyDecodeFromFiles(
+                metadataPath, shardPaths.toString(), prompt, maxNewTokens));
+        toyDecode.put("timestamp_utc", utcNow());
+        toyDecode.put("available", true);
+        JSONObject assetModel = toyDecode.optJSONObject("asset_model");
+        if (assetModel == null) {
+            assetModel = new JSONObject();
+        }
+        assetModel.put("metadata_asset", "phase9-native-file:" + metadataPath);
+        assetModel.put("tensor_asset", "phase9-native-file:tensor_shards");
+        assetModel.put("tensor_bytes", tensorBytes);
+        toyDecode.put("asset_model", assetModel);
+
+        JSONObject loader = new JSONObject();
+        loader.put("loader_location", "native_jni");
+        loader.put("open_method", "mmap_readonly");
+        loader.put("metadata_path", metadataPath);
+        loader.put("tensor_shard_paths", shardPaths);
+        loader.put("tensor_shard_count", shardPaths.length());
+        loader.put("tensor_bytes", tensorBytes);
+        loader.put("java_tensor_bytes_passed", false);
+        loader.put("all_sha256_verified_before_native_load", delivery.optBoolean("all_sha256_verified", false));
+
+        JSONObject payload = new JSONObject();
+        payload.put("schema_version", "0.1");
+        payload.put("source", "android-phase9-native-shard-loader");
+        payload.put("backend", "cpu_android_native_file_loader");
+        payload.put("native_library", "qpnpu_probe_native");
+        payload.put("available", true);
+        payload.put("model", manifest.getJSONObject("model"));
+        payload.put("model_delivery", delivery);
+        payload.put("native_model_loader", loader);
+        payload.put("toy_decode", toyDecode);
+        payload.put("prompt", toyDecode.optString("prompt", prompt));
+        payload.put("generated_token_ids", toyDecode.optJSONArray("generated_token_ids"));
+        payload.put("generated_text", toyDecode.optString("generated_text", ""));
+        payload.put("warnings", warnings);
+        for (int i = 0; i < warnings.length(); i++) {
+            javaWarnings.put(warnings.optString(i));
+        }
+        return payload;
     }
 
     private JSONObject collectNativeMicrobenchmarks(JSONArray warnings) throws JSONException {
@@ -1165,6 +1282,10 @@ public class MainActivity extends Activity {
         logJsonWithMarkers(TOY_DECODE_JSON_BEGIN, TOY_DECODE_JSON_END, json);
     }
 
+    private void logPhase9Json(String json) {
+        logJsonWithMarkers(PHASE9_JSON_BEGIN, PHASE9_JSON_END, json);
+    }
+
     private void logJsonWithMarkers(String begin, String endMarker, String json) {
         Log.i(TAG, begin);
         for (int start = 0; start < json.length(); start += LOG_CHUNK_SIZE) {
@@ -1201,6 +1322,33 @@ public class MainActivity extends Activity {
 
     private String readTextFileRequired(String path, int maxBytes) throws IOException {
         return new String(readFileBytesRequired(new File(path), maxBytes), StandardCharsets.UTF_8);
+    }
+
+    private JSONArray cachedTensorShardPathArray(JSONObject delivery) throws JSONException {
+        JSONArray paths = new JSONArray();
+        JSONArray files = delivery.getJSONArray("files");
+        for (int i = 0; i < files.length(); i++) {
+            JSONObject entry = files.getJSONObject(i);
+            if ("tensor_shard".equals(entry.optString("role", ""))) {
+                paths.put(entry.getString("cache_path"));
+            }
+        }
+        if (paths.length() == 0) {
+            throw new JSONException("manifest did not provide a tensor_shard file");
+        }
+        return paths;
+    }
+
+    private long cachedTensorShardByteLength(JSONObject delivery) throws JSONException {
+        long total = 0L;
+        JSONArray files = delivery.getJSONArray("files");
+        for (int i = 0; i < files.length(); i++) {
+            JSONObject entry = files.getJSONObject(i);
+            if ("tensor_shard".equals(entry.optString("role", ""))) {
+                total += entry.optLong("byte_length", 0L);
+            }
+        }
+        return total;
     }
 
     private byte[] readTensorShardBytes(JSONObject delivery, int maxBytes) throws IOException, JSONException {

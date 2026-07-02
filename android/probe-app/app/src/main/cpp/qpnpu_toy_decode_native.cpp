@@ -6,11 +6,16 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <fcntl.h>
+#include <fstream>
 #include <iomanip>
 #include <limits>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <vector>
 
 namespace {
@@ -314,6 +319,98 @@ std::vector<uint8_t> JByteArrayToVector(JNIEnv* env, jbyteArray array) {
     return bytes;
 }
 
+std::vector<std::string> ParseJsonStringArray(const std::string& json) {
+    std::vector<std::string> values;
+    size_t pos = 0;
+    while (pos < json.size()) {
+        while (pos < json.size() && json[pos] != '"') {
+            ++pos;
+        }
+        if (pos >= json.size()) {
+            break;
+        }
+        ++pos;
+        std::string value;
+        bool escaping = false;
+        while (pos < json.size()) {
+            const char ch = json[pos++];
+            if (escaping) {
+                value.push_back(ch);
+                escaping = false;
+            } else if (ch == '\\') {
+                escaping = true;
+            } else if (ch == '"') {
+                values.push_back(value);
+                break;
+            } else {
+                value.push_back(ch);
+            }
+        }
+    }
+    return values;
+}
+
+std::string ReadTextFileNative(const std::string& path, size_t max_bytes) {
+    std::ifstream input(path, std::ios::binary);
+    if (!input) {
+        throw std::runtime_error("could not open metadata file: " + path);
+    }
+    input.seekg(0, std::ios::end);
+    const std::streamoff size = input.tellg();
+    if (size < 0 || static_cast<size_t>(size) > max_bytes) {
+        throw std::runtime_error("metadata file exceeds native loader byte limit: " + path);
+    }
+    input.seekg(0, std::ios::beg);
+    std::string text(static_cast<size_t>(size), '\0');
+    if (size > 0) {
+        input.read(&text[0], size);
+    }
+    return text;
+}
+
+void AppendMmapFileBytes(const std::string& path, size_t max_total_bytes, std::vector<uint8_t>& out) {
+    const int fd = open(path.c_str(), O_RDONLY | O_CLOEXEC);
+    if (fd < 0) {
+        throw std::runtime_error("could not open tensor shard: " + path);
+    }
+
+    struct stat st {};
+    if (fstat(fd, &st) != 0) {
+        close(fd);
+        throw std::runtime_error("could not stat tensor shard: " + path);
+    }
+    if (st.st_size <= 0) {
+        close(fd);
+        throw std::runtime_error("tensor shard is empty: " + path);
+    }
+    const size_t size = static_cast<size_t>(st.st_size);
+    if (out.size() + size > max_total_bytes) {
+        close(fd);
+        throw std::runtime_error("tensor shards exceed native loader byte limit");
+    }
+
+    void* mapping = mmap(nullptr, size, PROT_READ, MAP_PRIVATE, fd, 0);
+    if (mapping == MAP_FAILED) {
+        close(fd);
+        throw std::runtime_error("mmap failed for tensor shard: " + path);
+    }
+    const uint8_t* begin = static_cast<const uint8_t*>(mapping);
+    out.insert(out.end(), begin, begin + size);
+    munmap(mapping, size);
+    close(fd);
+}
+
+std::vector<uint8_t> ReadTensorShardsViaMmap(const std::vector<std::string>& paths, size_t max_total_bytes) {
+    if (paths.empty()) {
+        throw std::runtime_error("no tensor shard paths provided to native loader");
+    }
+    std::vector<uint8_t> bytes;
+    for (const std::string& path : paths) {
+        AppendMmapFileBytes(path, max_total_bytes, bytes);
+    }
+    return bytes;
+}
+
 }  // namespace
 
 extern "C" JNIEXPORT jstring JNICALL
@@ -330,6 +427,31 @@ Java_com_qpnpu_trial_MainActivity_nativeRunToyDecode(JNIEnv* env, jobject /* thi
         return env->NewStringUTF(json.c_str());
     } catch (const std::exception& exc) {
         const std::string message = std::string("nativeRunToyDecode failed: ") + exc.what();
+        jclass runtime_exception = env->FindClass("java/lang/RuntimeException");
+        if (runtime_exception != nullptr) {
+            env->ThrowNew(runtime_exception, message.c_str());
+        }
+        return env->NewStringUTF("{}");
+    }
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_qpnpu_trial_MainActivity_nativeRunToyDecodeFromFiles(JNIEnv* env, jobject /* thiz */,
+                                                              jstring metadata_path,
+                                                              jstring tensor_shard_paths_json,
+                                                              jstring prompt,
+                                                              jint max_new_tokens) {
+    try {
+        const std::string metadata_file = JStringToStdString(env, metadata_path);
+        const std::string shard_json = JStringToStdString(env, tensor_shard_paths_json);
+        const std::string prompt_text = JStringToStdString(env, prompt);
+        const std::string metadata = ReadTextFileNative(metadata_file, 512u * 1024u);
+        const std::vector<std::string> shard_paths = ParseJsonStringArray(shard_json);
+        const std::vector<uint8_t> bytes = ReadTensorShardsViaMmap(shard_paths, 4u * 1024u * 1024u);
+        const std::string json = RunToyDecodeJson(metadata, bytes, prompt_text, static_cast<int>(max_new_tokens));
+        return env->NewStringUTF(json.c_str());
+    } catch (const std::exception& exc) {
+        const std::string message = std::string("nativeRunToyDecodeFromFiles failed: ") + exc.what();
         jclass runtime_exception = env->FindClass("java/lang/RuntimeException");
         if (runtime_exception != nullptr) {
             env->ThrowNew(runtime_exception, message.c_str());

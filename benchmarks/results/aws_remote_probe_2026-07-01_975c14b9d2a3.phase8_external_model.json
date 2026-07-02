@@ -1,0 +1,462 @@
+{
+  "available": true,
+  "backend": "cpu_android_native_reference",
+  "device": {
+    "android_release": "16",
+    "board": "canoe",
+    "device": "m3q",
+    "hardware": "qcom",
+    "manufacturer": "samsung",
+    "model": "SM-S948U1",
+    "sdk_version": 36,
+    "soc_manufacturer": "QTI",
+    "soc_model": "SM8850",
+    "supported_abis": [
+      "arm64-v8a"
+    ]
+  },
+  "generated_text": "(\\xfd\\xdc\\xd6\\x89\\xdd\\xe9\\x84",
+  "generated_token_ids": [
+    40,
+    253,
+    220,
+    214,
+    137,
+    221,
+    233,
+    132
+  ],
+  "model": {
+    "architecture": "qwen_toy",
+    "dtype": "fp32",
+    "hf_id": "local/toy-qwen-smoke",
+    "hidden_size": 16,
+    "intermediate_size": 64,
+    "max_position_embeddings": 128,
+    "num_attention_heads": 4,
+    "num_key_value_heads": 4,
+    "num_layers": 1,
+    "quantization": "none",
+    "rope_theta": 10000,
+    "vocab_size": 256
+  },
+  "model_delivery": {
+    "all_sha256_verified": true,
+    "cache_dir": "/storage/emulated/0/Android/data/com.qpnpu.trial/files/phase8_model_cache/toy-qwen-external-smoke",
+    "cache_hit_count": 3,
+    "downloaded_file_count": 0,
+    "files": [
+      {
+        "byte_length": 1546,
+        "cache_hit": true,
+        "cache_path": "/storage/emulated/0/Android/data/com.qpnpu.trial/files/phase8_model_cache/toy-qwen-external-smoke/metadata.json",
+        "downloaded": false,
+        "path": "metadata.json",
+        "role": "metadata",
+        "sha256": "d2675179f0bf9c9ef0fabbdf708ec1a7c06394bcfb4120963859d5bd95826f55",
+        "url": "metadata.json",
+        "verified": true
+      },
+      {
+        "byte_length": 317,
+        "cache_hit": true,
+        "cache_path": "/storage/emulated/0/Android/data/com.qpnpu.trial/files/phase8_model_cache/toy-qwen-external-smoke/tokenizer_stub.json",
+        "downloaded": false,
+        "path": "tokenizer_stub.json",
+        "role": "tokenizer_stub",
+        "sha256": "eab46956c43033c2456dc00820bfb614471d92d0d70a5a1954ee999324681bdd",
+        "url": "tokenizer_stub.json",
+        "verified": true
+      },
+      {
+        "byte_length": 32832,
+        "cache_hit": true,
+        "cache_path": "/storage/emulated/0/Android/data/com.qpnpu.trial/files/phase8_model_cache/toy-qwen-external-smoke/shards/model-00000.qpnpu",
+        "downloaded": false,
+        "path": "shards/model-00000.qpnpu",
+        "role": "tensor_shard",
+        "sha256": "c83c250650f8df3785d03e3bbd0b89a8cf7441aeb4751bd20cf967503af8b126",
+        "url": "shards/model-00000.qpnpu",
+        "verified": true
+      }
+    ],
+    "manifest_source": "url",
+    "manifest_url": "https://huggingface.co/yingjieh512/toy-model-for-testing/resolve/main/external_toy_qwen_smoke/manifest.json",
+    "model_id": "toy-qwen-external-smoke",
+    "network_used": true,
+    "total_bytes": 34695,
+    "warnings": [
+      "external model delivery demo only",
+      "toy model only; not Qwen 9B",
+      "Android CPU/JNI reference only; not NPU, QNN, NNAPI, or Vulkan execution",
+      "not a performance target claim",
+      "bounded tiny artifact path; do not use for large Qwen weights yet"
+    ]
+  },
+  "native_library": "qpnpu_probe_native",
+  "output_file": "/storage/emulated/0/Android/data/com.qpnpu.trial/files/phase8_external_model.json",
+  "prompt": "hello",
+  "schema_version": "0.1",
+  "source": "android-phase8-external-model-demo",
+  "thermal": {
+    "status": "hints_detected",
+    "zones": [
+      {
+        "name": "cooling_device0",
+        "type": "cpufreq-cpu0"
+      },
+      {
+        "name": "cooling_device1",
+        "type": "cpufreq-cpu6"
+      },
+      {
+        "name": "cooling_device10",
+        "type": "cpu-hotplug3"
+      },
+      {
+        "name": "cooling_device11",
+        "type": "cpu-hotplug4"
+      },
+      {
+        "name": "cooling_device12",
+        "type": "cpu-hotplug5"
+      },
+      {
+        "name": "cooling_device13",
+        "type": "cpu-hotplug6"
+      },
+      {
+        "name": "cooling_device14",
+        "type": "cpu-hotplug7"
+      },
+      {
+        "name": "cooling_device15",
+        "type": "pause-cpu0"
+      },
+      {
+        "name": "cooling_device16",
+        "type": "pause-cpu1"
+      },
+      {
+        "name": "cooling_device17",
+        "type": "thermal-pause-2"
+      },
+      {
+        "name": "cooling_device18",
+        "type": "thermal-pause-1"
+      },
+      {
+        "name": "cooling_device19",
+        "type": "pause-cpu2"
+      },
+      {
+        "name": "cooling_device2",
+        "type": "ufs"
+      },
+      {
+        "name": "cooling_device20",
+        "type": "pause-cpu3"
+      },
+      {
+        "name": "cooling_device21",
+        "type": "thermal-pause-3C"
+      },
+      {
+        "name": "cooling_device22",
+        "type": "pause-cpu4"
+      },
+      {
+        "name": "cooling_device23",
+        "type": "thermal-pause-8"
+      },
+      {
+        "name": "cooling_device24",
+        "type": "thermal-pause-4"
+      },
+      {
+        "name": "cooling_device25",
+        "type": "thermal-pause-10"
+      },
+      {
+        "name": "cooling_device26",
+        "type": "pause-cpu5"
+      },
+      {
+        "name": "cooling_device27",
+        "type": "pause-cpu6"
+      },
+      {
+        "name": "cooling_device28",
+        "type": "pause-cpu7"
+      },
+      {
+        "name": "cooling_device29",
+        "type": "thermal-pause-C0"
+      },
+      {
+        "name": "cooling_device3",
+        "type": "cpu-cluster0"
+      },
+      {
+        "name": "cooling_device30",
+        "type": "thermal-pause-80"
+      },
+      {
+        "name": "cooling_device31",
+        "type": "thermal-pause-20"
+      },
+      {
+        "name": "cooling_device32",
+        "type": "thermal-pause-40"
+      },
+      {
+        "name": "cooling_device33",
+        "type": "thermal-pause-3C"
+      },
+      {
+        "name": "cooling_device34",
+        "type": "kgsl"
+      },
+      {
+        "name": "cooling_device35",
+        "type": "gpu"
+      },
+      {
+        "name": "cooling_device36",
+        "type": "cdsp_hw"
+      },
+      {
+        "name": "cooling_device37",
+        "type": "cdsp_ss"
+      },
+      {
+        "name": "cooling_device38",
+        "type": "cdsp"
+      },
+      {
+        "name": "cooling_device39",
+        "type": "cdsp_sw_hvx"
+      },
+      {
+        "name": "cooling_device4",
+        "type": "cpu-cluster1"
+      },
+      {
+        "name": "cooling_device40",
+        "type": "cdsp_sw_hmx"
+      },
+      {
+        "name": "cooling_device41",
+        "type": "panel0-backlight"
+      },
+      {
+        "name": "cooling_device42",
+        "type": "modem_lte_dsc"
+      },
+      {
+        "name": "cooling_device43",
+        "type": "modem_lte_sub1_dsc"
+      },
+      {
+        "name": "cooling_device44",
+        "type": "modem_nr_dsc"
+      },
+      {
+        "name": "cooling_device45",
+        "type": "modem_nr_sub1_dsc"
+      },
+      {
+        "name": "cooling_device46",
+        "type": "modem_nr_scg_dsc"
+      },
+      {
+        "name": "cooling_device47",
+        "type": "modem_nr_scg_sub1_dsc"
+      },
+      {
+        "name": "cooling_device48",
+        "type": "pa_lte_sdr0_dsc"
+      },
+      {
+        "name": "cooling_device49",
+        "type": "pa_lte_sdr0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device5",
+        "type": "display-fps"
+      },
+      {
+        "name": "cooling_device50",
+        "type": "pa_nr_sdr0_dsc"
+      },
+      {
+        "name": "cooling_device51",
+        "type": "pa_nr_sdr0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device52",
+        "type": "pa_nr_sdr0_scg_dsc"
+      },
+      {
+        "name": "cooling_device53",
+        "type": "pa_nr_sdr0_scg_sub1_dsc"
+      },
+      {
+        "name": "cooling_device54",
+        "type": "mmw0_dsc"
+      },
+      {
+        "name": "cooling_device55",
+        "type": "mmw0_sub1_dsc"
+      },
+      {
+        "name": "cooling_device56",
+        "type": "mmw1_dsc"
+      },
+      {
+        "name": "cooling_device57",
+        "type": "mmw1_sub1_dsc"
+      },
+      {
+        "name": "cooling_device58",
+        "type": "mmw2_dsc"
+      },
+      {
+        "name": "cooling_device59",
+        "type": "mmw2_sub1_dsc"
+      },
+      {
+        "name": "cooling_device6",
+        "type": "ddr-cdev"
+      },
+      {
+        "name": "cooling_device60",
+        "type": "mmw3_dsc"
+      },
+      {
+        "name": "cooling_device61",
+        "type": "mmw3_sub1_dsc"
+      },
+      {
+        "name": "cooling_device62",
+        "type": "modem_bcl"
+      },
+      {
+        "name": "cooling_device7",
+        "type": "cpu-hotplug0"
+      },
+      {
+        "name": "cooling_device8",
+        "type": "cpu-hotplug1"
+      },
+      {
+        "name": "cooling_device9",
+        "type": "cpu-hotplug2"
+      },
+      {
+        "name": "thermal_zone0",
+        "temp_raw": "35900",
+        "type": "cpullc-0-0"
+      }
+    ]
+  },
+  "timestamp_utc": "2026-07-02T00:24:02Z",
+  "toy_decode": {
+    "asset_model": {
+      "metadata_asset": "phase8-cache:metadata.json",
+      "tensor_asset": "phase8-cache:tensor_shards",
+      "tensor_bytes": 32832
+    },
+    "available": true,
+    "backend": "cpu_android_native_reference",
+    "benchmark": {
+      "backend": "cpu_android_native_reference",
+      "device": {
+        "type": "android_device"
+      },
+      "kernel_config_hash": "toy_android_asset_v1",
+      "metrics": {
+        "latency_ms_p50": 0.371198,
+        "latency_ms_p90": 0.371198,
+        "latency_ms_p99": 0.371198,
+        "memory_rss_mb": 0,
+        "tokens_per_second": 21551.840258
+      },
+      "model": {
+        "architecture": "qwen_toy",
+        "hf_id": "local/toy-qwen-smoke"
+      },
+      "operator": "toy_decode",
+      "schema_version": "0.1",
+      "shape": {
+        "hidden_size": 16,
+        "max_new_tokens": 8,
+        "vocab_size": 256
+      },
+      "thermal": {},
+      "timestamp_utc": "native_clock_unavailable",
+      "warnings": [
+        "toy Android CPU/JNI decode only; not Qwen 9B; not NPU; not a performance claim"
+      ]
+    },
+    "decode": {
+      "latency_ms_total": 0.371198,
+      "max_new_tokens": 8,
+      "tokens_per_second": 21551.840258
+    },
+    "generated_text": "(\\xfd\\xdc\\xd6\\x89\\xdd\\xe9\\x84",
+    "generated_token_ids": [
+      40,
+      253,
+      220,
+      214,
+      137,
+      221,
+      233,
+      132
+    ],
+    "model": {
+      "architecture": "qwen_toy",
+      "hf_id": "local/toy-qwen-smoke",
+      "hidden_size": 16,
+      "num_layers": 1,
+      "vocab_size": 256
+    },
+    "native_library": "qpnpu_probe_native",
+    "prompt": "hello",
+    "prompt_token_ids": [
+      104,
+      101,
+      108,
+      108,
+      111
+    ],
+    "schema_version": "0.1",
+    "source": "android-toy-decode",
+    "timestamp_utc": "2026-07-02T00:24:02Z",
+    "tokenizer": {
+      "is_qwen_tokenizer": false,
+      "type": "byte_tokenizer_stub"
+    },
+    "warnings": [
+      "toy model only; not Qwen 9B",
+      "Android CPU/JNI reference only; not NPU, QNN, NNAPI, or Vulkan execution",
+      "byte tokenizer stub only; not the Qwen tokenizer",
+      "not a performance target claim"
+    ]
+  },
+  "warnings": [
+    "external model delivery demo only",
+    "toy model only; not Qwen 9B",
+    "Android CPU/JNI reference only; not NPU, QNN, NNAPI, or Vulkan execution",
+    "not a performance target claim",
+    "bounded tiny artifact path; do not use for large Qwen weights yet"
+  ],
+  "warnings_from_java": [
+    "external model delivery demo only",
+    "toy model only; not Qwen 9B",
+    "Android CPU/JNI reference only; not NPU, QNN, NNAPI, or Vulkan execution",
+    "not a performance target claim",
+    "bounded tiny artifact path; do not use for large Qwen weights yet"
+  ]
+}
